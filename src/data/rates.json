@@ -1,0 +1,14 @@
+{
+  "deposit": {
+    "min": 2.56,
+    "default": 2.88,
+    "max": 3.74
+  },
+  "savings": {
+    "min": 2.84,
+    "default": 2.92,
+    "max": 3.99
+  },
+  "asOf": "2026-09",
+  "isSample": false
+}
