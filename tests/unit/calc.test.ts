@@ -4,6 +4,7 @@ import {
   MAX_AMOUNT,
   amountBand,
   futureValueCompound,
+  installmentFutureValue,
   timeMachine,
   type ReturnsData,
 } from '../../src/core/calc.ts'
@@ -149,5 +150,43 @@ describe('amountBand', () => {
     expect(amountBand(49999)).toBe('mid')
     expect(amountBand(50000)).toBe('high')
     expect(amountBand(MAX_AMOUNT)).toBe('high')
+  })
+})
+
+describe('installmentFutureValue', () => {
+  it('매월 초 납입, 월 복리(연 이율/12)', () => {
+    // 10000 × Σ(1.01^k, k=1..12) = 128,093.28
+    expect(installmentFutureValue(10000, 0.12, 1)).toEqual({ totalPaid: 120000, value: 128093 })
+  })
+
+  it('0원과 0년은 0', () => {
+    expect(installmentFutureValue(0, 0.03, 5)).toEqual({ totalPaid: 0, value: 0 })
+    expect(installmentFutureValue(10000, 0.03, 0)).toEqual({ totalPaid: 0, value: 0 })
+  })
+
+  it('이율 0%는 납입액 그대로', () => {
+    expect(installmentFutureValue(15000, 0, 3)).toEqual({ totalPaid: 540000, value: 540000 })
+  })
+
+  it('예상 금액은 총 납입액 이상', () => {
+    const r = installmentFutureValue(18000, 0.0292, 10)
+    expect(r.totalPaid).toBe(18000 * 120)
+    expect(r.value).toBeGreaterThan(r.totalPaid)
+  })
+
+  it('원 단위 반올림', () => {
+    // 1 × Σ(1.001^k, k=1..12) = 12.078... → 12
+    expect(installmentFutureValue(1, 0.012, 1).value).toBe(12)
+    expect(Number.isInteger(installmentFutureValue(333, 0.0288, 7).value)).toBe(true)
+  })
+
+  it('최대 금액 허용, 범위 밖 거부', () => {
+    expect(installmentFutureValue(MAX_AMOUNT, 0, 1).totalPaid).toBe(MAX_AMOUNT * 12)
+    expect(() => installmentFutureValue(MAX_AMOUNT + 1, 0.03, 1)).toThrow(RangeError)
+    expect(() => installmentFutureValue(-1, 0.03, 1)).toThrow(RangeError)
+    expect(() => installmentFutureValue(100.5, 0.03, 1)).toThrow(RangeError)
+    expect(() => installmentFutureValue(1000, -0.01, 1)).toThrow(RangeError)
+    expect(() => installmentFutureValue(1000, 0.03, 51)).toThrow(RangeError)
+    expect(() => installmentFutureValue(1000, 0.03, 1.5)).toThrow(RangeError)
   })
 })

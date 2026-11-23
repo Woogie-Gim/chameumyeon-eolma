@@ -36,16 +36,32 @@ function assertPrincipal(principal: number) {
   }
 }
 
-// 연 복리. annualRate는 소수(2.88% → 0.0288)
-export function futureValueCompound(principal: number, annualRate: number, years: number): number {
-  assertPrincipal(principal)
+function assertRateAndYears(annualRate: number, years: number) {
   if (!Number.isFinite(annualRate) || annualRate < 0 || annualRate > 1) {
     throw new RangeError('이율은 0 이상 1 이하 소수여야 함')
   }
   if (!Number.isInteger(years) || years < 0 || years > MAX_YEARS) {
     throw new RangeError(`기간은 0~${MAX_YEARS}년 정수여야 함`)
   }
+}
+
+// 예금형: 일시 예치, 연 복리. annualRate는 소수(2.88% → 0.0288)
+export function futureValueCompound(principal: number, annualRate: number, years: number): number {
+  assertPrincipal(principal)
+  assertRateAndYears(annualRate, years)
   return roundWon(principal * (1 + annualRate) ** years)
+}
+
+export type InstallmentResult = { totalPaid: number; value: number }
+
+// 적금형: 매월 초 같은 금액 납입, 월 이율 = 연 이율/12 근사, 월 복리
+export function installmentFutureValue(monthly: number, annualRate: number, years: number): InstallmentResult {
+  assertPrincipal(monthly)
+  assertRateAndYears(annualRate, years)
+  const months = years * 12
+  const r = annualRate / 12
+  const factor = r === 0 ? months : ((1 + r) * ((1 + r) ** months - 1)) / r
+  return { totalPaid: monthly * months, value: roundWon(monthly * factor) }
 }
 
 // startYear 해 초에 넣어 마지막 데이터 연도 말까지 보유한 경우

@@ -39,7 +39,7 @@
     "category": "hunger",
     "amountBand": "low",
     "tone": "funny",
-    "template": "{item} 대신 물 한 잔이었다면 {years}년 뒤 {future}이 기다릴지도."
+    "template": "{item} 대신 집밥이었다면 {years}년 뒤 {future}이 기다릴지도."
   },
   {
     "id": "hunger-low-funny-07",
@@ -172,7 +172,7 @@
     "category": "hunger",
     "amountBand": "mid",
     "tone": "funny",
-    "template": "{item} 한 판이 {years}년 뒤 {future}으로 변신하는 마술이 있다면요."
+    "template": "{item}이 {years}년 뒤 {future}으로 변신하는 마술이 있다면요."
   },
   {
     "id": "hunger-mid-funny-02",
@@ -263,7 +263,7 @@
     "category": "hunger",
     "amountBand": "mid",
     "tone": "calm",
-    "template": "한 끼의 선택이 {years}년 뒤 약 {future}의 차이를 만듭니다."
+    "template": "오늘 저녁의 선택이 {years}년 뒤 약 {future}의 차이를 만듭니다."
   },
   {
     "id": "hunger-mid-calm-07",
@@ -305,7 +305,7 @@
     "category": "hunger",
     "amountBand": "mid",
     "tone": "stern",
-    "template": "{amount}은 한 끼, {future}은 {years}년의 결과입니다."
+    "template": "{amount}은 오늘 저녁, {future}은 {years}년의 결과입니다."
   },
   {
     "id": "hunger-mid-stern-05",
@@ -326,7 +326,7 @@
     "category": "hunger",
     "amountBand": "mid",
     "tone": "stern",
-    "template": "한 끼 {amount}이 쌓이면 {years}년 뒤 {future} 이상이 됩니다."
+    "template": "식비 {amount}이 쌓이면 {years}년 뒤 {future} 이상이 됩니다."
   },
   {
     "id": "hunger-mid-stern-08",
@@ -375,7 +375,7 @@
     "category": "hunger",
     "amountBand": "high",
     "tone": "funny",
-    "template": "한 상 가득 {amount}, {years}년 뒤 한 통장 가득 {future}."
+    "template": "푸짐한 {amount}, {years}년 뒤 통장 가득 {future}."
   },
   {
     "id": "hunger-high-funny-07",
@@ -403,7 +403,7 @@
     "category": "hunger",
     "amountBand": "high",
     "tone": "calm",
-    "template": "큰 한 끼 {amount}, {years}년 뒤에는 약 {future}이 됩니다."
+    "template": "넉넉한 식비 {amount}, {years}년 뒤에는 약 {future}이 됩니다."
   },
   {
     "id": "hunger-high-calm-03",
@@ -452,14 +452,14 @@
     "category": "hunger",
     "amountBand": "high",
     "tone": "stern",
-    "template": "한 끼에 {amount}입니다. {years}년이면 {future}이 됩니다."
+    "template": "식비로 {amount}입니다. {years}년이면 {future}이 됩니다."
   },
   {
     "id": "hunger-high-stern-02",
     "category": "hunger",
     "amountBand": "high",
     "tone": "stern",
-    "template": "{amount}이면 여러 끼니입니다. {future}의 시작이기도 합니다."
+    "template": "{amount}이면 며칠 치 식비입니다. {future}의 시작이기도 합니다."
   },
   {
     "id": "hunger-high-stern-03",
@@ -529,7 +529,7 @@
     "category": "stress",
     "amountBand": "low",
     "tone": "funny",
-    "template": "{item} 한 입의 달콤함 vs {future}의 달콤함, 박빙이네요."
+    "template": "{item}의 달콤함 vs {future}의 달콤함, 박빙이네요."
   },
   {
     "id": "stress-low-funny-05",
@@ -690,7 +690,7 @@
     "category": "stress",
     "amountBand": "mid",
     "tone": "funny",
-    "template": "오늘 밤 {item} 한 잔의 값 {amount}, 평행우주에선 {future}."
+    "template": "오늘 밤 {item}의 값 {amount}, 평행우주에선 {future}."
   },
   {
     "id": "stress-mid-funny-04",
@@ -1012,7 +1012,7 @@
     "category": "reward",
     "amountBand": "low",
     "tone": "funny",
-    "template": "오늘의 나에게 {item} 한 잔, 미래의 나에게 {future}."
+    "template": "오늘의 나에게 {item}, 미래의 나에게 {future}."
   },
   {
     "id": "reward-low-funny-02",
@@ -1026,7 +1026,7 @@
     "category": "reward",
     "amountBand": "low",
     "tone": "funny",
-    "template": "{item} 한 잔의 행복, {years}년 숙성하면 {future}이래요."
+    "template": "{item}의 행복, {years}년 숙성하면 {future}이래요."
   },
   {
     "id": "reward-low-funny-04",
@@ -1040,7 +1040,7 @@
     "category": "reward",
     "amountBand": "low",
     "tone": "funny",
-    "template": "{item}이 주는 기쁨 한 모금, {future}이 주는 기쁨 한 통장."
+    "template": "{item}이 주는 기쁨 잠깐, {future}이 주는 기쁨 오래."
   },
   {
     "id": "reward-low-funny-06",
@@ -1075,7 +1075,7 @@
     "category": "reward",
     "amountBand": "low",
     "tone": "calm",
-    "template": "한 잔의 {amount}이 {years}년 뒤 약 {future}이 되는 셈이에요."
+    "template": "작은 보상 {amount}이 {years}년 뒤 약 {future}이 되는 셈이에요."
   },
   {
     "id": "reward-low-calm-03",

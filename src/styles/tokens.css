@@ -1,0 +1,70 @@
+/* 디자인 토큰. 디자인 변경은 이 파일만 수정 */
+:root {
+  /* 색 */
+  --color-bg: #f7f4ee;
+  --color-surface: #ffffff;
+  --color-surface-alt: #efeae1;
+  --color-text: #1e2a2c;
+  --color-muted: #5f6b6d;
+  --color-border: #ddd6ca;
+  --color-primary: #2a6b63;
+  --color-primary-strong: #1d5049;
+  --color-on-primary: #ffffff;
+  --color-accent: #c9822b;
+  --color-accent-soft: #f6e6cf;
+  --color-danger: #a8402f;
+  --color-danger-soft: #f7e1dc;
+  --color-success-soft: #dcefe9;
+  --color-chart-bar: #2a6b63;
+  --color-chart-empty: #ddd6ca;
+
+  /* 간격 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* 글자 */
+  --font-family: system-ui, -apple-system, sans-serif;
+  --font-xs: 12px;
+  --font-sm: 14px;
+  --font-md: 16px;
+  --font-lg: 20px;
+  --font-xl: 28px;
+  --font-xxl: 34px;
+  --weight-regular: 400;
+  --weight-bold: 700;
+
+  /* 모양 */
+  --radius-s: 8px;
+  --radius-m: 14px;
+  --radius-l: 22px;
+  --touch-min: 48px;
+  --tabbar-h: 64px;
+  --content-max: 480px;
+  --shadow-card: 0 1px 3px rgb(30 42 44 / 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #151b1c;
+    --color-surface: #1f2729;
+    --color-surface-alt: #283234;
+    --color-text: #eef1ef;
+    --color-muted: #a5b0b1;
+    --color-border: #344042;
+    --color-primary: #5fb3a8;
+    --color-primary-strong: #7fc8be;
+    --color-on-primary: #0f1b1a;
+    --color-accent: #e3a457;
+    --color-accent-soft: #3a2f21;
+    --color-danger: #e58a78;
+    --color-danger-soft: #3a2420;
+    --color-success-soft: #1f3632;
+    --color-chart-bar: #5fb3a8;
+    --color-chart-empty: #344042;
+    --shadow-card: none;
+  }
+}
