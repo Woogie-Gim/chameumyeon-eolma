@@ -6,6 +6,7 @@ export type TemplateVars = {
   amount?: string // 포맷된 금액(원 포함)
   years?: number
   future?: string // 포맷된 금액(원 포함)
+  startYear?: number // ETF 문구 전용
 }
 
 function lastSyllable(word: string): number {
@@ -55,7 +56,8 @@ export function fillTemplate(template: string, vars: TemplateVars): string {
   if (vars.item != null) out = replaceWithParticle(out, 'item', vars.item)
   if (vars.amount != null) out = replaceWithParticle(out, 'amount', vars.amount)
   if (vars.future != null) out = replaceWithParticle(out, 'future', vars.future)
-  // {years} 뒤에는 항상 '년'이 온다
+  // {years}, {startYear} 뒤에는 항상 '년'이 온다
   if (vars.years != null) out = out.split('{years}').join(String(vars.years))
+  if (vars.startYear != null) out = out.split('{startYear}').join(String(vars.startYear))
   return out
 }

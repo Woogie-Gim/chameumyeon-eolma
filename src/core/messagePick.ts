@@ -12,3 +12,13 @@ export function pickMessage(messages: Message[], category: string, band: AmountB
   if (pool.length === 0) throw new Error('문구 후보 없음')
   return pool[Math.min(pool.length - 1, Math.floor(rand() * pool.length))]
 }
+
+export type EtfMessage = { id: string; category: string; tone: string; template: string }
+
+// ETF 타임머신 전용 풀. 과거 시제 문구
+export function pickEtfMessage(messages: EtfMessage[], category: string, rand: () => number = Math.random): EtfMessage {
+  const tone = TONE_LIST[Math.min(TONE_LIST.length - 1, Math.floor(rand() * TONE_LIST.length))]
+  const pool = messages.filter((m) => m.category === category && m.tone === tone)
+  if (pool.length === 0) throw new Error('문구 후보 없음')
+  return pool[Math.min(pool.length - 1, Math.floor(rand() * pool.length))]
+}

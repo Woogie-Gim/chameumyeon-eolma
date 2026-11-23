@@ -3,11 +3,13 @@ import { OTHER_LABEL } from '../core/copy.ts'
 import { formatNumber, formatWon } from '../core/format.ts'
 import { streakDays, totalSaved, weeklySaved, type LogRecord } from '../core/stats.ts'
 import items from '../data/items.json' with { type: 'json' }
+import { spentLabel } from './types.ts'
 
 const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토']
 // 막대 위 짧은 금액 표기. 1만 이상은 소수 첫째 자리 만 단위
 const shortAmount = (n: number) => (n >= 10000 ? `${Number((n / 10000).toFixed(1))}만` : formatNumber(n))
 const labelOf = (id: string) => items.find((i) => i.id === id)?.label ?? OTHER_LABEL
+const categoryOf = (id: string) => items.find((i) => i.id === id)?.category ?? 'impulse'
 
 function WeeklyChart({ data }: { data: { date: string; amount: number }[] }) {
   const w = 300
@@ -69,7 +71,7 @@ export function Log({ records, today }: { records: LogRecord[]; today: Date }) {
             {recent.map((r, i) => (
               <li key={`${r.date}-${i}`}>
                 <span>{r.date.slice(5).replace('-', '/')} {labelOf(r.itemId)}</span>
-                <span>{formatWon(r.amount)} · {r.choice === 'saved' ? '참았어요' : '먹었어요'}</span>
+                <span>{formatWon(r.amount)} · {r.choice === 'saved' ? '참았어요' : spentLabel(categoryOf(r.itemId))}</span>
               </li>
             ))}
           </ul>

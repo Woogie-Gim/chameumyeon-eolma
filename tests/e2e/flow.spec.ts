@@ -1,5 +1,6 @@
 // 입력 → 결과 → 참았어요 → 기록 시나리오
 import { expect, test } from '@playwright/test'
+import { shot } from './helpers.ts'
 
 const DISCLAIMER = '가정 시뮬레이션이며 수익을 보장하지 않습니다. 과거 성과는 미래를 보장하지 않습니다.'
 const ETF_DISCLAIMER = '지수 가격 기준이며 배당, 보수, 환율은 반영하지 않았습니다.'
@@ -24,7 +25,7 @@ test('상호명 거부, 환산, 참았어요, 기록 확인', async ({ page }) =
   await expect(page.getByRole('status')).toContainText('치킨으로 인식했어요')
   await page.getByLabel('금액').fill('18000')
   await expect(page.getByLabel('금액')).toHaveValue('18,000')
-  await page.screenshot({ path: 'docs/screenshots/input.png', fullPage: true })
+  await shot(page, 'input')
 
   // 결과
   await page.getByRole('button', { name: '환산하기' }).click()
@@ -32,7 +33,7 @@ test('상호명 거부, 환산, 참았어요, 기록 확인', async ({ page }) =
   await expect(page.getByText('적용 이율 연')).toBeVisible()
   await expect(page.getByTestId('result-value')).toContainText('원')
   await expect(page.getByTestId('disclaimer')).toHaveText(DISCLAIMER)
-  await page.screenshot({ path: 'docs/screenshots/result.png', fullPage: true })
+  await shot(page, 'result')
 
   // 적금형
   await page.getByRole('tab', { name: '적금형' }).click()
@@ -46,12 +47,13 @@ test('상호명 거부, 환산, 참았어요, 기록 확인', async ({ page }) =
 
   // 선택과 기록
   await page.getByRole('button', { name: '다음' }).click()
+  await expect(page.getByRole('button', { name: '먹었어요' })).toBeVisible()
   await page.getByRole('button', { name: '참았어요' }).click()
   await expect(page.getByRole('heading', { name: '기록' })).toBeVisible()
   await expect(page.getByTestId('total-saved')).toHaveText('18,000원')
   await expect(page.getByTestId('streak')).toHaveText('1일')
   await expect(page.locator('.record-list')).toContainText('치킨')
-  await page.screenshot({ path: 'docs/screenshots/log.png', fullPage: true })
+  await shot(page, 'log')
 
   // 저장소에는 원문이 없고 허용 필드만 있다
   const saved = await page.evaluate(() => JSON.stringify({ ...localStorage }))

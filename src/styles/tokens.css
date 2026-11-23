@@ -17,6 +17,12 @@
   --color-success-soft: #dcefe9;
   --color-chart-bar: #2a6b63;
   --color-chart-empty: #ddd6ca;
+  --color-piggy: #e9a3a0;
+  --color-piggy-shade: #c9706c;
+  --color-piggy-eye: #2b2b2b;
+  --color-coin: #e0b04a;
+  --color-coin-edge: #b98a2a;
+  --color-stage-bg: #fbf3e8;
 
   /* 간격 */
   --space-1: 4px;
@@ -45,6 +51,7 @@
   --tabbar-h: 64px;
   --content-max: 480px;
   --shadow-card: 0 1px 3px rgb(30 42 44 / 0.08);
+  --stage-h: 220px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -65,6 +72,12 @@
     --color-success-soft: #1f3632;
     --color-chart-bar: #5fb3a8;
     --color-chart-empty: #344042;
+    --color-piggy: #d98f8b;
+    --color-piggy-shade: #a85f5b;
+    --color-piggy-eye: #111111;
+    --color-coin: #e3b85a;
+    --color-coin-edge: #a77f2c;
+    --color-stage-bg: #222b2d;
     --shadow-card: none;
   }
 }

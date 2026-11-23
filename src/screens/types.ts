@@ -10,3 +10,8 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   reward: '보상',
   impulse: '충동',
 }
+
+// 참지 못한 경우 라벨. 배고픔은 먹었어요, 그 외는 샀어요
+export function spentLabel(category: string): string {
+  return category === 'hunger' ? '먹었어요' : '샀어요'
+}

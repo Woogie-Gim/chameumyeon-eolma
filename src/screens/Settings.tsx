@@ -56,7 +56,7 @@ export function Settings({ settings, onChange, onReset }: Props) {
           <label htmlFor="reduce3d">저사양 3D 끄기</label>
           <input id="reduce3d" className="switch" type="checkbox" checked={settings.reduce3d} onChange={(e) => onChange({ ...settings, reduce3d: e.target.checked })} />
         </div>
-        <p className="meta">3D 연출은 준비 중이에요. 설정은 미리 저장돼요.</p>
+        <p className="meta">켜면 저금통 연출을 2D 그래픽으로 보여 줘요. 동작 줄이기 설정이 켜진 기기와 3D를 지원하지 않는 기기도 2D로 보여요.</p>
       </div>
 
       <div className="card">

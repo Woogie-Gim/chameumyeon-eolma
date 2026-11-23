@@ -4,7 +4,7 @@
     "label": "치킨",
     "category": "hunger",
     "aliases": [
-      "후라이드치킨",
+      "후라이드 치킨",
       "양념치킨",
       "통닭",
       "닭강정"
@@ -140,7 +140,7 @@
     "label": "도시락",
     "category": "hunger",
     "aliases": [
-      "편의점도시락"
+      "편의점 도시락"
     ]
   },
   {
@@ -156,7 +156,7 @@
     "label": "야식",
     "category": "hunger",
     "aliases": [
-      "배달음식"
+      "배달 음식"
     ]
   },
   {
@@ -180,7 +180,7 @@
     "label": "디저트",
     "category": "stress",
     "aliases": [
-      "디저트카페"
+      "디저트 카페"
     ]
   },
   {
@@ -209,7 +209,7 @@
     "category": "stress",
     "aliases": [
       "생맥주",
-      "수입맥주"
+      "수입 맥주"
     ]
   },
   {
@@ -286,11 +286,9 @@
   },
   {
     "id": "spicyfood",
-    "label": "매운음식",
+    "label": "매운 음식",
     "category": "stress",
-    "aliases": [
-      
-    ]
+    "aliases": []
   },
   {
     "id": "coffee",
@@ -302,7 +300,7 @@
       "라떼",
       "카페라떼",
       "카페",
-      "아이스아메리카노",
+      "아이스 아메리카노",
       "카푸치노"
     ]
   },
@@ -311,7 +309,7 @@
     "label": "케이크",
     "category": "reward",
     "aliases": [
-      "조각케이크"
+      "조각 케이크"
     ]
   },
   {
@@ -372,7 +370,7 @@
     "category": "reward",
     "aliases": [
       "립스틱",
-      "쿠션팩트"
+      "쿠션 팩트"
     ]
   },
   {
@@ -441,7 +439,7 @@
     "label": "이어폰",
     "category": "impulse",
     "aliases": [
-      "무선이어폰",
+      "무선 이어폰",
       "헤드폰"
     ]
   },
@@ -450,16 +448,14 @@
     "label": "굿즈",
     "category": "impulse",
     "aliases": [
-      "팬굿즈"
+      "팬 굿즈"
     ]
   },
   {
     "id": "toy",
     "label": "장난감",
     "category": "impulse",
-    "aliases": [
-      
-    ]
+    "aliases": []
   },
   {
     "id": "figure",
@@ -469,11 +465,11 @@
   },
   {
     "id": "gameitem",
-    "label": "게임아이템",
+    "label": "게임 아이템",
     "category": "impulse",
     "aliases": [
       "현질",
-      "게임머니"
+      "게임 머니"
     ]
   },
   {
@@ -539,7 +535,7 @@
     "label": "폰케이스",
     "category": "impulse",
     "aliases": [
-      "휴대폰케이스"
+      "휴대폰 케이스"
     ]
   },
   {
@@ -568,7 +564,7 @@
   },
   {
     "id": "onlineshopping",
-    "label": "온라인쇼핑",
+    "label": "온라인 쇼핑",
     "category": "impulse",
     "aliases": [
       "쇼핑",
@@ -580,7 +576,7 @@
     "label": "구독",
     "category": "impulse",
     "aliases": [
-      "구독서비스"
+      "구독 서비스"
     ]
   },
   {
@@ -593,7 +589,7 @@
   },
   {
     "id": "camping",
-    "label": "캠핑용품",
+    "label": "캠핑 용품",
     "category": "impulse",
     "aliases": [
       "캠핑"
@@ -601,7 +597,7 @@
   },
   {
     "id": "interior",
-    "label": "인테리어소품",
+    "label": "인테리어 소품",
     "category": "impulse",
     "aliases": [
       "소품",

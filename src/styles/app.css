@@ -151,3 +151,15 @@ button, input { font: inherit; color: inherit; }
   color: var(--color-muted);
 }
 .tabbar .tab[aria-current='page'] { color: var(--color-primary-strong); font-weight: var(--weight-bold); }
+
+.coin-stage {
+  position: relative;
+  height: var(--stage-h);
+  border-radius: var(--radius-m);
+  background: var(--color-stage-bg);
+  overflow: hidden;
+}
+.coin-stage canvas { display: block; }
+.coin-fallback { width: 100%; height: 100%; display: block; }
+.coin-fallback .coin { fill: var(--color-coin); stroke: var(--color-coin-edge); stroke-width: 1; }
+.coin-fallback .label { fill: var(--color-text); font-size: 14px; font-weight: 700; }

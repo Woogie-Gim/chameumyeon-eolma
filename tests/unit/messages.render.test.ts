@@ -4,6 +4,7 @@ import { OTHER_LABEL } from '../../src/core/copy.ts'
 import { fillTemplate, hasBatchim, hasRieul } from '../../src/core/template.ts'
 import items from '../../src/data/items.json' with { type: 'json' }
 import messages from '../../src/data/messages.json' with { type: 'json' }
+import messagesEtf from '../../src/data/messagesEtf.json' with { type: 'json' }
 
 const LABELS = [...items.map((i) => i.label), OTHER_LABEL]
 const AMOUNTS = ['18,000원', '1,000원', '100,000,000원']
@@ -65,5 +66,25 @@ describe('문구 렌더링', () => {
   it('받침 없는 값이 오면 조사도 바뀜', () => {
     expect(fillTemplate('{amount}을 {future}과', { amount: '천 원 정도', future: '만 원 정도' })).toBe('천 원 정도를 만 원 정도와')
     expect(fillTemplate('{future}으로', { future: '커피' })).toBe('커피로')
+  })
+})
+
+describe('ETF 문구 렌더링', () => {
+  it('단위 표현 없음', () => {
+    for (const m of messagesEtf) expect(m.template, m.id).not.toMatch(UNIT)
+  })
+
+  it('모든 품목 대입 시 자리표시자 없음, 조사 일치', () => {
+    for (const m of messagesEtf) {
+      for (const item of LABELS) {
+        for (const amount of AMOUNTS) {
+          const s = fillTemplate(m.template, { item, amount, startYear: 2016, future: amount })
+          expect(s, m.id).not.toMatch(/[{}]/)
+          if (m.template.includes('{item}')) expect(wrongParticle(s, item), `${m.id} ${s}`).toBeNull()
+          expect(wrongParticle(s, amount), `${m.id} ${s}`).toBeNull()
+          if (m.template.includes('{startYear}')) expect(s).toContain('2016년')
+        }
+      }
+    }
   })
 })

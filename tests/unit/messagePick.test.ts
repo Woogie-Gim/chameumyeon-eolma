@@ -1,7 +1,8 @@
 // messagePick.ts 단위 테스트
 import { describe, expect, it } from 'vitest'
-import { pickMessage } from '../../src/core/messagePick.ts'
+import { pickEtfMessage, pickMessage } from '../../src/core/messagePick.ts'
 import messages from '../../src/data/messages.json' with { type: 'json' }
+import messagesEtf from '../../src/data/messagesEtf.json' with { type: 'json' }
 
 describe('pickMessage', () => {
   it('카테고리와 금액 구간에 맞는 문구', () => {
@@ -19,5 +20,19 @@ describe('pickMessage', () => {
 
   it('후보가 없으면 오류', () => {
     expect(() => pickMessage([], 'hunger', 'low', () => 0)).toThrow()
+  })
+})
+
+describe('pickEtfMessage', () => {
+  it('카테고리에 맞는 ETF 문구', () => {
+    for (const r of [0, 0.5, 0.999]) {
+      const m = pickEtfMessage(messagesEtf, 'reward', () => r)
+      expect(m.category).toBe('reward')
+      expect(m.id.startsWith('etf-')).toBe(true)
+    }
+  })
+
+  it('후보가 없으면 오류', () => {
+    expect(() => pickEtfMessage([], 'hunger', () => 0)).toThrow()
   })
 })
