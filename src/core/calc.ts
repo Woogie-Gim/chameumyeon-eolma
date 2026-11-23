@@ -1,0 +1,92 @@
+// 환산 계산 순수 함수
+import returnsJson from '../data/returns.json' with { type: 'json' }
+import { roundWon } from './format.ts'
+
+export const MAX_AMOUNT = 100_000_000
+export const MAX_YEARS = 50
+// 금액 구간 경계(원)
+export const BAND_MID_FROM = 10_000
+export const BAND_HIGH_FROM = 50_000
+
+export type AmountBand = 'low' | 'mid' | 'high'
+
+export type AssetType = {
+  id: string
+  label: string
+  annualReturns: Record<string, number | null>
+  isSample: boolean
+  sampleYears: number[]
+  source: string
+}
+export type ReturnsData = { asOf: string; assetTypes: AssetType[] }
+
+export type TimeMachineResult = {
+  value: number
+  multiplier: number
+  cumulativeReturn: number
+  startYear: number
+  endYear: number // 기준 연도(마지막 데이터 연도)
+  years: number
+  isSample: boolean
+}
+
+function assertPrincipal(principal: number) {
+  if (!Number.isInteger(principal) || principal < 0 || principal > MAX_AMOUNT) {
+    throw new RangeError(`금액은 0원 이상 ${MAX_AMOUNT}원 이하 정수여야 함`)
+  }
+}
+
+// 연 복리. annualRate는 소수(2.88% → 0.0288)
+export function futureValueCompound(principal: number, annualRate: number, years: number): number {
+  assertPrincipal(principal)
+  if (!Number.isFinite(annualRate) || annualRate < 0 || annualRate > 1) {
+    throw new RangeError('이율은 0 이상 1 이하 소수여야 함')
+  }
+  if (!Number.isInteger(years) || years < 0 || years > MAX_YEARS) {
+    throw new RangeError(`기간은 0~${MAX_YEARS}년 정수여야 함`)
+  }
+  return roundWon(principal * (1 + annualRate) ** years)
+}
+
+// startYear 해 초에 넣어 마지막 데이터 연도 말까지 보유한 경우
+export function timeMachine(
+  principal: number,
+  assetTypeId: string,
+  startYear: number,
+  data: ReturnsData = returnsJson as ReturnsData,
+): TimeMachineResult {
+  assertPrincipal(principal)
+  const asset = data.assetTypes.find((a) => a.id === assetTypeId)
+  if (!asset) throw new RangeError('알 수 없는 유형')
+
+  const years = Object.keys(asset.annualReturns).map(Number)
+  const first = Math.min(...years)
+  const endYear = Math.max(...years)
+  if (!Number.isInteger(startYear) || startYear < first || startYear > endYear) {
+    throw new RangeError(`시작 연도는 ${first}~${endYear} 범위여야 함`)
+  }
+
+  let multiplier = 1
+  for (let y = startYear; y <= endYear; y++) {
+    const r = asset.annualReturns[String(y)]
+    if (r == null) throw new RangeError(`${y}년 데이터 없음`)
+    multiplier *= 1 + r
+  }
+
+  return {
+    value: roundWon(principal * multiplier),
+    multiplier,
+    cumulativeReturn: multiplier - 1,
+    startYear,
+    endYear,
+    years: endYear - startYear + 1,
+    isSample: asset.isSample,
+  }
+}
+
+// 문구 선택용 금액 구간
+export function amountBand(amount: number): AmountBand {
+  if (amount < BAND_MID_FROM) return 'low'
+  if (amount < BAND_HIGH_FROM) return 'mid'
+  return 'high'
+}

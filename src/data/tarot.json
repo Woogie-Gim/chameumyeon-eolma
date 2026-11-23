@@ -1,0 +1,134 @@
+[
+  {
+    "id": 0,
+    "name": "빈 지갑의 여행자",
+    "keyword": "새 출발",
+    "adviceTemplate": "가벼운 지갑이 오히려 홀가분하게 느껴지는 날일지도 몰라요."
+  },
+  {
+    "id": 1,
+    "name": "동전 마법사",
+    "keyword": "계획",
+    "adviceTemplate": "작은 {amount}도 계획에 들어가면 다르게 보이는 날일 수 있어요."
+  },
+  {
+    "id": 2,
+    "name": "장부의 현자",
+    "keyword": "직감",
+    "adviceTemplate": "결제 전 잠깐 멈추는 직감이 유난히 잘 맞는 날일지도요."
+  },
+  {
+    "id": 3,
+    "name": "풍요의 정원사",
+    "keyword": "돌봄",
+    "adviceTemplate": "돈을 쓰기보다 가꾸는 쪽에 마음이 가는 하루일 수 있어요."
+  },
+  {
+    "id": 4,
+    "name": "금고의 왕",
+    "keyword": "절제",
+    "adviceTemplate": "단단한 원칙이 지갑을 지켜 주는 하루일지도 몰라요."
+  },
+  {
+    "id": 5,
+    "name": "가계부 스승",
+    "keyword": "습관",
+    "adviceTemplate": "오늘 적어 둔 한 줄이 나중에 반가운 기록이 될 수 있어요."
+  },
+  {
+    "id": 6,
+    "name": "두 장바구니",
+    "keyword": "선택",
+    "adviceTemplate": "두 가지 사이에서 고민한다면 하나로 충분한 날일지도요."
+  },
+  {
+    "id": 7,
+    "name": "저금통 수레",
+    "keyword": "추진력",
+    "adviceTemplate": "모으는 속도가 붙는 느낌이 드는 하루일 수 있어요."
+  },
+  {
+    "id": 8,
+    "name": "참을성의 사자",
+    "keyword": "인내",
+    "adviceTemplate": "오늘 넘긴 {amount}이 은근히 뿌듯하게 느껴질지도 몰라요."
+  },
+  {
+    "id": 9,
+    "name": "등불 든 절약가",
+    "keyword": "성찰",
+    "adviceTemplate": "혼자 지출을 돌아보기 좋은 조용한 하루일 수 있어요."
+  },
+  {
+    "id": 10,
+    "name": "돌고 도는 동전",
+    "keyword": "흐름",
+    "adviceTemplate": "나간 돈과 들어온 돈의 흐름이 눈에 들어오는 날일지도요."
+  },
+  {
+    "id": 11,
+    "name": "영수증 저울",
+    "keyword": "균형",
+    "adviceTemplate": "쓰는 것과 남기는 것의 균형이 맞춰지는 날일 수 있어요."
+  },
+  {
+    "id": 12,
+    "name": "거꾸로 본 가격표",
+    "keyword": "관점",
+    "adviceTemplate": "같은 가격표도 다르게 보이는 하루일지도 몰라요."
+  },
+  {
+    "id": 13,
+    "name": "끝난 할부",
+    "keyword": "정리",
+    "adviceTemplate": "묵은 지출을 정리하는 기분이 드는 날일 수 있어요."
+  },
+  {
+    "id": 14,
+    "name": "알맞은 한 잔",
+    "keyword": "조화",
+    "adviceTemplate": "딱 필요한 만큼이 가장 만족스러운 날일지도요."
+  },
+  {
+    "id": 15,
+    "name": "유혹의 쇼윈도",
+    "keyword": "유혹",
+    "adviceTemplate": "반짝이는 것에 눈길이 자주 가는 하루일 수 있어요."
+  },
+  {
+    "id": 16,
+    "name": "흔들리는 금고",
+    "keyword": "변화",
+    "adviceTemplate": "예상 밖의 지출 소식이 들려올지도 몰라요. 여유분이 든든할 수 있어요."
+  },
+  {
+    "id": 17,
+    "name": "희망의 저금통",
+    "keyword": "희망",
+    "adviceTemplate": "작은 저축이 기분 좋은 기대가 되는 날일 수 있어요."
+  },
+  {
+    "id": 18,
+    "name": "밤의 장바구니",
+    "keyword": "망설임",
+    "adviceTemplate": "늦은 밤의 결제는 아침에 다시 보면 달라 보일지도요."
+  },
+  {
+    "id": 19,
+    "name": "햇살 통장",
+    "keyword": "만족",
+    "adviceTemplate": "쓰지 않아도 충분히 즐거운 하루일 수 있어요."
+  },
+  {
+    "id": 20,
+    "name": "결산의 나팔",
+    "keyword": "돌아보기",
+    "adviceTemplate": "이번 달 지출을 돌아보면 뜻밖의 발견이 있을지도 몰라요."
+  },
+  {
+    "id": 21,
+    "name": "완성된 지갑",
+    "keyword": "완성",
+    "adviceTemplate": "{amount}만큼의 여유가 차곡차곡 느껴지는 하루일 수 있어요."
+  }
+]

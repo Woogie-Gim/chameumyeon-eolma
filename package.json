@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:e2e": "playwright test --pass-with-no-tests",
     "scan:banned": "tsx scripts/scan-banned.ts",
-    "fetch:data": "tsx scripts/fetch-data.ts"
+    "fetch:data": "tsx scripts/fetch-data.ts",
+    "build:blocklist": "tsx scripts/build-blocklist.ts"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

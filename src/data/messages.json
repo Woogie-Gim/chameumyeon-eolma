@@ -1,0 +1,2018 @@
+[
+  {
+    "id": "hunger-low-funny-01",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{item} 한 번 참으면 {years}년 뒤 {future}, 배꼽시계도 놀랄 숫자네요."
+  },
+  {
+    "id": "hunger-low-funny-02",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{amount}짜리 출출함이 {years}년 뒤엔 {future}으로 자라 있을지도요."
+  },
+  {
+    "id": "hunger-low-funny-03",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "지금 배 속 신호는 {amount}, {years}년 뒤 통장 신호는 {future}."
+  },
+  {
+    "id": "hunger-low-funny-04",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{item} 생각이 {amount}만큼 밀려와도 {future}이 손을 흔드는 중."
+  },
+  {
+    "id": "hunger-low-funny-05",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "배가 꼬르륵, 통장은 {years}년 뒤 {future}으로 방긋."
+  },
+  {
+    "id": "hunger-low-funny-06",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{item} 대신 물 한 잔이었다면 {years}년 뒤 {future}이 기다릴지도."
+  },
+  {
+    "id": "hunger-low-funny-07",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "작은 {amount}도 {years}년이 지나면 {future}, 꽤 든든한 간식이네요."
+  },
+  {
+    "id": "hunger-low-funny-08",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{item}의 유혹은 짧고 {future}의 여운은 길다고 하더라고요."
+  },
+  {
+    "id": "hunger-low-calm-01",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "{amount}을 그대로 두었다면 {years}년 뒤 약 {future}입니다."
+  },
+  {
+    "id": "hunger-low-calm-02",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "오늘의 {item} 값 {amount}, {years}년 뒤에는 약 {future}이 됩니다."
+  },
+  {
+    "id": "hunger-low-calm-03",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "작은 금액도 {years}년이 쌓이면 약 {future}이 됩니다."
+  },
+  {
+    "id": "hunger-low-calm-04",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "{item}을 한 번 미뤘다면 {years}년 뒤 약 {future}이었을 거예요."
+  },
+  {
+    "id": "hunger-low-calm-05",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "{amount}이 조용히 자라 {years}년 뒤 약 {future}에 닿습니다."
+  },
+  {
+    "id": "hunger-low-calm-06",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "배고픔은 지나가고, {amount}은 {years}년 뒤 약 {future}으로 남습니다."
+  },
+  {
+    "id": "hunger-low-calm-07",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "오늘 넘긴 {item} 한 번이 {years}년 뒤 약 {future}입니다."
+  },
+  {
+    "id": "hunger-low-calm-08",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "가볍게 넘긴 {amount}, {years}년 뒤 모습은 약 {future}입니다."
+  },
+  {
+    "id": "hunger-low-stern-01",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "{amount}이라도 {years}년이면 {future}입니다. 작지 않은 숫자예요."
+  },
+  {
+    "id": "hunger-low-stern-02",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "습관적인 {item} 한 번은 {years}년 뒤 {future}의 차이로 남습니다."
+  },
+  {
+    "id": "hunger-low-stern-03",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "배고픔인지 습관인지에 따라 {future}의 행방이 달라집니다."
+  },
+  {
+    "id": "hunger-low-stern-04",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "오늘 {amount}, {years}년 뒤 {future}. 숫자는 정직합니다."
+  },
+  {
+    "id": "hunger-low-stern-05",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "작은 지출이 반복되면 {years}년 뒤 {future}이 사라진 셈이 됩니다."
+  },
+  {
+    "id": "hunger-low-stern-06",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "{item} 한 번의 값은 {amount}이 아니라 {future}일 수도 있습니다."
+  },
+  {
+    "id": "hunger-low-stern-07",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "참은 {amount}은 {years}년 뒤 {future}이라는 기록으로 남습니다."
+  },
+  {
+    "id": "hunger-low-stern-08",
+    "category": "hunger",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "지금 고민 중인 {amount}, {years}년 뒤에는 {future}입니다."
+  },
+  {
+    "id": "hunger-mid-funny-01",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{item} 한 판이 {years}년 뒤 {future}으로 변신하는 마술이 있다면요."
+  },
+  {
+    "id": "hunger-mid-funny-02",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{amount}짜리 야식, {years}년 뒤엔 {future}짜리 추억이 될지도."
+  },
+  {
+    "id": "hunger-mid-funny-03",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "배달 알림 대신 {future} 알림이 울리는 미래도 있대요."
+  },
+  {
+    "id": "hunger-mid-funny-04",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "오늘 밤 {item}의 무게는 {amount}, {years}년 뒤엔 {future}."
+  },
+  {
+    "id": "hunger-mid-funny-05",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{item} 냄새는 강력하지만 {future}의 향기도 만만치 않네요."
+  },
+  {
+    "id": "hunger-mid-funny-06",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "배부른 오늘과 든든한 {years}년 뒤, 차이는 {future}."
+  },
+  {
+    "id": "hunger-mid-funny-07",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{amount}을 쥐고 있는 손, {years}년 뒤엔 {future}을 쥐고 있을지도."
+  },
+  {
+    "id": "hunger-mid-funny-08",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{item}이 부르는 소리, {future}도 작게 부르는 중이에요."
+  },
+  {
+    "id": "hunger-mid-calm-01",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "{amount}을 넣었다면 {years}년 뒤 약 {future}입니다."
+  },
+  {
+    "id": "hunger-mid-calm-02",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "오늘 {item} 한 번을 넘기면 {years}년 뒤 약 {future}이 됩니다."
+  },
+  {
+    "id": "hunger-mid-calm-03",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "배달 한 번의 {amount}, {years}년이면 약 {future}으로 자랍니다."
+  },
+  {
+    "id": "hunger-mid-calm-04",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "{item} 대신 집밥이었다면 {years}년 뒤 약 {future}입니다."
+  },
+  {
+    "id": "hunger-mid-calm-05",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "{amount}의 {years}년 뒤 모습은 약 {future}입니다."
+  },
+  {
+    "id": "hunger-mid-calm-06",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "한 끼의 선택이 {years}년 뒤 약 {future}의 차이를 만듭니다."
+  },
+  {
+    "id": "hunger-mid-calm-07",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "오늘의 {item}, 내일의 {future}. 둘 다 같은 {amount}에서 출발해요."
+  },
+  {
+    "id": "hunger-mid-calm-08",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "{amount}이 {years}년 동안 머물렀다면 약 {future}이었을 거예요."
+  },
+  {
+    "id": "hunger-mid-stern-01",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "{item} 한 번에 {amount}, {years}년 뒤 {future}이 걸려 있습니다."
+  },
+  {
+    "id": "hunger-mid-stern-02",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "배달비까지 더한 {amount}, {years}년이면 {future}입니다."
+  },
+  {
+    "id": "hunger-mid-stern-03",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "정말 배고픈 건지, {future}보다 중요한지 따져 볼 시점입니다."
+  },
+  {
+    "id": "hunger-mid-stern-04",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "{amount}은 한 끼, {future}은 {years}년의 결과입니다."
+  },
+  {
+    "id": "hunger-mid-stern-05",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "이번 주 몇 번째 {item}인지에 따라 {future}의 크기가 달라집니다."
+  },
+  {
+    "id": "hunger-mid-stern-06",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "{years}년 뒤 {future}. 오늘 {amount}의 다른 얼굴입니다."
+  },
+  {
+    "id": "hunger-mid-stern-07",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "한 끼 {amount}이 쌓이면 {years}년 뒤 {future} 이상이 됩니다."
+  },
+  {
+    "id": "hunger-mid-stern-08",
+    "category": "hunger",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "{item}은 내일도 있지만 {future}은 오늘의 선택에서 시작됩니다."
+  },
+  {
+    "id": "hunger-high-funny-01",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{amount}짜리 만찬이라니, {years}년 뒤 {future}이 살짝 서운하대요."
+  },
+  {
+    "id": "hunger-high-funny-02",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{item} 파티의 영수증은 {amount}, 평행우주 통장은 {future}."
+  },
+  {
+    "id": "hunger-high-funny-03",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "오늘의 대식가 모드는 {amount}, {years}년 뒤 부자 모드는 {future}."
+  },
+  {
+    "id": "hunger-high-funny-04",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{amount}을 먹는 대신 키웠다면 {years}년 뒤 {future}으로 배부를지도."
+  },
+  {
+    "id": "hunger-high-funny-05",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{item} 앞에서 흔들리는 마음, {future} 앞에서도 흔들릴 거예요."
+  },
+  {
+    "id": "hunger-high-funny-06",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "한 상 가득 {amount}, {years}년 뒤 한 통장 가득 {future}."
+  },
+  {
+    "id": "hunger-high-funny-07",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{item}의 행복은 몇 시간, {future}의 든든함은 꽤 오래갑니다."
+  },
+  {
+    "id": "hunger-high-funny-08",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "배는 하나인데 {amount}이라니, {future}이 눈을 크게 뜨네요."
+  },
+  {
+    "id": "hunger-high-calm-01",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "여럿이 나누는 {item}이라면 {amount}의 의미도 달라질 수 있어요."
+  },
+  {
+    "id": "hunger-high-calm-02",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "큰 한 끼 {amount}, {years}년 뒤에는 약 {future}이 됩니다."
+  },
+  {
+    "id": "hunger-high-calm-03",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "오늘의 {item} 대신이라면 {years}년 뒤 약 {future}입니다."
+  },
+  {
+    "id": "hunger-high-calm-04",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "{amount}은 {years}년 동안 약 {future}까지 자랄 수 있었어요."
+  },
+  {
+    "id": "hunger-high-calm-05",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "특별한 날인지 한 번 떠올려 볼 만한 금액, {amount}입니다."
+  },
+  {
+    "id": "hunger-high-calm-06",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "{item}의 기억과 {future}의 숫자, 둘 다 {amount}에서 출발합니다."
+  },
+  {
+    "id": "hunger-high-calm-07",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "{years}년 뒤 약 {future}. 지금 고민 중인 {amount}의 가능성입니다."
+  },
+  {
+    "id": "hunger-high-calm-08",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "조금 줄인 {item}이었다면 차이만큼 {years}년 뒤 더 남았을 거예요."
+  },
+  {
+    "id": "hunger-high-stern-01",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "한 끼에 {amount}입니다. {years}년이면 {future}이 됩니다."
+  },
+  {
+    "id": "hunger-high-stern-02",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "{amount}이면 여러 끼니입니다. {future}의 시작이기도 합니다."
+  },
+  {
+    "id": "hunger-high-stern-03",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "특별한 날이 아니라면 {amount}의 무게는 꽤 큽니다."
+  },
+  {
+    "id": "hunger-high-stern-04",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "{item} 한 번이 {years}년 뒤 {future}과 맞바뀌는 선택입니다."
+  },
+  {
+    "id": "hunger-high-stern-05",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "오늘의 {amount}, {years}년 뒤 {future}. 차이가 분명합니다."
+  },
+  {
+    "id": "hunger-high-stern-06",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "큰 지출일수록 {years}년 뒤 {future}처럼 차이도 커집니다."
+  },
+  {
+    "id": "hunger-high-stern-07",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "배부름은 하루, {future}은 {years}년의 결과입니다."
+  },
+  {
+    "id": "hunger-high-stern-08",
+    "category": "hunger",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "{amount}을 쓰기 전에 {future}이라는 숫자를 한 번 보게 됩니다."
+  },
+  {
+    "id": "stress-low-funny-01",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "스트레스엔 {item}이라지만 통장은 {future}으로 웃고 싶대요."
+  },
+  {
+    "id": "stress-low-funny-02",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{amount}짜리 위로, {years}년 뒤엔 {future}짜리 위로가 될지도."
+  },
+  {
+    "id": "stress-low-funny-03",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "오늘의 짜증 지수 {amount}, {years}년 뒤 미소 지수 {future}."
+  },
+  {
+    "id": "stress-low-funny-04",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{item} 한 입의 달콤함 vs {future}의 달콤함, 박빙이네요."
+  },
+  {
+    "id": "stress-low-funny-05",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "스트레스는 날아가고 {amount}은 남아 {future}이 되는 평행우주."
+  },
+  {
+    "id": "stress-low-funny-06",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{item}이 부르는 밤, {future}도 같이 부르는 중이에요."
+  },
+  {
+    "id": "stress-low-funny-07",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "기분 전환 {amount}, {years}년 뒤 기분 좋은 {future}."
+  },
+  {
+    "id": "stress-low-funny-08",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "화난 마음은 {item}을 찾고, 통장은 {future}을 꿈꿉니다."
+  },
+  {
+    "id": "stress-low-calm-01",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "오늘 힘든 하루였다면 {amount}의 위로도 충분히 이해돼요."
+  },
+  {
+    "id": "stress-low-calm-02",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "{amount}을 남겨 두었다면 {years}년 뒤 약 {future}입니다."
+  },
+  {
+    "id": "stress-low-calm-03",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "잠깐 숨 고르고 나면 {item} 생각이 조금 줄어들 수도 있어요."
+  },
+  {
+    "id": "stress-low-calm-04",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "작은 위로 {amount}, {years}년 뒤에는 약 {future}입니다."
+  },
+  {
+    "id": "stress-low-calm-05",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "스트레스는 지나가고 {amount}은 {years}년 뒤 약 {future}으로 남습니다."
+  },
+  {
+    "id": "stress-low-calm-06",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "{item} 대신 산책이었다면 {years}년 뒤 약 {future}이었을 거예요."
+  },
+  {
+    "id": "stress-low-calm-07",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "마음이 지친 날의 {amount}, {years}년이면 약 {future}이 됩니다."
+  },
+  {
+    "id": "stress-low-calm-08",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "오늘의 {item}, 내일의 {future}. 어느 쪽이든 괜찮은 하루예요."
+  },
+  {
+    "id": "stress-low-stern-01",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "스트레스 해소와 지출 습관은 다른 이야기입니다. {future}처럼요."
+  },
+  {
+    "id": "stress-low-stern-02",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "{amount}이 쌓여 {years}년이면 {future}입니다."
+  },
+  {
+    "id": "stress-low-stern-03",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "기분이 결제를 정하면 {years}년 뒤 {future}이 줄어듭니다."
+  },
+  {
+    "id": "stress-low-stern-04",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "오늘 {amount}, {years}년 뒤 {future}. 감정은 지나갑니다."
+  },
+  {
+    "id": "stress-low-stern-05",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "{item}의 위로는 잠깐, {future}의 여유는 오래갑니다."
+  },
+  {
+    "id": "stress-low-stern-06",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "반복되는 위로 소비는 {years}년 뒤 {future}의 차이가 됩니다."
+  },
+  {
+    "id": "stress-low-stern-07",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "스트레스가 지나간 뒤에도 {amount}의 선택은 남습니다."
+  },
+  {
+    "id": "stress-low-stern-08",
+    "category": "stress",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "작은 {amount}도 {years}년이면 {future}, 가볍지 않습니다."
+  },
+  {
+    "id": "stress-mid-funny-01",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{amount}어치 스트레스 해소라니, {future}이 질투할지도요."
+  },
+  {
+    "id": "stress-mid-funny-02",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{item}으로 날린 스트레스, {years}년 뒤 {future}으로 돌아올 수도."
+  },
+  {
+    "id": "stress-mid-funny-03",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "오늘 밤 {item} 한 잔의 값 {amount}, 평행우주에선 {future}."
+  },
+  {
+    "id": "stress-mid-funny-04",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "스트레스는 {amount}, 평온은 {years}년 뒤 {future}."
+  },
+  {
+    "id": "stress-mid-funny-05",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "기분 풀이 영수증 {amount}, 미래의 영수증은 {future}."
+  },
+  {
+    "id": "stress-mid-funny-06",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{item} 생각이 간절한 밤, {future}도 간절히 기다리는 중."
+  },
+  {
+    "id": "stress-mid-funny-07",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "화를 {amount}으로 달래면 {years}년 뒤 {future}이 조금 서운할지도."
+  },
+  {
+    "id": "stress-mid-funny-08",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "짜증은 사라지고 {future}만 남는 결말도 있대요."
+  },
+  {
+    "id": "stress-mid-calm-01",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "마음을 달랠 {amount}, {years}년 뒤라면 약 {future}입니다."
+  },
+  {
+    "id": "stress-mid-calm-02",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "힘든 날의 {item}, {years}년 뒤라면 약 {future}이 됩니다."
+  },
+  {
+    "id": "stress-mid-calm-03",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "스트레스는 내일이면 줄고, {amount}은 {years}년 뒤 약 {future}."
+  },
+  {
+    "id": "stress-mid-calm-04",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "{amount}의 위로가 필요한 날도 있어요. {future}은 참고로만."
+  },
+  {
+    "id": "stress-mid-calm-05",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "잠깐 쉬어 가는 선택이라면 {years}년 뒤 약 {future}입니다."
+  },
+  {
+    "id": "stress-mid-calm-06",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "오늘의 {item} 대신이라면 {years}년 뒤 약 {future}이 남아요."
+  },
+  {
+    "id": "stress-mid-calm-07",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "마음을 달래는 방법이 꼭 {amount}일 필요는 없을지도 몰라요."
+  },
+  {
+    "id": "stress-mid-calm-08",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "{years}년 뒤 약 {future}. 오늘 {amount}의 또 다른 모습입니다."
+  },
+  {
+    "id": "stress-mid-stern-01",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "스트레스를 {amount}으로 푸는 습관은 {years}년 뒤 {future}입니다."
+  },
+  {
+    "id": "stress-mid-stern-02",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "감정적인 지출 {amount}, {years}년이면 {future}이 됩니다."
+  },
+  {
+    "id": "stress-mid-stern-03",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "오늘의 기분이 {years}년 뒤 {future}을 정하고 있습니다."
+  },
+  {
+    "id": "stress-mid-stern-04",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "{item} 한 번에 {amount}, 이번 달 몇 번째인지 세어 볼 일입니다."
+  },
+  {
+    "id": "stress-mid-stern-05",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "{amount}의 위로보다 {future}의 여유가 더 오래갑니다."
+  },
+  {
+    "id": "stress-mid-stern-06",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "스트레스는 하루, {future}은 {years}년의 이야기입니다."
+  },
+  {
+    "id": "stress-mid-stern-07",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "기분 소비 {amount}은 {years}년 뒤 {future}의 차이로 돌아옵니다."
+  },
+  {
+    "id": "stress-mid-stern-08",
+    "category": "stress",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "{item}이 해결해 주는 건 잠깐이고, {amount}은 그대로 나갑니다."
+  },
+  {
+    "id": "stress-high-funny-01",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{amount}짜리 홧김 소비라니, {future}이 깜짝 놀랐대요."
+  },
+  {
+    "id": "stress-high-funny-02",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "스트레스가 {amount}만큼 컸군요. {future}도 같이 커질 뻔했네요."
+  },
+  {
+    "id": "stress-high-funny-03",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "홧김 버튼의 가격 {amount}, 평행우주 버튼은 {future}."
+  },
+  {
+    "id": "stress-high-funny-04",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{item}으로 하늘을 날 기분, {future}으로 날 수도 있대요."
+  },
+  {
+    "id": "stress-high-funny-05",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "오늘의 분노 게이지 {amount}, {years}년 뒤 평화 게이지 {future}."
+  },
+  {
+    "id": "stress-high-funny-06",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{amount}을 지르기 직전, {future}이 소매를 잡아당기는 중."
+  },
+  {
+    "id": "stress-high-funny-07",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{item} 장바구니가 묵직하네요. {future}도 묵직할 예정이었는데."
+  },
+  {
+    "id": "stress-high-funny-08",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "스트레스는 지나가고 {amount} 영수증은 남는 법이래요."
+  },
+  {
+    "id": "stress-high-calm-01",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "마음이 무거운 날의 {amount}, 그대로라면 {years}년 뒤 약 {future}."
+  },
+  {
+    "id": "stress-high-calm-02",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "{amount}처럼 큰 지출은 하룻밤 지나고 결정해도 늦지 않을 수 있어요."
+  },
+  {
+    "id": "stress-high-calm-03",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "마음이 힘든 날의 {amount}, {years}년 뒤에는 약 {future}입니다."
+  },
+  {
+    "id": "stress-high-calm-04",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "{item}이 꼭 필요한지, 지금 기분 때문인지 떠올려 볼 만해요."
+  },
+  {
+    "id": "stress-high-calm-05",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "오늘의 {amount}, {years}년 뒤라면 약 {future}이 됩니다."
+  },
+  {
+    "id": "stress-high-calm-06",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "스트레스가 가라앉은 뒤에도 {item}이 필요할지 궁금해지네요."
+  },
+  {
+    "id": "stress-high-calm-07",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "{years}년 뒤 약 {future}. 지금 손에 쥔 {amount}의 가능성입니다."
+  },
+  {
+    "id": "stress-high-calm-08",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "큰 위로가 필요한 날이라면 {amount}을 고민하는 마음도 이해돼요."
+  },
+  {
+    "id": "stress-high-stern-01",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "홧김의 {amount}은 {years}년 뒤 {future}의 차이로 남습니다."
+  },
+  {
+    "id": "stress-high-stern-02",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "감정이 큰 날의 {amount}, {years}년 뒤에는 {future}입니다."
+  },
+  {
+    "id": "stress-high-stern-03",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "{amount}은 스트레스보다 오래 남습니다. {years}년 뒤 {future}처럼요."
+  },
+  {
+    "id": "stress-high-stern-04",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "기분이 가라앉아도 {item} 할부는 남아 있을 수 있습니다."
+  },
+  {
+    "id": "stress-high-stern-05",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "오늘 {amount}, {years}년 뒤 {future}. 큰 차이입니다."
+  },
+  {
+    "id": "stress-high-stern-06",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "스트레스 해소에 {amount}은 큰 금액입니다."
+  },
+  {
+    "id": "stress-high-stern-07",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "{item}이 해결해 줄 스트레스인지 한 번 따져 볼 시점입니다."
+  },
+  {
+    "id": "stress-high-stern-08",
+    "category": "stress",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "큰 결제 {amount}, {years}년이면 {future}이 됩니다."
+  },
+  {
+    "id": "reward-low-funny-01",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "오늘의 나에게 {item} 한 잔, 미래의 나에게 {future}."
+  },
+  {
+    "id": "reward-low-funny-02",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "수고한 나에게 {amount}, {years}년 뒤의 나는 {future}을 원할지도."
+  },
+  {
+    "id": "reward-low-funny-03",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{item} 한 잔의 행복, {years}년 숙성하면 {future}이래요."
+  },
+  {
+    "id": "reward-low-funny-04",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "보상은 {amount}, 보상의 보상은 {years}년 뒤 {future}."
+  },
+  {
+    "id": "reward-low-funny-05",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{item}이 주는 기쁨 한 모금, {future}이 주는 기쁨 한 통장."
+  },
+  {
+    "id": "reward-low-funny-06",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "작은 사치 {amount}, 평행우주의 나는 {future}을 들고 웃는 중."
+  },
+  {
+    "id": "reward-low-funny-07",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "오늘 잘했으니 {item}? {future}도 잘했다고 말하고 싶대요."
+  },
+  {
+    "id": "reward-low-funny-08",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{amount}짜리 칭찬 대신 {future}짜리 칭찬도 있다네요."
+  },
+  {
+    "id": "reward-low-calm-01",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "수고한 하루라면 {amount}의 보상도 자연스러워요."
+  },
+  {
+    "id": "reward-low-calm-02",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "한 잔의 {amount}이 {years}년 뒤 약 {future}이 되는 셈이에요."
+  },
+  {
+    "id": "reward-low-calm-03",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "오늘의 {item} 한 번, {years}년 뒤에는 약 {future}입니다."
+  },
+  {
+    "id": "reward-low-calm-04",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "작은 보상 {amount}이 {years}년 동안 자라면 약 {future}이에요."
+  },
+  {
+    "id": "reward-low-calm-05",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "{item} 대신 다른 보상이었다면 {years}년 뒤 약 {future}이 남아요."
+  },
+  {
+    "id": "reward-low-calm-06",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "잘 해낸 오늘, {future}이라는 숫자도 하나의 칭찬이 될 수 있어요."
+  },
+  {
+    "id": "reward-low-calm-07",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "{amount}의 보상과 {future}의 보상, 둘 다 나를 위한 것이에요."
+  },
+  {
+    "id": "reward-low-calm-08",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "하루 한 번의 {item}, {years}년 뒤 모습은 약 {future}입니다."
+  },
+  {
+    "id": "reward-low-stern-01",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "매일의 보상 {amount}, {years}년이면 {future}입니다."
+  },
+  {
+    "id": "reward-low-stern-02",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "보상이 습관이 되면 {years}년 뒤 {future}의 차이가 생깁니다."
+  },
+  {
+    "id": "reward-low-stern-03",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "오늘 {amount}, {years}년 뒤 {future}. 숫자는 분명합니다."
+  },
+  {
+    "id": "reward-low-stern-04",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "{item}이 보상인지 일상인지에 따라 {future}이 달라집니다."
+  },
+  {
+    "id": "reward-low-stern-05",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "작은 {amount}도 {years}년이면 {future}으로 커집니다."
+  },
+  {
+    "id": "reward-low-stern-06",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "보상은 가끔일 때 더 달콤합니다. {future}도 그렇고요."
+  },
+  {
+    "id": "reward-low-stern-07",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "{item} 한 번의 {amount}, 반복되면 {future}이 됩니다."
+  },
+  {
+    "id": "reward-low-stern-08",
+    "category": "reward",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "이번 주 보상이 몇 번째인지 세어 보면 {future}이 보입니다."
+  },
+  {
+    "id": "reward-mid-funny-01",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{amount}짜리 셀프 선물, {years}년 뒤 {future}짜리 선물로 변신 가능."
+  },
+  {
+    "id": "reward-mid-funny-02",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "수고한 나에게 {item}, 수고할 미래의 나에게 {future}."
+  },
+  {
+    "id": "reward-mid-funny-03",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "오늘의 보상 {amount}, 평행우주 보상은 {future}."
+  },
+  {
+    "id": "reward-mid-funny-04",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{item} 앞에서 반짝이는 눈, {future} 앞에서도 반짝일 거예요."
+  },
+  {
+    "id": "reward-mid-funny-05",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "칭찬 스티커 대신 {amount}, 그 스티커가 {years}년 뒤 {future}."
+  },
+  {
+    "id": "reward-mid-funny-06",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{amount}의 행복이 {years}년 동안 자라면 {future}의 행복."
+  },
+  {
+    "id": "reward-mid-funny-07",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "오늘 고생했으니 {item}? {future}도 고생 많았다고 하네요."
+  },
+  {
+    "id": "reward-mid-funny-08",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "보상 지수 {amount}, 미래 보상 지수 {future}."
+  },
+  {
+    "id": "reward-mid-calm-01",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "나를 위한 {amount}, 미래의 나에게는 {years}년 뒤 약 {future}."
+  },
+  {
+    "id": "reward-mid-calm-02",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "스스로에게 주는 {item}, {years}년 뒤라면 약 {future}이 됩니다."
+  },
+  {
+    "id": "reward-mid-calm-03",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "열심히 지낸 날의 {amount}, {years}년 뒤 약 {future}이에요."
+  },
+  {
+    "id": "reward-mid-calm-04",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "보상은 소중해요. 같은 {amount}의 {years}년 뒤는 약 {future}입니다."
+  },
+  {
+    "id": "reward-mid-calm-05",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "{item}의 기쁨과 {future}의 든든함, 고민해 볼 만한 갈림길이에요."
+  },
+  {
+    "id": "reward-mid-calm-06",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "오늘의 {amount}이 {years}년 뒤 약 {future}으로 남을 수도 있었어요."
+  },
+  {
+    "id": "reward-mid-calm-07",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "작은 보상으로 바꿨다면 차액만큼 {years}년 뒤 더 남았을 거예요."
+  },
+  {
+    "id": "reward-mid-calm-08",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "{years}년 뒤 약 {future}. 오늘 보상의 또 다른 모습입니다."
+  },
+  {
+    "id": "reward-mid-stern-01",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "보상 {amount}, {years}년이면 {future}입니다."
+  },
+  {
+    "id": "reward-mid-stern-02",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "수고한 만큼 쓰면 수고한 만큼 남지 않습니다. {future}처럼요."
+  },
+  {
+    "id": "reward-mid-stern-03",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "{item}이 이번 달 몇 번째 보상인지 따져 볼 일입니다."
+  },
+  {
+    "id": "reward-mid-stern-04",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "오늘 {amount}, {years}년 뒤 {future}. 보상의 크기가 다릅니다."
+  },
+  {
+    "id": "reward-mid-stern-05",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "반복되는 보상 {amount}은 {years}년 뒤 {future}으로 남습니다."
+  },
+  {
+    "id": "reward-mid-stern-06",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "{item}의 기쁨은 짧고 {amount}의 빈자리는 깁니다."
+  },
+  {
+    "id": "reward-mid-stern-07",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "보상 소비가 잦아지면 {future}만큼의 여유가 줄어듭니다."
+  },
+  {
+    "id": "reward-mid-stern-08",
+    "category": "reward",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "{amount}을 쓰기 전 {years}년 뒤 {future}을 한 번 보게 됩니다."
+  },
+  {
+    "id": "reward-high-funny-01",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{amount}짜리 큰 선물이라니, {future}이 부러워하는 중이에요."
+  },
+  {
+    "id": "reward-high-funny-02",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "오늘의 나는 {item}을, {years}년 뒤의 나는 {future}을 원할지도."
+  },
+  {
+    "id": "reward-high-funny-03",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "셀프 선물 {amount}, 평행우주에선 {future}짜리 선물."
+  },
+  {
+    "id": "reward-high-funny-04",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{item}의 반짝임 vs {future}의 반짝임, 결과는 {years}년 뒤에."
+  },
+  {
+    "id": "reward-high-funny-05",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "통 큰 보상 {amount}, 통 큰 미래 {future}."
+  },
+  {
+    "id": "reward-high-funny-06",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{amount}을 쓰면 하루가 빛나고 키우면 {future}이 빛나요."
+  },
+  {
+    "id": "reward-high-funny-07",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "수고한 나, 하지만 {future}도 나를 위해 대기 중이래요."
+  },
+  {
+    "id": "reward-high-funny-08",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{item} 장바구니가 반짝이네요. {future}도 반짝일 뻔했는데."
+  },
+  {
+    "id": "reward-high-calm-01",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "오래 고민한 {amount}, 그대로였다면 {years}년 뒤 약 {future}입니다."
+  },
+  {
+    "id": "reward-high-calm-02",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "큰 보상 {amount}, {years}년 뒤에는 약 {future}이 됩니다."
+  },
+  {
+    "id": "reward-high-calm-03",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "오래 기다린 {item}이라면 그 의미도 충분히 있어요."
+  },
+  {
+    "id": "reward-high-calm-04",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "선물 같은 {amount}, {years}년 뒤에는 약 {future}의 선물이 됩니다."
+  },
+  {
+    "id": "reward-high-calm-05",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "{amount}처럼 큰 금액은 하루 지나 다시 봐도 괜찮을 수 있어요."
+  },
+  {
+    "id": "reward-high-calm-06",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "{item}이 오래 기억될 보상인지 떠올려 볼 만해요."
+  },
+  {
+    "id": "reward-high-calm-07",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "오늘의 {amount}, {years}년 동안 머물면 약 {future}이에요."
+  },
+  {
+    "id": "reward-high-calm-08",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "꼭 필요한 보상이라면 {future}은 참고 숫자로만 남겨 두어도 돼요."
+  },
+  {
+    "id": "reward-high-stern-01",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "보상치고 {amount}은 큰 금액입니다. {years}년이면 {future}입니다."
+  },
+  {
+    "id": "reward-high-stern-02",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "보상 {item} 한 번과 {years}년 뒤 {future}, 무게가 다릅니다."
+  },
+  {
+    "id": "reward-high-stern-03",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "큰 보상은 큰 빈자리를 남깁니다. {future}만큼요."
+  },
+  {
+    "id": "reward-high-stern-04",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "오늘 {amount}, {years}년 뒤 {future}. 차이가 큽니다."
+  },
+  {
+    "id": "reward-high-stern-05",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "정말 오래 원한 {item}인지에 따라 답이 달라집니다."
+  },
+  {
+    "id": "reward-high-stern-06",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "큰 보상 {amount}, 결제 전에 {future}이라는 숫자가 함께 보입니다."
+  },
+  {
+    "id": "reward-high-stern-07",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "보상의 크기가 {amount}이라면 {years}년 뒤 {future}도 따라옵니다."
+  },
+  {
+    "id": "reward-high-stern-08",
+    "category": "reward",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "기분 좋은 하루와 {future}, 둘 중 무엇이 오래갈지 보입니다."
+  },
+  {
+    "id": "impulse-low-funny-01",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "장바구니에 {item}이 슬쩍, {future}은 조용히 한숨 중."
+  },
+  {
+    "id": "impulse-low-funny-02",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{amount}짜리 충동, {years}년 뒤엔 {future}짜리 여유."
+  },
+  {
+    "id": "impulse-low-funny-03",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "눈에 띈 {item}, {years}년 뒤 눈에 띌 {future}."
+  },
+  {
+    "id": "impulse-low-funny-04",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "충동 버튼의 가격 {amount}, 참음 버튼의 가격 {future}."
+  },
+  {
+    "id": "impulse-low-funny-05",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{item}이 손짓하지만 {future}도 열심히 손짓하는 중이에요."
+  },
+  {
+    "id": "impulse-low-funny-06",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "작은 {amount}이 {years}년 동안 자라면 {future}이래요."
+  },
+  {
+    "id": "impulse-low-funny-07",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "결제 버튼 앞에서 머뭇, 그 사이 {future}이 미소 짓는 중."
+  },
+  {
+    "id": "impulse-low-funny-08",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "funny",
+    "template": "{item}은 귀엽지만 {future}도 꽤 귀여운 숫자예요."
+  },
+  {
+    "id": "impulse-low-calm-01",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "문득 생긴 {amount}의 충동, {years}년 뒤라면 약 {future}입니다."
+  },
+  {
+    "id": "impulse-low-calm-02",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "갑자기 눈에 들어온 {item}, 내일도 갖고 싶을지 궁금해요."
+  },
+  {
+    "id": "impulse-low-calm-03",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "작은 충동 {amount}, {years}년 뒤에는 약 {future}입니다."
+  },
+  {
+    "id": "impulse-low-calm-04",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "잠깐 미뤄 두면 {item} 생각이 줄어들 수도 있어요."
+  },
+  {
+    "id": "impulse-low-calm-05",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "{item} 대신이라면 {years}년 뒤 약 {future}이 남아요."
+  },
+  {
+    "id": "impulse-low-calm-06",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "작게 아낀 {amount}도 {years}년이 지나면 약 {future}입니다."
+  },
+  {
+    "id": "impulse-low-calm-07",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "사고 싶은 마음은 자연스러워요. {future}은 참고 숫자예요."
+  },
+  {
+    "id": "impulse-low-calm-08",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "calm",
+    "template": "오늘 넘긴 {amount}이 {years}년 뒤 약 {future}이 됩니다."
+  },
+  {
+    "id": "impulse-low-stern-01",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "계획에 없던 {amount}, {years}년이면 {future}입니다."
+  },
+  {
+    "id": "impulse-low-stern-02",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "충동 지출은 작아도 {years}년 뒤 {future}의 차이를 만듭니다."
+  },
+  {
+    "id": "impulse-low-stern-03",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "충동 {amount}, {years}년 뒤 {future}. 작게 시작해 크게 남습니다."
+  },
+  {
+    "id": "impulse-low-stern-04",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "{item}이 정말 필요한지, 그냥 보여서인지에 따라 다릅니다."
+  },
+  {
+    "id": "impulse-low-stern-05",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "작은 충동이 모이면 {years}년 뒤 {future}이 됩니다."
+  },
+  {
+    "id": "impulse-low-stern-06",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "필요해서가 아니라면 {amount}은 {future}의 씨앗입니다."
+  },
+  {
+    "id": "impulse-low-stern-07",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "{item} 한 번의 {amount}, 반복되면 {future}입니다."
+  },
+  {
+    "id": "impulse-low-stern-08",
+    "category": "impulse",
+    "amountBand": "low",
+    "tone": "stern",
+    "template": "눈에 보여서 고른 {item}은 금방 잊히고 {amount}은 나갑니다."
+  },
+  {
+    "id": "impulse-mid-funny-01",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{amount}짜리 충동, 평행우주에선 {future}짜리 침착함."
+  },
+  {
+    "id": "impulse-mid-funny-02",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{item}이 나를 부르는데 {future}도 목청껏 부르는 중이에요."
+  },
+  {
+    "id": "impulse-mid-funny-03",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "장바구니 속 {item}, {years}년 뒤 통장 속 {future}."
+  },
+  {
+    "id": "impulse-mid-funny-04",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "결제 직전 {amount}, 참은 직후 {years}년 뒤 {future}."
+  },
+  {
+    "id": "impulse-mid-funny-05",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{item}은 한정판이라지만 {future}도 꽤 한정판이에요."
+  },
+  {
+    "id": "impulse-mid-funny-06",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "충동의 속도는 빠르고 {future}의 속도는 꾸준하대요."
+  },
+  {
+    "id": "impulse-mid-funny-07",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "{amount}을 누르기 전에 {future}이 살짝 기침하는 중."
+  },
+  {
+    "id": "impulse-mid-funny-08",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "funny",
+    "template": "오늘의 득템은 {item}, {years}년 뒤의 득템은 {future}."
+  },
+  {
+    "id": "impulse-mid-calm-01",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "충동이 지나간 자리의 {amount}, {years}년 뒤 약 {future}입니다."
+  },
+  {
+    "id": "impulse-mid-calm-02",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "{item}을 하루만 장바구니에 두어도 마음이 달라질 수 있어요."
+  },
+  {
+    "id": "impulse-mid-calm-03",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "{item}이 일주일 뒤에도 필요할지 궁금해지네요."
+  },
+  {
+    "id": "impulse-mid-calm-04",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "{amount}의 {years}년 뒤는 약 {future}입니다."
+  },
+  {
+    "id": "impulse-mid-calm-05",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "충동은 금방 지나가고 {amount}은 {years}년 뒤 약 {future}으로 남아요."
+  },
+  {
+    "id": "impulse-mid-calm-06",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "{item} 대신이라면 {years}년 뒤 약 {future}이 됩니다."
+  },
+  {
+    "id": "impulse-mid-calm-07",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "갖고 싶은 마음도 자연스러워요. {future}은 한 번 볼 만한 숫자예요."
+  },
+  {
+    "id": "impulse-mid-calm-08",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "calm",
+    "template": "{years}년 뒤 약 {future}. 오늘 {amount}의 다른 가능성입니다."
+  },
+  {
+    "id": "impulse-mid-stern-01",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "계획 밖의 {amount}은 {years}년 뒤 {future}의 공백이 됩니다."
+  },
+  {
+    "id": "impulse-mid-stern-02",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "{item}이 집에 비슷한 게 있는지 떠올려 볼 시점입니다."
+  },
+  {
+    "id": "impulse-mid-stern-03",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "한정이라는 말에 {amount}이 나가면 {future}도 함께 멀어집니다."
+  },
+  {
+    "id": "impulse-mid-stern-04",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "오늘 {amount}, {years}년 뒤 {future}. 충동의 값입니다."
+  },
+  {
+    "id": "impulse-mid-stern-05",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "필요와 충동의 차이는 {years}년 뒤 {future}으로 나타납니다."
+  },
+  {
+    "id": "impulse-mid-stern-06",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "장바구니 속 {item}, 같은 종류가 집에 있다면 {amount}은 중복입니다."
+  },
+  {
+    "id": "impulse-mid-stern-07",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "충동 구매는 {amount}에서 끝나지 않고 {future}의 차이로 남습니다."
+  },
+  {
+    "id": "impulse-mid-stern-08",
+    "category": "impulse",
+    "amountBand": "mid",
+    "tone": "stern",
+    "template": "{amount}의 충동, 결제 전 {years}년 뒤 {future}이 먼저 보입니다."
+  },
+  {
+    "id": "impulse-high-funny-01",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{amount}짜리 충동이라니, {future}이 의자에서 일어났대요."
+  },
+  {
+    "id": "impulse-high-funny-02",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{item}이 반짝, {future}도 반짝, 둘 중 하나만 빛날 수 있대요."
+  },
+  {
+    "id": "impulse-high-funny-03",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "큰 충동 {amount}, 평행우주의 나는 {future}을 들고 있는 중."
+  },
+  {
+    "id": "impulse-high-funny-04",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{item} 결제 버튼이 무거워 보이네요. {future}만큼요."
+  },
+  {
+    "id": "impulse-high-funny-05",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "통 큰 충동 {amount}, 통 큰 미래 {future}."
+  },
+  {
+    "id": "impulse-high-funny-06",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "지금 {item}을 원하는 나와 {future}을 원하는 나의 줄다리기."
+  },
+  {
+    "id": "impulse-high-funny-07",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "{amount}이 {years}년 동안 자라면 {future}, 꽤 놀라운 변신이네요."
+  },
+  {
+    "id": "impulse-high-funny-08",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "funny",
+    "template": "한정판 {item}보다 한정판 {future}이 더 귀할지도요."
+  },
+  {
+    "id": "impulse-high-calm-01",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "장바구니 속 {amount}, {years}년을 기다렸다면 약 {future}입니다."
+  },
+  {
+    "id": "impulse-high-calm-02",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "{amount}은 하룻밤 지나고 다시 봐도 늦지 않을 수 있어요."
+  },
+  {
+    "id": "impulse-high-calm-03",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "{item}이 한 달 뒤에도 필요할지 떠올려 볼 만해요."
+  },
+  {
+    "id": "impulse-high-calm-04",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "반짝이는 {item} 대신이라면 {years}년 뒤 약 {future}의 여유가 생겨요."
+  },
+  {
+    "id": "impulse-high-calm-05",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "충동이 지나간 뒤에도 {item}을 원한다면 그때 결정해도 괜찮아요."
+  },
+  {
+    "id": "impulse-high-calm-06",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "충동 대신 {amount}을 두었다면 {years}년 동안 약 {future}으로 자라요."
+  },
+  {
+    "id": "impulse-high-calm-07",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "{item} 대신이라면 {years}년 뒤 약 {future}이 남습니다."
+  },
+  {
+    "id": "impulse-high-calm-08",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "calm",
+    "template": "{amount} 앞에서 망설이는 마음도 충분히 자연스러워요."
+  },
+  {
+    "id": "impulse-high-stern-01",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "계획에 없던 {amount}은 큰 금액입니다. {years}년이면 {future}입니다."
+  },
+  {
+    "id": "impulse-high-stern-02",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "충동으로 {amount}을 쓰면 {years}년 뒤 {future}이 함께 사라집니다."
+  },
+  {
+    "id": "impulse-high-stern-03",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "{item}이 정말 필요한지 하루 지나 다시 보면 답이 나옵니다."
+  },
+  {
+    "id": "impulse-high-stern-04",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "충동의 {amount}, {years}년 뒤 {future}. 무시하기 어려운 차이입니다."
+  },
+  {
+    "id": "impulse-high-stern-05",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "할부라면 {amount}의 무게는 다음 달에도 이어집니다."
+  },
+  {
+    "id": "impulse-high-stern-06",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "충동의 {item}과 {years}년 뒤 {future}, 어느 쪽이 오래갈지 보입니다."
+  },
+  {
+    "id": "impulse-high-stern-07",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "큰 충동일수록 결제 전 한 번 멈춘 결과는 {future}입니다."
+  },
+  {
+    "id": "impulse-high-stern-08",
+    "category": "impulse",
+    "amountBand": "high",
+    "tone": "stern",
+    "template": "{amount}은 충동보다 오래 남습니다."
+  }
+]
