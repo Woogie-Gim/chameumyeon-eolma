@@ -1,0 +1,47 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: package.json 존재 확인
+        id: pkg
+        run: |
+          if [ -f package.json ]; then echo "exists=true" >> "$GITHUB_OUTPUT"; else echo "exists=false" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: actions/setup-node@v4
+        if: steps.pkg.outputs.exists == 'true'
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: 의존성 설치
+        if: steps.pkg.outputs.exists == 'true'
+        run: npm ci
+
+      - name: 금칙어 스캔
+        if: steps.pkg.outputs.exists == 'true'
+        run: npm run scan:banned
+
+      - name: 단위 테스트
+        if: steps.pkg.outputs.exists == 'true'
+        run: npm test
+
+      - name: 빌드
+        if: steps.pkg.outputs.exists == 'true'
+        run: npm run build
+
+      - name: Playwright 브라우저 설치
+        if: steps.pkg.outputs.exists == 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E 테스트
+        if: steps.pkg.outputs.exists == 'true'
+        run: npm run test:e2e
