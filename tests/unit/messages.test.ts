@@ -145,6 +145,7 @@ describe('messagesEtf.json', () => {
     for (const m of messagesEtf) {
       expect(m.template, m.id).not.toMatch(/지금[^.]*(었|았|였)/)
       expect(m.template, m.id).not.toMatch(/\{future\}[^.]*(었|았|였)/)
+      expect(m.template, m.id).toContain('지금')
     }
   })
 })

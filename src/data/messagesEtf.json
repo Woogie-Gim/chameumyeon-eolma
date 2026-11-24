@@ -213,7 +213,7 @@
     "id": "etf-reward-stern-04",
     "category": "reward",
     "tone": "stern",
-    "template": "보상 {amount}의 {startYear}년 이후 모습은 약 {future}입니다."
+    "template": "보상 {amount}의 {startYear}년 이후 모습은 지금 약 {future}입니다."
   },
   {
     "id": "etf-impulse-funny-01",
