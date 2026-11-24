@@ -1,5 +1,6 @@
 // 3D와 2D 폴백 선택. 3D 모듈은 동적 import로 분리
 import { Component, Suspense, lazy, useEffect, useState, type ReactNode } from 'react'
+import type { CoinSplit } from '../core/coinCount.ts'
 import { detectWebgl, prefersReducedMotion, shouldUse3d } from '../core/fallback.ts'
 import { CoinFallback2d } from './CoinFallback2d.tsx'
 
@@ -28,7 +29,8 @@ class SceneBoundary extends Component<{ fallback: ReactNode; onError: () => void
   }
 }
 
-export function CoinStage({ coins, reduce3d }: { coins: number; reduce3d: boolean }) {
+export function CoinStage({ split, reduce3d }: { split: CoinSplit; reduce3d: boolean }) {
+  const { principal, grown } = split
   const [reducedMotion, setReducedMotion] = useState(motionQuery)
   const [failed, setFailed] = useState(false)
 
@@ -41,19 +43,31 @@ export function CoinStage({ coins, reduce3d }: { coins: number; reduce3d: boolea
   }, [])
 
   const use3d = !failed && shouldUse3d({ webgl: hasWebgl(), reduce3d, reducedMotion })
-  const fallback = <CoinFallback2d coins={coins} />
+  const fallback = <CoinFallback2d principal={principal} grown={grown} />
 
   return (
-    <div className="coin-stage" role="img" aria-label={`코인 ${coins}개 쌓임`} data-testid={use3d ? 'coin-stage-3d' : 'coin-stage-2d'}>
-      {use3d ? (
-        <SceneBoundary fallback={fallback} onError={() => setFailed(true)}>
-          <Suspense fallback={fallback}>
-            <PiggyBank coins={coins} />
-          </Suspense>
-        </SceneBoundary>
-      ) : (
-        fallback
-      )}
-    </div>
+    <>
+      <div
+        className="coin-stage"
+        role="img"
+        aria-label={`원금 코인 ${principal}개, 불어난 코인 ${grown}개 쌓임`}
+        data-testid={use3d ? 'coin-stage-3d' : 'coin-stage-2d'}
+      >
+        {use3d ? (
+          <SceneBoundary fallback={fallback} onError={() => setFailed(true)}>
+            <Suspense fallback={fallback}>
+              <PiggyBank principal={principal} grown={grown} />
+            </Suspense>
+          </SceneBoundary>
+        ) : (
+          fallback
+        )}
+      </div>
+      {/* 범례. 정보는 대체 텍스트에 이미 있으므로 보조 기기에서는 숨김 */}
+      <p className="coin-legend" aria-hidden="true">
+        <span><i className="swatch-principal" />원금</span>
+        <span><i className="swatch-grown" />불어난 만큼</span>
+      </p>
+    </>
   )
 }

@@ -1,9 +1,10 @@
-// 2D 폴백. 코인을 열로 쌓은 정적 그래픽
+// 2D 폴백. 코인을 열로 쌓은 정적 그래픽. 아래부터 원금 코인, 그 위로 불어난 코인
 import { COIN_MAX } from '../core/coinCount.ts'
 
 const PER_COLUMN = 20
 
-export function CoinFallback2d({ coins }: { coins: number }) {
+export function CoinFallback2d({ principal, grown }: { principal: number; grown: number }) {
+  const coins = principal + grown
   const w = 300
   const h = 220
   const coinW = 44
@@ -23,7 +24,7 @@ export function CoinFallback2d({ coins }: { coins: number }) {
         return (
           <rect
             key={i}
-            className="coin"
+            className={i < principal ? 'coin-principal' : 'coin-grown'}
             x={left + col * (coinW + colGap)}
             y={base - (level + 1) * (coinH + gap)}
             width={coinW}
@@ -32,7 +33,7 @@ export function CoinFallback2d({ coins }: { coins: number }) {
           />
         )
       })}
-      <text className="label" x={w / 2} y={h - 10} textAnchor="middle">코인 {coins}개</text>
+      <text className="label" x={w / 2} y={h - 10} textAnchor="middle">원금 {principal} · 불어난 {grown}</text>
     </svg>
   )
 }

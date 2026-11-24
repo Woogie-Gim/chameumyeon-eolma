@@ -1,6 +1,6 @@
 // coinCount.ts 단위 테스트
 import { describe, expect, it } from 'vitest'
-import { COIN_BASE, COIN_GROWTH, COIN_MAX, coinCount } from '../../src/core/coinCount.ts'
+import { COIN_BASE, COIN_GROWTH, COIN_MAX, coinCount, coinSplit } from '../../src/core/coinCount.ts'
 
 describe('coinCount', () => {
   it('0원과 0 결과는 0개', () => {
@@ -47,5 +47,35 @@ describe('coinCount', () => {
       expect(n).toBeGreaterThanOrEqual(prev)
       prev = n
     }
+  })
+})
+
+describe('coinSplit', () => {
+  it('합은 coinCount와 같다', () => {
+    for (const v of [0, 1, 5000, 10000, 10288, 12500, 30000, 1e9]) {
+      const s = coinSplit(10000, v)
+      expect(s.total).toBe(coinCount(10000, v))
+      expect(s.principal + s.grown).toBe(s.total)
+    }
+  })
+
+  it('배율 1배 초과는 원금 코인이 기본 개수, 나머지는 불어난 코인', () => {
+    expect(coinSplit(10000, 12500)).toEqual({ total: 20, principal: COIN_BASE, grown: 10 })
+  })
+
+  it('배율 1배는 불어난 코인 0개', () => {
+    expect(coinSplit(10000, 10000)).toEqual({ total: COIN_BASE, principal: COIN_BASE, grown: 0 })
+  })
+
+  it('배율 1배 미만은 전부 원금 코인', () => {
+    expect(coinSplit(10000, 5000)).toEqual({ total: 5, principal: 5, grown: 0 })
+  })
+
+  it('상한에서도 원금 코인은 기본 개수', () => {
+    expect(coinSplit(1, 1e9)).toEqual({ total: COIN_MAX, principal: COIN_BASE, grown: COIN_MAX - COIN_BASE })
+  })
+
+  it('0원은 0개', () => {
+    expect(coinSplit(0, 100)).toEqual({ total: 0, principal: 0, grown: 0 })
   })
 })

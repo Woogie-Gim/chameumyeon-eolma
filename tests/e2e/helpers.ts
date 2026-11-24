@@ -2,8 +2,10 @@
 import type { Page } from '@playwright/test'
 
 // SCREENSHOTS=1일 때만 docs/screenshots에 저장
-export async function shot(page: Page, name: string) {
+// settleMs: 3D 코인 보간이 끝날 때까지 기다릴 시간
+export async function shot(page: Page, name: string, settleMs = 0) {
   if (process.env.SCREENSHOTS !== '1') return
+  if (settleMs > 0) await page.waitForTimeout(settleMs)
   await page.screenshot({ path: `docs/screenshots/${name}.png`, fullPage: true })
 }
 

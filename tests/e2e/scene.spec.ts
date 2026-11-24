@@ -4,7 +4,7 @@ import { gotoResult, shot } from './helpers.ts'
 
 test.use({ viewport: { width: 390, height: 844 } })
 
-const stageLabel = /^코인 \d+개 쌓임$/
+const stageLabel = /^원금 코인 \d+개, 불어난 코인 \d+개 쌓임$/
 
 test('일반 환경에서 3D 캔버스와 대체 텍스트', async ({ page }) => {
   await gotoResult(page)
@@ -18,7 +18,7 @@ test('일반 환경에서 3D 캔버스와 대체 텍스트', async ({ page }) =>
   await page.getByLabel('몇 년 뒤').fill('10')
   await expect(stage).not.toHaveAttribute('aria-label', before ?? '')
   await expect(stage).toHaveAttribute('aria-label', stageLabel)
-  await shot(page, 'result-3d')
+  await shot(page, 'result-3d', 2500)
 
   // 카메라 조작 요소 없음: 캔버스 외 버튼 없음
   await expect(stage.locator('button')).toHaveCount(0)
@@ -37,6 +37,14 @@ test('WebGL 미지원이면 2D 폴백', async ({ page }) => {
   await expect(page.getByTestId('coin-stage-3d')).toHaveCount(0)
   await expect(page.locator('canvas')).toHaveCount(0)
   await expect(page.getByRole('img', { name: stageLabel })).toBeVisible()
+
+  // 원금 코인과 불어난 코인을 다른 클래스로 그림. 대체 텍스트 개수와 일치
+  await page.getByLabel('몇 년 뒤').fill('10')
+  const label = (await page.getByTestId('coin-stage-2d').getAttribute('aria-label')) ?? ''
+  const [, p, g] = label.match(/원금 코인 (\d+)개, 불어난 코인 (\d+)개/) ?? []
+  expect(Number(g)).toBeGreaterThan(0)
+  await expect(page.locator('.coin-fallback .coin-principal')).toHaveCount(Number(p))
+  await expect(page.locator('.coin-fallback .coin-grown')).toHaveCount(Number(g))
 })
 
 test('동작 줄이기 설정이면 2D 폴백', async ({ page }) => {

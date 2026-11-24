@@ -2,7 +2,7 @@
 // 변화가 있을 때만 프레임을 요청한다(frameloop demand)
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo, useRef } from 'react'
-import { CylinderGeometry, InstancedMesh, MeshStandardMaterial, Object3D } from 'three'
+import { Color, CylinderGeometry, InstancedMesh, MeshStandardMaterial, Object3D } from 'three'
 import { COIN_MAX } from '../core/coinCount.ts'
 import { readSceneColors, type SceneColors } from './sceneColors.ts'
 
@@ -69,16 +69,17 @@ function Piggy({ colors }: { colors: SceneColors }) {
   )
 }
 
-function Coins({ target, colors }: { target: number; colors: SceneColors }) {
+// 인덱스 principal 미만은 원금색, 이상은 불어난 코인색
+function Coins({ target, principal, colors }: { target: number; principal: number; colors: SceneColors }) {
   const mesh = useRef<InstancedMesh>(null)
   const current = useRef(0)
   const invalidate = useThree((s) => s.invalidate)
   const dummy = useMemo(() => new Object3D(), [])
   const geometry = useMemo(() => new CylinderGeometry(COIN_R, COIN_R, COIN_H, 28), [])
-  const material = useMemo(
-    () => new MeshStandardMaterial({ color: colors.coin, emissive: colors.coinEdge, emissiveIntensity: 0.2, metalness: 0.25, roughness: 0.4 }),
-    [colors],
-  )
+  // 인스턴스 색이 곱해지도록 재질은 흰색
+  const material = useMemo(() => new MeshStandardMaterial({ color: '#ffffff', metalness: 0.25, roughness: 0.4 }), [])
+  const principalColor = useMemo(() => new Color(colors.coinPrincipal), [colors])
+  const grownColor = useMemo(() => new Color(colors.coinGrown), [colors])
 
   // 언마운트 시 해제
   useEffect(() => () => geometry.dispose(), [geometry])
@@ -87,7 +88,7 @@ function Coins({ target, colors }: { target: number; colors: SceneColors }) {
   // 목표가 바뀌면 프레임 재개
   useEffect(() => {
     invalidate()
-  }, [target, invalidate])
+  }, [target, principal, invalidate])
 
   useFrame((_, delta) => {
     const m = mesh.current
@@ -107,9 +108,11 @@ function Coins({ target, colors }: { target: number; colors: SceneColors }) {
       dummy.scale.set(s, s, s)
       dummy.updateMatrix()
       m.setMatrixAt(i, dummy.matrix)
+      m.setColorAt(i, i < principal ? principalColor : grownColor)
     }
     m.count = shown
     m.instanceMatrix.needsUpdate = true
+    if (m.instanceColor) m.instanceColor.needsUpdate = true
 
     // 목표에 닿지 않았을 때만 다음 프레임 요청
     if (current.current !== target) invalidate()
@@ -118,7 +121,7 @@ function Coins({ target, colors }: { target: number; colors: SceneColors }) {
   return <instancedMesh ref={mesh} args={[geometry, material, COIN_MAX]} />
 }
 
-export default function PiggyBank({ coins }: { coins: number }) {
+export default function PiggyBank({ principal, grown }: { principal: number; grown: number }) {
   const colors = useMemo(readSceneColors, [])
   return (
     <Canvas
@@ -132,7 +135,7 @@ export default function PiggyBank({ coins }: { coins: number }) {
       <ambientLight intensity={0.7} />
       <directionalLight position={[3, 5, 4]} intensity={1.6} />
       <Piggy colors={colors} />
-      <Coins target={coins} colors={colors} />
+      <Coins target={principal + grown} principal={principal} colors={colors} />
     </Canvas>
   )
 }

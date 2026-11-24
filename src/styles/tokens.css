@@ -20,8 +20,10 @@
   --color-piggy: #e9a3a0;
   --color-piggy-shade: #c9706c;
   --color-piggy-eye: #2b2b2b;
-  --color-coin: #e0b04a;
-  --color-coin-edge: #b98a2a;
+  --color-coin-principal: #8e9a9d;
+  --color-coin-principal-edge: #66757a;
+  --color-coin-grown: #e0b04a;
+  --color-coin-grown-edge: #b98a2a;
   --color-stage-bg: #fbf3e8;
 
   /* 간격 */
@@ -75,8 +77,10 @@
     --color-piggy: #d98f8b;
     --color-piggy-shade: #a85f5b;
     --color-piggy-eye: #111111;
-    --color-coin: #e3b85a;
-    --color-coin-edge: #a77f2c;
+    --color-coin-principal: #7d898c;
+    --color-coin-principal-edge: #5a6669;
+    --color-coin-grown: #e3b85a;
+    --color-coin-grown-edge: #a77f2c;
     --color-stage-bg: #222b2d;
     --shadow-card: none;
   }

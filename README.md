@@ -92,7 +92,10 @@
   - `frameloop="demand"`로 코인 개수를 보간하는 동안만 프레임을 요청하고, 목표에 닿으면 멈춘다. 렌더 해상도 배율은 최대 2.
   - 직접 만든 지오메트리와 재질은 언마운트 시 해제한다.
 - 3D 모듈은 `React.lazy`로 분리해 결과 화면에서만 로드한다. drei는 쓰지 않는다(의존성은 남겨 둠).
-- 3D 영역에는 "코인 N개 쌓임" 대체 텍스트를 단다.
+- 3D 영역에는 "원금 코인 N개, 불어난 코인 M개 쌓임" 대체 텍스트를 단다.
+- (보정) 원금 코인과 불어난 코인을 색으로 구분한다(`coinSplit`).
+  - 배율 1 이상이면 원금 코인은 10개(COIN_BASE)이고 나머지가 불어난 코인이다. 배율 1 미만이면 전부 원금 코인이다. 배율 환산식(COIN_GROWTH)은 바꾸지 않았다.
+  - 색은 tokens.css의 `--color-coin-principal*`, `--color-coin-grown*`이다. 원금은 회색 계열, 불어난 만큼은 금색 계열로 명도 차이를 두었다. 3D와 2D 폴백에 같이 적용하고 범례를 붙였다.
 - E2E 스크린샷은 `SCREENSHOTS=1`일 때만 `docs/screenshots/`에 저장한다.
   - bash: `SCREENSHOTS=1 npm run test:e2e`
   - PowerShell: `$env:SCREENSHOTS='1'; npm run test:e2e`

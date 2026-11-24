@@ -1,6 +1,6 @@
 // 결과 화면. 예금형은 이율, 적금형은 이율과 납입액, ETF형은 유형 상승률만 표시
 import { useMemo, useState } from 'react'
-import { coinCount } from '../core/coinCount.ts'
+import { coinSplit } from '../core/coinCount.ts'
 import { ETF_MIN_YEARS, amountBand, futureValueCompound, installmentFutureValue, startYearRange, timeMachine } from '../core/calc.ts'
 import { DISCLAIMER, ETF_DISCLAIMER } from '../core/copy.ts'
 import { formatPercent, formatWon } from '../core/format.ts'
@@ -57,10 +57,10 @@ export function Result({ draft, settings, onNext, onBack }: { draft: Draft; sett
   // 코인 수: 모드별 원금 대비 배율
   const coins =
     mode === 'deposit'
-      ? coinCount(draft.amount, deposit)
+      ? coinSplit(draft.amount, deposit)
       : mode === 'savings'
-        ? coinCount(savings.totalPaid, savings.value)
-        : coinCount(draft.amount, tm.value)
+        ? coinSplit(savings.totalPaid, savings.value)
+        : coinSplit(draft.amount, tm.value)
 
   return (
     <section className="screen" aria-labelledby="result-title">
@@ -91,7 +91,7 @@ export function Result({ draft, settings, onNext, onBack }: { draft: Draft; sett
         />
       </div>
 
-      <CoinStage coins={coins} reduce3d={settings.reduce3d} />
+      <CoinStage split={coins} reduce3d={settings.reduce3d} />
 
       <div className="card" aria-live="polite">
         {mode === 'deposit' && (
