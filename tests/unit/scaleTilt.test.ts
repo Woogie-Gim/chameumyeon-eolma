@@ -1,6 +1,6 @@
 // scaleTilt.ts 단위 테스트. 양수면 환산 코인 쪽이 내려간다
 import { describe, expect, it } from 'vitest'
-import { MAX_TILT, RATIO_CAP, scaleSide, scaleTilt } from '../../src/core/scaleTilt.ts'
+import { MAX_TILT, RATIO_CAP, scaleAltText, scaleSide, scaleTilt } from '../../src/core/scaleTilt.ts'
 
 describe('scaleTilt', () => {
   it('같은 금액이면 수평', () => {
@@ -64,5 +64,13 @@ describe('scaleSide', () => {
     expect(scaleSide(10000, 10000)).toBe('level')
     expect(scaleSide(0, 0)).toBe('level')
     expect(scaleSide(Number.NaN, 1)).toBe('level')
+  })
+})
+
+describe('scaleAltText', () => {
+  it('두 금액과 기울기 방향', () => {
+    expect(scaleAltText('지금 쓰는 금액', 10000, 12763)).toBe('지금 쓰는 금액 10,000원, 환산 금액 약 12,763원. 환산 쪽으로 기울어짐')
+    expect(scaleAltText('지금 쓰는 금액', 10000, 8000)).toContain('쓰는 금액 쪽으로 기울어짐')
+    expect(scaleAltText('총 납입액', 120000, 120000)).toBe('총 납입액 120,000원, 환산 금액 약 120,000원. 수평')
   })
 })

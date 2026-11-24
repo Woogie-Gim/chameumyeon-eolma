@@ -29,6 +29,10 @@
   --color-tarot-front: #fdf8ee;
   --color-tarot-ink: #c9822b;
   --color-tarot-edge: #1d3a50;
+  --color-scale-frame: #6b5a45;
+  --color-scale-pan: #b9a88c;
+  --color-spend-pile: #d9774f;
+  --color-spend-pile-edge: #a9532f;
 
   /* 간격 */
   --space-1: 4px;
@@ -90,6 +94,10 @@
     --color-tarot-front: #2c3537;
     --color-tarot-ink: #e3a457;
     --color-tarot-edge: #22465f;
+    --color-scale-frame: #a8957a;
+    --color-scale-pan: #7d6f5a;
+    --color-spend-pile: #e08a64;
+    --color-spend-pile-edge: #b0603d;
     --shadow-card: none;
   }
 }

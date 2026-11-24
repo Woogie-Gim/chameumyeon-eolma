@@ -9,6 +9,9 @@ export type SceneColors = {
   tarotFront: string
   tarotInk: string
   tarotEdge: string
+  scaleFrame: string
+  scalePan: string
+  spendPile: string
 }
 
 const FALLBACK: SceneColors = {
@@ -21,6 +24,9 @@ const FALLBACK: SceneColors = {
   tarotFront: '#fdf8ee',
   tarotInk: '#c9822b',
   tarotEdge: '#1d3a50',
+  scaleFrame: '#6b5a45',
+  scalePan: '#b9a88c',
+  spendPile: '#d9774f',
 }
 
 export function readSceneColors(): SceneColors {
@@ -37,6 +43,9 @@ export function readSceneColors(): SceneColors {
       tarotFront: v('--color-tarot-front', FALLBACK.tarotFront),
       tarotInk: v('--color-tarot-ink', FALLBACK.tarotInk),
       tarotEdge: v('--color-tarot-edge', FALLBACK.tarotEdge),
+      scaleFrame: v('--color-scale-frame', FALLBACK.scaleFrame),
+      scalePan: v('--color-scale-pan', FALLBACK.scalePan),
+      spendPile: v('--color-spend-pile', FALLBACK.spendPile),
     }
   } catch {
     return FALLBACK

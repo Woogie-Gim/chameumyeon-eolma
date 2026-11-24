@@ -10,6 +10,7 @@ import messages from '../data/messages.json' with { type: 'json' }
 import messagesEtf from '../data/messagesEtf.json' with { type: 'json' }
 import returns from '../data/returns.json' with { type: 'json' }
 import { CoinStage } from '../scenes/CoinStage.tsx'
+import { ScaleStage } from '../scenes/ScaleStage.tsx'
 import type { Settings } from '../store/storage.ts'
 import type { Draft } from './types.ts'
 
@@ -19,6 +20,11 @@ const MODE_TABS: { id: Mode; label: string }[] = [
   { id: 'savings', label: '적금형' },
   { id: 'etf', label: 'ETF 타임머신형' },
 ]
+type View = 'piggy' | 'scale'
+const VIEW_TABS: { id: View; label: string }[] = [
+  { id: 'piggy', label: '저금통' },
+  { id: 'scale', label: '저울' },
+]
 const YEARS_MIN = 1
 const YEARS_MAX = 10
 
@@ -26,6 +32,7 @@ export function Result({ draft, settings, onNext, onBack }: { draft: Draft; sett
   const [mode, setMode] = useState<Mode>('deposit')
   const [years, setYears] = useState(5)
   const [assetId, setAssetId] = useState(returns.assetTypes[0].id)
+  const [view, setView] = useState<View>('piggy')
 
   // 한마디는 입력이 바뀔 때만 새로 고른다
   const message = useMemo(() => pickMessage(messages, draft.category, amountBand(draft.amount)), [draft])
@@ -54,13 +61,14 @@ export function Result({ draft, settings, onNext, onBack }: { draft: Draft; sett
           future: formatWon(mode === 'savings' ? savings.value : deposit),
         })
 
-  // 코인 수: 모드별 원금 대비 배율
-  const coins =
+  // 모드별 비교 쌍. 적금형은 총 납입액 기준. 코인 수와 저울 기울기에 함께 쓴다
+  const pair =
     mode === 'deposit'
-      ? coinSplit(draft.amount, deposit)
+      ? { base: draft.amount, value: deposit, baseLabel: '지금 쓰는 금액' }
       : mode === 'savings'
-        ? coinSplit(savings.totalPaid, savings.value)
-        : coinSplit(draft.amount, tm.value)
+        ? { base: savings.totalPaid, value: savings.value, baseLabel: '총 납입액' }
+        : { base: draft.amount, value: tm.value, baseLabel: '지금 쓰는 금액' }
+  const coins = coinSplit(pair.base, pair.value)
 
   return (
     <section className="screen" aria-labelledby="result-title">
@@ -91,7 +99,19 @@ export function Result({ draft, settings, onNext, onBack }: { draft: Draft; sett
         />
       </div>
 
-      <CoinStage split={coins} reduce3d={settings.reduce3d} />
+      <div className="view-toggle" role="group" aria-label="연출 선택">
+        {VIEW_TABS.map((v) => (
+          <button key={v.id} type="button" className="chip" aria-pressed={view === v.id} onClick={() => setView(v.id)}>
+            {v.label}
+          </button>
+        ))}
+      </div>
+
+      {view === 'piggy' ? (
+        <CoinStage split={coins} reduce3d={settings.reduce3d} />
+      ) : (
+        <ScaleStage spend={pair.base} converted={pair.value} spendLabel={pair.baseLabel} reduce3d={settings.reduce3d} />
+      )}
 
       <div className="card" aria-live="polite">
         {mode === 'deposit' && (
