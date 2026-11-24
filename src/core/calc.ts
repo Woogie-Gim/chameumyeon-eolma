@@ -7,6 +7,8 @@ export const MAX_YEARS = 50
 // 금액 구간 경계(원)
 export const BAND_MID_FROM = 10_000
 export const BAND_HIGH_FROM = 50_000
+// ETF형 최소 보유 연수. 시작 연도는 마지막 연도 직전까지
+export const ETF_MIN_YEARS = 2
 
 export type AmountBand = 'low' | 'mid' | 'high'
 
@@ -64,6 +66,21 @@ export function installmentFutureValue(monthly: number, annualRate: number, year
   return { totalPaid: monthly * months, value: roundWon(monthly * factor) }
 }
 
+export type StartYearRange = { min: number; max: number; endYear: number }
+
+function findAsset(assetTypeId: string, data: ReturnsData): AssetType {
+  const asset = data.assetTypes.find((a) => a.id === assetTypeId)
+  if (!asset) throw new RangeError('알 수 없는 유형')
+  return asset
+}
+
+// 선택 가능한 시작 연도 범위. max는 마지막 데이터 연도 직전
+export function startYearRange(assetTypeId: string, data: ReturnsData = returnsJson as ReturnsData): StartYearRange {
+  const years = Object.keys(findAsset(assetTypeId, data).annualReturns).map(Number)
+  const endYear = Math.max(...years)
+  return { min: Math.min(...years), max: endYear - (ETF_MIN_YEARS - 1), endYear }
+}
+
 // startYear 해 초에 넣어 마지막 데이터 연도 말까지 보유한 경우
 export function timeMachine(
   principal: number,
@@ -72,14 +89,10 @@ export function timeMachine(
   data: ReturnsData = returnsJson as ReturnsData,
 ): TimeMachineResult {
   assertPrincipal(principal)
-  const asset = data.assetTypes.find((a) => a.id === assetTypeId)
-  if (!asset) throw new RangeError('알 수 없는 유형')
-
-  const years = Object.keys(asset.annualReturns).map(Number)
-  const first = Math.min(...years)
-  const endYear = Math.max(...years)
-  if (!Number.isInteger(startYear) || startYear < first || startYear > endYear) {
-    throw new RangeError(`시작 연도는 ${first}~${endYear} 범위여야 함`)
+  const asset = findAsset(assetTypeId, data)
+  const { min, max, endYear } = startYearRange(assetTypeId, data)
+  if (!Number.isInteger(startYear) || startYear < min || startYear > max) {
+    throw new RangeError(`시작 연도는 ${min}~${max} 범위여야 함`)
   }
 
   let multiplier = 1

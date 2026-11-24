@@ -5,6 +5,7 @@ import {
   amountBand,
   futureValueCompound,
   installmentFutureValue,
+  startYearRange,
   timeMachine,
   type ReturnsData,
 } from '../../src/core/calc.ts'
@@ -25,9 +26,9 @@ const fixture: ReturnsData = {
     {
       id: 'gap',
       label: '테스트 누락형',
-      annualReturns: { '2023': 0.1, '2024': null, '2025': 0.1 },
+      annualReturns: { '2022': 0.1, '2023': null, '2024': 0.1, '2025': 0.1 },
       isSample: true,
-      sampleYears: [2024],
+      sampleYears: [2023],
       source: '테스트',
     },
   ],
@@ -87,8 +88,15 @@ describe('timeMachine', () => {
     expect(r.isSample).toBe(false)
   })
 
-  it('마지막 연도 시작은 한 해 상승률만 반영', () => {
-    expect(timeMachine(10000, 'up', 2025, fixture).value).toBe(11000)
+  it('마지막 연도 직전 시작은 두 해 상승률 반영', () => {
+    const r = timeMachine(10000, 'up', 2024, fixture)
+    // 0.5 * 1.1 = 0.55
+    expect(r.value).toBe(5500)
+    expect(r.years).toBe(2)
+  })
+
+  it('마지막 연도 시작은 거부', () => {
+    expect(() => timeMachine(10000, 'up', 2025, fixture)).toThrow(RangeError)
   })
 
   it('음수 상승률 구간은 원금 미만', () => {
@@ -102,13 +110,13 @@ describe('timeMachine', () => {
   })
 
   it('최대 금액 처리, 초과 거부', () => {
-    expect(timeMachine(MAX_AMOUNT, 'up', 2025, fixture).value).toBe(110_000_000)
-    expect(() => timeMachine(MAX_AMOUNT + 1, 'up', 2025, fixture)).toThrow(RangeError)
+    expect(timeMachine(MAX_AMOUNT, 'up', 2024, fixture).value).toBe(55_000_000)
+    expect(() => timeMachine(MAX_AMOUNT + 1, 'up', 2024, fixture)).toThrow(RangeError)
   })
 
   it('소수점 반올림', () => {
-    // 333 * 1.1 = 366.3 → 366
-    expect(timeMachine(333, 'up', 2025, fixture).value).toBe(366)
+    // 333 * 0.5 * 1.1 = 183.15 → 183
+    expect(timeMachine(333, 'up', 2024, fixture).value).toBe(183)
   })
 
   it('연도 범위 밖 거부', () => {
@@ -122,23 +130,41 @@ describe('timeMachine', () => {
   })
 
   it('값이 없는 연도가 포함되면 거부', () => {
+    expect(() => timeMachine(10000, 'gap', 2022, fixture)).toThrow(RangeError)
     expect(() => timeMachine(10000, 'gap', 2023, fixture)).toThrow(RangeError)
-    expect(timeMachine(10000, 'gap', 2025, fixture).value).toBe(11000)
+    expect(timeMachine(10000, 'gap', 2024, fixture).value).toBe(12100)
   })
 
   it('isSample 전달', () => {
-    expect(timeMachine(10000, 'gap', 2025, fixture).isSample).toBe(true)
+    expect(timeMachine(10000, 'gap', 2024, fixture).isSample).toBe(true)
   })
 
   it('실제 데이터로 계산하고 기준 연도 포함', () => {
     const data = returns as ReturnsData
     const endYear = Number(data.asOf.slice(0, 4))
     for (const a of data.assetTypes) {
-      const r = timeMachine(10000, a.id, endYear)
-      const expected = Math.round(10000 * (1 + (a.annualReturns[String(endYear)] as number)))
-      expect(r.value).toBe(expected)
+      const r = timeMachine(10000, a.id, endYear - 1)
+      const m = (1 + (a.annualReturns[String(endYear - 1)] as number)) * (1 + (a.annualReturns[String(endYear)] as number))
+      expect(r.value).toBe(Math.round(10000 * m))
       expect(r.endYear).toBe(endYear)
+      expect(() => timeMachine(10000, a.id, endYear)).toThrow(RangeError)
     }
+  })
+})
+
+describe('startYearRange', () => {
+  it('첫 연도부터 마지막 연도 직전까지', () => {
+    expect(startYearRange('up', fixture)).toEqual({ min: 2022, max: 2024, endYear: 2025 })
+  })
+
+  it('실제 데이터의 상한은 기준 연도 직전', () => {
+    const data = returns as ReturnsData
+    const endYear = Number(data.asOf.slice(0, 4))
+    for (const a of data.assetTypes) expect(startYearRange(a.id).max).toBe(endYear - 1)
+  })
+
+  it('알 수 없는 유형 거부', () => {
+    expect(() => startYearRange('none', fixture)).toThrow(RangeError)
   })
 })
 

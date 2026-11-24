@@ -71,3 +71,17 @@ test('ETF형 결과는 과거 시제 한마디', async ({ page }) => {
   await expect(page.locator('.quote')).not.toContainText('년 뒤')
   await expect(page.locator('.quote')).toContainText('지금')
 })
+
+test('ETF형 시작 연도는 마지막 연도 직전까지', async ({ page }) => {
+  await gotoResult(page)
+  await page.getByRole('tab', { name: '예금형' }).click()
+  await page.getByLabel('몇 년 뒤').fill('1')
+  await page.getByRole('tab', { name: 'ETF 타임머신형' }).click()
+  const slider = page.getByLabel('몇 년 전에 넣었다면')
+  await expect(slider).toHaveAttribute('min', '2')
+  await expect(slider).toHaveValue('2')
+  const line = await page.locator('.rate-line').innerText()
+  const m = line.match(/(\d{4})~(\d{4})/)
+  expect(m).not.toBeNull()
+  expect(Number(m![1])).toBe(Number(m![2]) - 1)
+})

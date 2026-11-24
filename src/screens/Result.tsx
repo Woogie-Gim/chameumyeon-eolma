@@ -1,7 +1,7 @@
 // 결과 화면. 예금형은 이율, 적금형은 이율과 납입액, ETF형은 유형 상승률만 표시
 import { useMemo, useState } from 'react'
 import { coinCount } from '../core/coinCount.ts'
-import { amountBand, futureValueCompound, installmentFutureValue, timeMachine } from '../core/calc.ts'
+import { ETF_MIN_YEARS, amountBand, futureValueCompound, installmentFutureValue, startYearRange, timeMachine } from '../core/calc.ts'
 import { DISCLAIMER, ETF_DISCLAIMER } from '../core/copy.ts'
 import { formatPercent, formatWon } from '../core/format.ts'
 import { pickEtfMessage, pickMessage } from '../core/messagePick.ts'
@@ -19,7 +19,8 @@ const MODE_TABS: { id: Mode; label: string }[] = [
   { id: 'savings', label: '적금형' },
   { id: 'etf', label: 'ETF 타임머신형' },
 ]
-const END_YEAR = Number(returns.asOf.slice(0, 4))
+const YEARS_MIN = 1
+const YEARS_MAX = 10
 
 export function Result({ draft, settings, onNext, onBack }: { draft: Draft; settings: Settings; onNext: () => void; onBack: () => void }) {
   const [mode, setMode] = useState<Mode>('deposit')
@@ -34,8 +35,13 @@ export function Result({ draft, settings, onNext, onBack }: { draft: Draft; sett
   const deposit = futureValueCompound(draft.amount, settings.depositRate / 100, years)
   const savings = installmentFutureValue(draft.amount, settings.savingsRate / 100, years)
   const asset = returns.assetTypes.find((a) => a.id === assetId) ?? returns.assetTypes[0]
-  const startYear = END_YEAR - years + 1
+  // ETF형 기간: 최소 2년(시작 연도는 마지막 연도 직전까지), 최대는 데이터 첫 연도까지
+  const range = startYearRange(asset.id)
+  const etfMax = Math.min(YEARS_MAX, range.endYear - range.min + 1)
+  const etfYears = Math.min(etfMax, Math.max(ETF_MIN_YEARS, years))
+  const startYear = range.endYear - etfYears + 1
   const tm = timeMachine(draft.amount, asset.id, startYear)
+  const shownYears = mode === 'etf' ? etfYears : years
 
   // ETF형은 과거 시제 전용 풀 사용
   const quote =
@@ -71,9 +77,18 @@ export function Result({ draft, settings, onNext, onBack }: { draft: Draft; sett
       <div className="card">
         <div className="slider-head">
           <label className="section-label" htmlFor="years">{mode === 'etf' ? '몇 년 전에 넣었다면' : '몇 년 뒤'}</label>
-          <strong>{years}년</strong>
+          <strong>{shownYears}년</strong>
         </div>
-        <input id="years" className="slider" type="range" min={1} max={10} step={1} value={years} onChange={(e) => setYears(Number(e.target.value))} />
+        <input
+          id="years"
+          className="slider"
+          type="range"
+          min={mode === 'etf' ? ETF_MIN_YEARS : YEARS_MIN}
+          max={mode === 'etf' ? etfMax : YEARS_MAX}
+          step={1}
+          value={shownYears}
+          onChange={(e) => setYears(Number(e.target.value))}
+        />
       </div>
 
       <CoinStage coins={coins} reduce3d={settings.reduce3d} />
