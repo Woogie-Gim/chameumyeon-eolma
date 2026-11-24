@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  // GitHub Pages 하위 경로 배포용. 미지정 시 루트
+  base: process.env.BASE_PATH || '/',
   plugins: [react()],
   build: {
     // 3D 청크(three 포함)는 결과 화면에서만 동적 로드되므로 경고 기준을 올림

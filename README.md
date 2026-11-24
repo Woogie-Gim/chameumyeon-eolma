@@ -102,6 +102,13 @@
   - PowerShell: `$env:SCREENSHOTS='1'; npm run test:e2e`
 - 헤드리스 E2E는 소프트웨어 WebGL(swiftshader) 실행 인자를 쓴다.
 
+### 배포 준비
+
+- `vite.config.ts`의 `base`는 환경변수 `BASE_PATH`로 받는다. 없으면 `/`이다.
+- `.github/workflows/deploy.yml`은 main 푸시 시 `BASE_PATH=/<저장소 이름>/`으로 빌드해 GitHub Pages에 배포한다. 검사용 `ci.yml`과 따로 동작한다.
+- 저장소 설정의 Pages 소스를 GitHub Actions로 지정해야 배포된다.
+- Windows Git Bash에서 로컬로 확인할 때는 경로 자동 변환을 꺼야 한다: `MSYS2_ENV_CONV_EXCL=BASE_PATH BASE_PATH=/chameumyeon-eolma/ npm run build`
+
 ## 테스트
 
 개발 후 작성.
