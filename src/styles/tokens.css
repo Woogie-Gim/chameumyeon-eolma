@@ -25,6 +25,10 @@
   --color-coin-grown: #e0b04a;
   --color-coin-grown-edge: #b98a2a;
   --color-stage-bg: #fbf3e8;
+  --color-tarot-back: #2a4f6b;
+  --color-tarot-front: #fdf8ee;
+  --color-tarot-ink: #c9822b;
+  --color-tarot-edge: #1d3a50;
 
   /* 간격 */
   --space-1: 4px;
@@ -82,6 +86,10 @@
     --color-coin-grown: #e3b85a;
     --color-coin-grown-edge: #a77f2c;
     --color-stage-bg: #222b2d;
+    --color-tarot-back: #3d6f93;
+    --color-tarot-front: #2c3537;
+    --color-tarot-ink: #e3a457;
+    --color-tarot-edge: #22465f;
     --shadow-card: none;
   }
 }

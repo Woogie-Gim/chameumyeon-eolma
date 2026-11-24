@@ -7,15 +7,17 @@ import { Input } from './screens/Input.tsx'
 import { Log } from './screens/Log.tsx'
 import { Result } from './screens/Result.tsx'
 import { Settings } from './screens/Settings.tsx'
+import { Tarot } from './screens/Tarot.tsx'
 import type { Draft } from './screens/types.ts'
 import { store, type Settings as SettingsValue } from './store/storage.ts'
 
-type Screen = 'input' | 'result' | 'choice' | 'log' | 'settings' | 'guide'
-type Tab = 'input' | 'log' | 'settings'
+type Screen = 'input' | 'result' | 'choice' | 'log' | 'tarot' | 'settings' | 'guide'
+type Tab = 'input' | 'log' | 'tarot' | 'settings'
 
 const TAB_ITEMS: { id: Tab; label: string }[] = [
   { id: 'input', label: '입력' },
   { id: 'log', label: '기록' },
+  { id: 'tarot', label: '타로' },
   { id: 'settings', label: '설정' },
 ]
 
@@ -25,7 +27,7 @@ function App() {
   const [settings, setSettings] = useState<SettingsValue>(() => store.getSettings())
   const [records, setRecords] = useState<LogRecord[]>(() => store.getRecords())
 
-  const activeTab: Tab = screen === 'guide' ? 'settings' : screen === 'log' || screen === 'settings' ? screen : 'input'
+  const activeTab: Tab = screen === 'guide' ? 'settings' : screen === 'log' || screen === 'tarot' || screen === 'settings' ? screen : 'input'
 
   function choose(c: ChoiceValue) {
     if (!draft) return
@@ -64,6 +66,7 @@ function App() {
         )}
         {screen === 'choice' && draft && <Choice draft={draft} onChoose={choose} />}
         {screen === 'log' && <Log records={records} today={new Date()} />}
+        {screen === 'tarot' && <Tarot reduce3d={settings.reduce3d} />}
         {screen === 'settings' && (
           <Settings settings={settings} onChange={changeSettings} onReset={reset} onOpenGuide={() => setScreen('guide')} />
         )}

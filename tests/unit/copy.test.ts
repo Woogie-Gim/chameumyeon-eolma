@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { scanText } from '../../scripts/scan-banned.ts'
-import { DISCLAIMER, guideSections } from '../../src/core/copy.ts'
+import { DISCLAIMER, TAROT_NOTICE, guideSections } from '../../src/core/copy.ts'
 
 const ROOT = resolve(import.meta.dirname, '../..')
 const readList = (file: string) =>
@@ -46,5 +46,18 @@ describe('이용 안내 문구', () => {
       expect(t).not.toMatch(IMPERATIVE)
       expect(scanText(t, 'copy', allow, banned), t).toEqual([])
     }
+  })
+})
+
+describe('타로 고지 문구', () => {
+  it('오락 콘텐츠이며 환산과 기록에 무관함을 밝힌다', () => {
+    expect(TAROT_NOTICE).toContain('재미로만 보는 오락 콘텐츠')
+    expect(TAROT_NOTICE).toContain('환산 결과')
+    expect(TAROT_NOTICE).toContain('소비 기록')
+  })
+
+  it('권유 어미, 금칙어 없음', () => {
+    expect(TAROT_NOTICE).not.toMatch(IMPERATIVE)
+    expect(scanText(TAROT_NOTICE, 'copy', allow, banned)).toEqual([])
   })
 })

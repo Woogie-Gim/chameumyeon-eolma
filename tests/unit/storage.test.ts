@@ -66,3 +66,42 @@ describe('store', () => {
     expect(s.getRecords()).toEqual([])
   })
 })
+
+describe('store 타로', () => {
+  it('날짜와 카드 id만 저장', () => {
+    const kv = memory()
+    const s = createStore(kv)
+    s.saveTarot({ date: '2026-11-25', cardId: 7, name: '카드 이름', extra: 1 } as never)
+    expect(s.getTarot()).toEqual({ date: '2026-11-25', cardId: 7 })
+    expect(JSON.parse(kv.getItem('chameum.tarot.v1')!)).toEqual({ date: '2026-11-25', cardId: 7 })
+    expect(kv.dump()).not.toContain('카드 이름')
+  })
+
+  it('다시 저장하면 덮어쓰고 누적하지 않는다', () => {
+    const kv = memory()
+    const s = createStore(kv)
+    s.saveTarot({ date: '2026-11-24', cardId: 1 })
+    s.saveTarot({ date: '2026-11-25', cardId: 2 })
+    expect(s.getTarot()).toEqual({ date: '2026-11-25', cardId: 2 })
+    expect(kv.dump()).not.toContain('2026-11-24')
+  })
+
+  it('잘못된 값은 저장하지 않고 읽지 않는다', () => {
+    const kv = memory()
+    const s = createStore(kv)
+    s.saveTarot({ date: '어제', cardId: 1 })
+    s.saveTarot({ date: '2026-11-25', cardId: 22 })
+    expect(s.getTarot()).toBeNull()
+    kv.setItem('chameum.tarot.v1', '{"date":"2026-11-25","cardId":-1}')
+    expect(s.getTarot()).toBeNull()
+    kv.setItem('chameum.tarot.v1', 'not json')
+    expect(s.getTarot()).toBeNull()
+  })
+
+  it('초기화하면 타로도 지운다', () => {
+    const s = createStore(memory())
+    s.saveTarot({ date: '2026-11-25', cardId: 3 })
+    s.resetAll()
+    expect(s.getTarot()).toBeNull()
+  })
+})

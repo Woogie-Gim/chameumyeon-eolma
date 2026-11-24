@@ -43,3 +43,13 @@ describe('prefersReducedMotion', () => {
     expect(prefersReducedMotion(() => { throw new Error('x') })).toBe(false)
   })
 })
+
+describe('shouldUse3d 전체 조합(저금통, 저울, 타로 공용)', () => {
+  it('8가지 조합 중 3D는 하나뿐', () => {
+    const combos = [true, false].flatMap((webgl) =>
+      [true, false].flatMap((reduce3d) => [true, false].map((reducedMotion) => ({ webgl, reduce3d, reducedMotion }))),
+    )
+    const on = combos.filter((c) => shouldUse3d(c))
+    expect(on).toEqual([{ webgl: true, reduce3d: false, reducedMotion: false }])
+  })
+})

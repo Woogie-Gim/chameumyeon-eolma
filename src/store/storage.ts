@@ -1,12 +1,15 @@
 // localStorage 래퍼. 날짜, 품목 id, 금액, 선택 결과, 설정만 저장한다
 import rates from '../data/rates.json' with { type: 'json' }
 import type { Choice, LogRecord } from '../core/stats.ts'
+import { isValidCardId, type TarotStored } from '../core/tarot.ts'
 
 export type KeyValue = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>
 export type Settings = { depositRate: number; savingsRate: number; reduce3d: boolean }
 
 const RECORDS_KEY = 'chameum.records.v1'
 const SETTINGS_KEY = 'chameum.settings.v1'
+// 타로는 마지막으로 뽑은 날짜와 카드 id 하나만 덮어쓴다(기록 누적 없음)
+const TAROT_KEY = 'chameum.tarot.v1'
 
 export const DEFAULT_SETTINGS: Settings = {
   depositRate: rates.deposit.default,
@@ -28,6 +31,14 @@ function sanitizeRecord(v: unknown): LogRecord | null {
   if (typeof r.amount !== 'number' || !Number.isInteger(r.amount) || r.amount < 0) return null
   if (!isChoice(r.choice)) return null
   return { date: r.date, itemId: r.itemId, amount: r.amount, choice: r.choice }
+}
+
+function sanitizeTarot(v: unknown): TarotStored | null {
+  if (!v || typeof v !== 'object') return null
+  const t = v as Record<string, unknown>
+  if (typeof t.date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(t.date)) return null
+  if (!isValidCardId(t.cardId)) return null
+  return { date: t.date, cardId: t.cardId }
 }
 
 function sanitizeSettings(v: unknown): Settings {
@@ -71,10 +82,16 @@ export function createStore(kv: KeyValue | null) {
     saveSettings(s: Settings) {
       write(SETTINGS_KEY, sanitizeSettings(s))
     },
+    getTarot: (): TarotStored | null => sanitizeTarot(read(TAROT_KEY)),
+    saveTarot(t: TarotStored) {
+      const clean = sanitizeTarot(t)
+      if (clean) write(TAROT_KEY, clean)
+    },
     resetAll() {
       try {
         kv?.removeItem(RECORDS_KEY)
         kv?.removeItem(SETTINGS_KEY)
+        kv?.removeItem(TAROT_KEY)
       } catch {
         // 무시
       }

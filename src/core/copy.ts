@@ -6,6 +6,9 @@ export const DISCLAIMER = '가정 시뮬레이션이며 수익을 보장하지 �
 // ETF 유형 환산 결과 전용 문구
 export const ETF_DISCLAIMER = '지수 가격 기준이며 배당, 보수, 환율은 반영하지 않았습니다.'
 
+// 타로 화면 고정 문구
+export const TAROT_NOTICE = '재미로만 보는 오락 콘텐츠입니다. 카드 결과는 환산 결과나 소비 기록과 관계없습니다.'
+
 // 사전에 없는 품목 표시명
 export const OTHER_LABEL = '기타 소비'
 

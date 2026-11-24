@@ -1,48 +1,15 @@
-// 3D와 2D 폴백 선택. 3D 모듈은 동적 import로 분리
-import { Component, Suspense, lazy, useEffect, useState, type ReactNode } from 'react'
+// 3D 저금통과 2D 폴백 선택. 3D 모듈은 동적 import로 분리
+import { Suspense, lazy } from 'react'
 import type { CoinSplit } from '../core/coinCount.ts'
-import { detectWebgl, prefersReducedMotion, shouldUse3d } from '../core/fallback.ts'
 import { CoinFallback2d } from './CoinFallback2d.tsx'
+import { SceneBoundary } from './SceneBoundary.tsx'
+import { useUse3d } from './useUse3d.ts'
 
 const PiggyBank = lazy(() => import('./PiggyBank.tsx'))
 
-let webglCache: boolean | null = null
-function hasWebgl(): boolean {
-  if (webglCache === null) webglCache = detectWebgl(() => document.createElement('canvas'))
-  return webglCache
-}
-
-const motionQuery = () =>
-  prefersReducedMotion(typeof window !== 'undefined' && window.matchMedia ? (q) => window.matchMedia(q) : undefined)
-
-// 3D 실패 시 2D로 전환
-class SceneBoundary extends Component<{ fallback: ReactNode; onError: () => void; children: ReactNode }, { failed: boolean }> {
-  state = { failed: false }
-  static getDerivedStateFromError() {
-    return { failed: true }
-  }
-  componentDidCatch() {
-    this.props.onError()
-  }
-  render() {
-    return this.state.failed ? this.props.fallback : this.props.children
-  }
-}
-
 export function CoinStage({ split, reduce3d }: { split: CoinSplit; reduce3d: boolean }) {
   const { principal, grown } = split
-  const [reducedMotion, setReducedMotion] = useState(motionQuery)
-  const [failed, setFailed] = useState(false)
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) return
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const onChange = () => setReducedMotion(mq.matches)
-    mq.addEventListener?.('change', onChange)
-    return () => mq.removeEventListener?.('change', onChange)
-  }, [])
-
-  const use3d = !failed && shouldUse3d({ webgl: hasWebgl(), reduce3d, reducedMotion })
+  const { use3d, onFail } = useUse3d(reduce3d)
   const fallback = <CoinFallback2d principal={principal} grown={grown} />
 
   return (
@@ -54,7 +21,7 @@ export function CoinStage({ split, reduce3d }: { split: CoinSplit; reduce3d: boo
         data-testid={use3d ? 'coin-stage-3d' : 'coin-stage-2d'}
       >
         {use3d ? (
-          <SceneBoundary fallback={fallback} onError={() => setFailed(true)}>
+          <SceneBoundary fallback={fallback} onError={onFail}>
             <Suspense fallback={fallback}>
               <PiggyBank principal={principal} grown={grown} />
             </Suspense>
