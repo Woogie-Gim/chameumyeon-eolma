@@ -140,4 +140,11 @@ describe('messagesEtf.json', () => {
       for (const s of m.template.matchAll(/\{startYear\}(.)/g)) expect(s[1], m.id).toBe('년')
     }
   })
+
+  it('시제 통일: 지금이나 {future} 뒤 같은 문장에 과거형 어미 없음', () => {
+    for (const m of messagesEtf) {
+      expect(m.template, m.id).not.toMatch(/지금[^.]*(었|았|였)/)
+      expect(m.template, m.id).not.toMatch(/\{future\}[^.]*(었|았|였)/)
+    }
+  })
 })

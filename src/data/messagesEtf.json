@@ -39,7 +39,7 @@
     "id": "etf-hunger-calm-03",
     "category": "hunger",
     "tone": "calm",
-    "template": "{startYear}년부터 {amount}을 그대로 두었다면 지금 약 {future}이었을 거예요."
+    "template": "{startYear}년부터 {amount}을 그대로 두었다면 지금은 약 {future}이 되어 있을 거예요."
   },
   {
     "id": "etf-hunger-calm-04",
@@ -57,13 +57,13 @@
     "id": "etf-hunger-stern-02",
     "category": "hunger",
     "tone": "stern",
-    "template": "{startYear}년에 넣었다면 {amount}은 지금 약 {future}이었습니다."
+    "template": "{startYear}년에 넣었다면 {amount}은 지금 약 {future}이 되어 있을 겁니다."
   },
   {
     "id": "etf-hunger-stern-03",
     "category": "hunger",
     "tone": "stern",
-    "template": "그때의 {item} 한 번은 지금 약 {future}의 차이였습니다."
+    "template": "그때 {item} 한 번을 넘겼다면 지금은 약 {future}이 되어 있을 겁니다."
   },
   {
     "id": "etf-hunger-stern-04",
@@ -81,7 +81,7 @@
     "id": "etf-stress-funny-02",
     "category": "stress",
     "tone": "funny",
-    "template": "그때 {item} 대신 숨 한 번 골랐다면 지금 약 {future}이었을지도요."
+    "template": "그때 {item} 대신 숨 한 번 골랐다면 지금은 약 {future}이 되어 있을 거예요."
   },
   {
     "id": "etf-stress-funny-03",
@@ -105,19 +105,19 @@
     "id": "etf-stress-calm-02",
     "category": "stress",
     "tone": "calm",
-    "template": "힘들었던 {startYear}년의 {amount}, 지금은 약 {future}이 되었을 거예요."
+    "template": "힘들었던 {startYear}년의 {amount}, 넣었다면 지금은 약 {future}이 되어 있을 거예요."
   },
   {
     "id": "etf-stress-calm-03",
     "category": "stress",
     "tone": "calm",
-    "template": "그때의 위로 {amount}, 넣었다면 지금 약 {future}이었습니다."
+    "template": "그때의 위로 {amount}, 넣었다면 지금은 약 {future}이 되어 있을 거예요."
   },
   {
     "id": "etf-stress-calm-04",
     "category": "stress",
     "tone": "calm",
-    "template": "{startYear}년의 {item} 값이 지금 약 {future}으로 남았을 수도 있었어요."
+    "template": "{startYear}년의 {item} 값, 그때 넣었다면 지금은 약 {future}이 되어 있을 거예요."
   },
   {
     "id": "etf-stress-stern-01",
@@ -129,7 +129,7 @@
     "id": "etf-stress-stern-02",
     "category": "stress",
     "tone": "stern",
-    "template": "감정이 고른 {amount}은 {startYear}년 이후 약 {future}의 차이가 되었습니다."
+    "template": "기분값 {amount}, {startYear}년에 넣었다면 지금은 약 {future}이 되어 있을 겁니다."
   },
   {
     "id": "etf-stress-stern-03",
@@ -165,7 +165,7 @@
     "id": "etf-reward-funny-04",
     "category": "reward",
     "tone": "funny",
-    "template": "그때의 {item}이 지금 약 {future}짜리 보상으로 바뀌었을지도요."
+    "template": "그때의 {item} 값, 넣었다면 지금은 약 {future}짜리 보상이 되어 있을 거예요."
   },
   {
     "id": "etf-reward-calm-01",
@@ -177,7 +177,7 @@
     "id": "etf-reward-calm-02",
     "category": "reward",
     "tone": "calm",
-    "template": "수고한 {startYear}년의 {amount}, 지금은 약 {future}이었을 거예요."
+    "template": "수고한 {startYear}년의 {amount}, 넣었다면 지금은 약 {future}이 되어 있을 거예요."
   },
   {
     "id": "etf-reward-calm-03",
@@ -189,7 +189,7 @@
     "id": "etf-reward-calm-04",
     "category": "reward",
     "tone": "calm",
-    "template": "그때의 {amount}이 지금 약 {future}이 되었을 수도 있었어요."
+    "template": "그때의 {amount}, 넣어 두었다면 지금은 약 {future}이 되어 있을 거예요."
   },
   {
     "id": "etf-reward-stern-01",
@@ -201,13 +201,13 @@
     "id": "etf-reward-stern-02",
     "category": "reward",
     "tone": "stern",
-    "template": "그때의 {item}은 지금 약 {future}과 맞바뀐 선택이었습니다."
+    "template": "그때의 {item} 값을 넣었다면 지금은 약 {future}이 되어 있을 겁니다."
   },
   {
     "id": "etf-reward-stern-03",
     "category": "reward",
     "tone": "stern",
-    "template": "{startYear}년 이후 {amount}은 약 {future}이 될 수 있었습니다."
+    "template": "{startYear}년 이후 그대로 두었다면 {amount}은 지금 약 {future}이 되어 있을 겁니다."
   },
   {
     "id": "etf-reward-stern-04",
@@ -237,13 +237,13 @@
     "id": "etf-impulse-funny-04",
     "category": "impulse",
     "tone": "funny",
-    "template": "그때의 충동 {amount}이 지금은 약 {future}의 값이었을지도요."
+    "template": "그때의 충동 {amount}, 넣었다면 지금은 약 {future}이 되어 있을 거예요."
   },
   {
     "id": "etf-impulse-calm-01",
     "category": "impulse",
     "tone": "calm",
-    "template": "{startYear}년에 {amount}을 넣었다면 지금 약 {future}이었을 거예요."
+    "template": "{startYear}년에 {amount}을 넣었다면 지금은 약 {future}이 되어 있을 거예요."
   },
   {
     "id": "etf-impulse-calm-02",
@@ -273,18 +273,18 @@
     "id": "etf-impulse-stern-02",
     "category": "impulse",
     "tone": "stern",
-    "template": "그때의 {item}은 지금 약 {future}의 차이로 남았습니다."
+    "template": "그때의 {item} 값을 넘겼다면 지금은 약 {future}이 되어 있을 겁니다."
   },
   {
     "id": "etf-impulse-stern-03",
     "category": "impulse",
     "tone": "stern",
-    "template": "{startYear}년의 충동 {amount}은 지금 약 {future}이 될 수 있었습니다."
+    "template": "{startYear}년의 충동 {amount}, 넣었다면 지금은 약 {future}이 되어 있을 겁니다."
   },
   {
     "id": "etf-impulse-stern-04",
     "category": "impulse",
     "tone": "stern",
-    "template": "충동의 {amount}, {startYear}년 이후로는 약 {future}의 값이었습니다."
+    "template": "충동의 {amount}, {startYear}년에 넣었다면 지금은 약 {future}이 되어 있을 겁니다."
   }
 ]
