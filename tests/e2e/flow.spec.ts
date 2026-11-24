@@ -1,12 +1,12 @@
 // 입력 → 결과 → 참았어요 → 기록 시나리오
 import { expect, test } from '@playwright/test'
-import { shot } from './helpers.ts'
+import { SHOT_VIEWPORT, shot } from './helpers.ts'
 
 const DISCLAIMER = '가정 시뮬레이션이며 수익을 보장하지 않습니다. 과거 성과는 미래를 보장하지 않습니다.'
 const ETF_DISCLAIMER = '지수 가격 기준이며 배당, 보수, 환율은 반영하지 않았습니다.'
 const BRAND = '스타벅스'
 
-test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true })
+test.use({ viewport: SHOT_VIEWPORT, hasTouch: true, isMobile: true })
 
 test('상호명 거부, 환산, 참았어요, 기록 확인', async ({ page }) => {
   await page.goto('/')

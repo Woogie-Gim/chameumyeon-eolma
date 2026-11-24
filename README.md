@@ -8,7 +8,7 @@
 | --- | --- | --- | --- | --- |
 | <img src="docs/screenshots/input.png" width="160" alt="입력 화면"> | <img src="docs/screenshots/result-3d.png" width="160" alt="결과 화면 3D 저금통"> | <img src="docs/screenshots/result-2d.png" width="160" alt="결과 화면 2D 폴백"> | <img src="docs/screenshots/log.png" width="160" alt="기록 화면"> | <img src="docs/screenshots/guide.png" width="160" alt="이용 안내 화면"> |
 
-스크린샷은 E2E 테스트가 390×844 뷰포트에서 저장한 화면이다.
+스크린샷은 E2E 테스트가 모바일 뷰포트(390×844) 한 화면 크기로 저장한 것이다. 각 화면의 맨 위에서 캡처하므로 아래쪽 내용은 잘릴 수 있다.
 
 ## 주요 기능
 
@@ -259,6 +259,7 @@ $env:SCREENSHOTS='1'; npm run test:e2e    # PowerShell
   - 배율 1 이상이면 원금 코인은 10개(COIN_BASE)이고 나머지가 불어난 코인이다. 배율 1 미만이면 전부 원금 코인이다. 배율 환산식(COIN_GROWTH)은 바꾸지 않았다.
   - 색은 tokens.css의 `--color-coin-principal*`, `--color-coin-grown*`이다. 원금은 회색 계열, 불어난 만큼은 금색 계열로 명도 차이를 두었다. 3D와 2D 폴백에 같이 적용하고 범례를 붙였다.
 - E2E 스크린샷은 `SCREENSHOTS=1`일 때만 `docs/screenshots/`에 저장한다.
+  - (보정) 전체 페이지가 아니라 모바일 뷰포트(390×844) 크기로, 페이지 맨 위에서 캡처한다. 3D 결과는 코인 보간이 끝나도록 2.5초 기다린 뒤 찍는다.
   - bash: `SCREENSHOTS=1 npm run test:e2e`
   - PowerShell: `$env:SCREENSHOTS='1'; npm run test:e2e`
 - 헤드리스 E2E는 소프트웨어 WebGL(swiftshader) 실행 인자를 쓴다.

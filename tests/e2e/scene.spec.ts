@@ -1,8 +1,8 @@
 // 3D 저금통과 2D 폴백
 import { expect, test } from '@playwright/test'
-import { gotoResult, shot } from './helpers.ts'
+import { SHOT_VIEWPORT, gotoResult, shot } from './helpers.ts'
 
-test.use({ viewport: { width: 390, height: 844 } })
+test.use({ viewport: SHOT_VIEWPORT })
 
 const stageLabel = /^원금 코인 \d+개, 불어난 코인 \d+개 쌓임$/
 
