@@ -1,12 +1,16 @@
 # 참으면 얼마?
 
-사려던 금액을 가정 이율과 과거 지수 상승률로 환산해 3D 저금통과 함께 보여 주는 충동 소비 억제 웹앱이다. 서버 없이 정적 파일만으로 동작한다.
+사려던 금액을 가정 이율과 과거 지수 상승률로 환산해 3D 저금통과 저울로 보여 주는 충동 소비 억제 웹앱이다. 서버 없이 정적 파일만으로 동작한다.
 
 > 가정 시뮬레이션이며 수익을 보장하지 않습니다. 과거 성과는 미래를 보장하지 않습니다.
 
-| 입력 | 결과(3D) | 결과(2D 폴백) | 기록 | 이용 안내 |
-| --- | --- | --- | --- | --- |
-| <img src="docs/screenshots/input.png" width="160" alt="입력 화면"> | <img src="docs/screenshots/result-3d.png" width="160" alt="결과 화면 3D 저금통"> | <img src="docs/screenshots/result-2d.png" width="160" alt="결과 화면 2D 폴백"> | <img src="docs/screenshots/log.png" width="160" alt="기록 화면"> | <img src="docs/screenshots/guide.png" width="160" alt="이용 안내 화면"> |
+| 입력 | 결과(3D 저금통) | 결과(3D 저울) | 결과(2D 폴백) |
+| --- | --- | --- | --- |
+| <img src="docs/screenshots/input.png" width="160" alt="입력 화면"> | <img src="docs/screenshots/result-3d.png" width="160" alt="결과 화면 3D 저금통"> | <img src="docs/screenshots/result-scale.png" width="160" alt="결과 화면 3D 저울"> | <img src="docs/screenshots/result-2d.png" width="160" alt="결과 화면 2D 폴백"> |
+
+| 기록 | 재물운 타로 | 이용 안내 |
+| --- | --- | --- |
+| <img src="docs/screenshots/log.png" width="160" alt="기록 화면"> | <img src="docs/screenshots/tarot.png" width="160" alt="재물운 타로 화면"> | <img src="docs/screenshots/guide.png" width="160" alt="이용 안내 화면"> |
 
 스크린샷은 E2E 테스트가 모바일 뷰포트(390×844) 한 화면 크기로 저장한 것이다. 각 화면의 맨 위에서 캡처하므로 아래쪽 내용은 잘릴 수 있다.
 
@@ -18,8 +22,10 @@
   - 적금형: 매달 같은 금액을 넣는 월 복리
   - ETF 타임머신형: N년 전 초에 넣었다면 기준 연도 말에 얼마인지 계산한다. 기술주 ETF형과 대형주 ETF형의 과거 연간 상승률을 쓴다.
 - **3D 저금통**: 원금 대비 배율만큼 코인을 쌓는다. 원금 코인과 불어난 코인은 색으로 구분한다. WebGL 미지원, 동작 줄이기 설정, 저사양 3D 끄기 설정에서는 같은 정보를 2D 그래픽으로 보여 준다.
+- **3D 저울**: 결과 화면에서 저금통과 저울을 바꿔 볼 수 있다(기본은 저금통). 한쪽 접시에는 지금 쓰는 금액 더미, 다른 쪽에는 환산 금액 코인 더미를 올리고 두 금액의 비율만큼 기울인다. ETF형이 하락한 구간에서는 쓰는 금액 쪽으로 기운다. 2D 폴백은 막대 두 개 비교다.
 - **한마디**: 미리 작성해 둔 문구 사전에서 카테고리, 금액 구간, 톤에 맞는 문구를 하나 고른다.
 - **선택과 기록**: 참았어요 또는 샀어요/먹었어요를 기록한다. 누적 참은 금액, 연속 일수, 최근 7일 그래프를 보여 준다.
+- **재물운 타로**: 하루에 한 장, 날짜로 정해지는 카드를 뒤집어 카드 이름, 키워드, 소비 조언 한 줄을 본다. 재미로만 보는 오락 콘텐츠이며 환산 결과와 소비 기록에는 영향이 없다. 다시 뽑기, 포인트, 등급, 뽑기 기록은 없다. 3D 카드 뒤집기와 CSS 뒤집기 2D 폴백이 있다.
 - **설정**: 가정 이율을 데이터 범위 안에서 조정할 수 있다. 저사양 3D 끄기, 데이터 초기화, 이용 안내 화면을 제공한다.
 
 ## 설계 근거
@@ -61,14 +67,19 @@ src/
   core/        순수 로직
     calc.ts          예금형, 적금형, ETF 타임머신 계산과 시작 연도 범위
     coinCount.ts     배율 → 코인 수, 원금 코인과 불어난 코인 분리
+    scaleTilt.ts     두 금액 비율 → 저울 기울기, 대체 텍스트
+    tarot.ts         날짜 시드 카드 선택, 하루 한 장 판정, 조언 문구
     inputFilter.ts   직접 입력 판정(사전 매칭, 해시 대조)
     messagePick.ts   문구 선택
     template.ts      자리표시자 치환, 조사 보정
     copy.ts          고정 문구, 입력 안내, 이용 안내 문구
     format.ts, stats.ts, fallback.ts, textNorm.ts
   data/        정적 JSON (rates, returns, items, messages, messagesEtf, tarot, blockedHashes)
-  scenes/      CoinStage(3D/2D 선택), PiggyBank(three.js, 지연 로드), CoinFallback2d(SVG)
-  screens/     Input, Result, Choice, Log, Settings, Guide
+  scenes/      useUse3d(3D/2D 판정 훅), SceneBoundary(3D 실패 시 폴백)
+               CoinStage → PiggyBank(3D, 지연 로드) / CoinFallback2d(SVG)
+               ScaleStage → Scale(3D, 지연 로드) / ScaleFallback2d(막대 SVG)
+               TarotStage → TarotCard(3D, 지연 로드) / TarotFallback2d(CSS 뒤집기)
+  screens/     Input, Result, Choice, Log, Tarot, Settings, Guide
   store/       localStorage 래퍼(허용 필드만 읽고 씀)
   styles/      tokens.css(디자인 토큰), app.css
 scripts/       fetch-data.ts, scan-banned.ts, build-blocklist.ts, banned-terms.txt, allow-tokens.txt
@@ -84,13 +95,17 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSIO
   └─ Draft { itemId, label, category, amount }
 결과 화면
   ├─ calc: futureValueCompound / installmentFutureValue / timeMachine  ← rates.json, returns.json, 설정 이율
-  ├─ coinSplit → CoinStage → PiggyBank(3D) 또는 CoinFallback2d(2D)
+  ├─ 비교 쌍 { 원금 또는 총 납입액, 환산 금액 }
+  │    ├─ coinSplit → CoinStage → PiggyBank(3D) 또는 CoinFallback2d(2D)
+  │    └─ scaleTilt → ScaleStage → Scale(3D) 또는 ScaleFallback2d(2D)
   └─ messagePick → fillTemplate  ← messages.json, messagesEtf.json
 선택 화면 → store.addRecord { date, itemId, amount, choice } → localStorage
 기록 화면 ← store.getRecords → stats(누적, 연속 일수, 7일 그래프)
+타로 화면 ← toDateKey(오늘) + store.getTarot → resolveToday → tarot.json   (환산, 기록과 독립)
+          뒤집기 → store.saveTarot { date, cardId }   (한 건 덮어쓰기)
 ```
 
-화면 전환은 라우터 없이 `App.tsx`의 상태로 한다. 3D 모듈은 `React.lazy`로 분리해 결과 화면에서만 받는다.
+화면 전환은 라우터 없이 `App.tsx`의 상태로 한다. 3D 모듈(PiggyBank, Scale, TarotCard)은 `React.lazy`로 분리해 필요한 화면에서만 받는다.
 
 ## 데이터 정책
 
@@ -107,28 +122,31 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSIO
 
 ## 품질 보증
 
-### 단위 테스트 (Vitest): 13개 파일, 146개
+### 단위 테스트 (Vitest): 15개 파일, 180개
 
 | 파일 | 개수 | 내용 |
 | --- | --- | --- |
 | calc.test.ts | 29 | 복리, 적금, 타임머신 계산, 경계값, 범위 오류, 시작 연도 범위 |
 | inputFilter.test.ts | 21 | 상호명 거부, 일반 명칭 허용, 영문 거부, 결과에 원문 없음, 품목 사전 무결성, 해시 목록 동기화 |
 | data.test.ts | 19 | rates, returns 스키마, 연도 연속성, isSample 일관성, 티커와 지수명 없음 |
+| tarot.test.ts | 15 | 날짜 시드 결정성과 범위, 하루 한 장 판정, 날짜 변경 시 새 카드, 조언 치환, 타로 문구 금칙어 |
 | messages.test.ts | 15 | 문구 규칙(자리표시자, 길이, 권유 어미, 과장, 금칙어, 시제) |
 | coinCount.test.ts | 13 | 코인 수 경계, 단조성, 원금 코인과 불어난 코인 분리 |
+| scaleTilt.test.ts | 12 | 저울 기울기: 0원, 같은 금액, 비율 상한과 하한 경계, 하락 구간, 잘못된 입력, 대체 텍스트 |
+| storage.test.ts | 11 | 허용 필드만 저장, 이율 보정, 손상 데이터 복구, 초기화, 타로 날짜와 id만 저장 |
 | stats.test.ts | 9 | 누적 금액, 연속 일수, 7일 집계 |
-| fallback.test.ts | 7 | 2D 폴백 조건, WebGL과 동작 줄이기 감지 |
+| fallback.test.ts | 8 | 2D 폴백 조건 전체 조합, WebGL과 동작 줄이기 감지 |
 | messages.render.test.ts | 7 | 모든 품목 대입 시 조사 일치, 자리표시자 잔존 없음 |
-| storage.test.ts | 7 | 허용 필드만 저장, 이율 보정, 손상 데이터 복구, 초기화 |
 | format.test.ts | 6 | 원 단위 반올림, 콤마, 원과 퍼센트 표기 |
+| copy.test.ts | 6 | 이용 안내 필수 내용, 타로 고지 문구, 권유 어미, 금칙어 |
 | messagePick.test.ts | 5 | 카테고리, 금액 구간, 톤별 문구 선택 |
-| copy.test.ts | 4 | 이용 안내 필수 내용, 권유 어미, 금칙어 |
 | template.test.ts | 4 | 자리표시자 치환, 조사 보정 |
 
-### E2E (Playwright, Chromium): 2개 파일, 9개
+### E2E (Playwright, Chromium): 3개 파일, 15개
 
 - `flow.spec.ts` (3개): 상호명 거부, 원문 미표시와 미저장, 환산, 참았어요 기록, 기타 소비 처리, 이용 안내 이동
-- `scene.spec.ts` (6개): 3D 캔버스와 대체 텍스트, 2D 폴백(WebGL 미지원, 동작 줄이기, 설정 토글), 2D 코인 색 구분, ETF 한마디 시제, ETF 시작 연도 범위
+- `scene.spec.ts` (8개): 3D 캔버스와 대체 텍스트, 2D 폴백(WebGL 미지원, 동작 줄이기, 설정 토글), 2D 코인 색 구분, ETF 한마디 시제, ETF 시작 연도 범위, 저금통/저울 전환, 저울 2D 폴백
+- `tarot.spec.ts` (4개): 탭 이동 → 키보드로 뒤집기 → 새로고침 후 같은 카드와 뒤집기 버튼 없음, 어제 기록이면 다시 뒤집기 가능, WebGL 미지원 CSS 폴백, 동작 줄이기 2D
 - 헤드리스에서는 소프트웨어 WebGL(swiftshader)로 3D를 렌더링한다.
 
 ### 금칙어 스캔 (`npm run scan:banned`)
@@ -143,6 +161,7 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSIO
 
 - `.github/workflows/ci.yml`: push(main)와 PR마다 실행한다. 순서는 `npm ci` → 금칙어 스캔 → 단위 테스트 → 빌드 → Playwright 브라우저 설치 → E2E다.
 - `.github/workflows/deploy.yml`: main 푸시 시 빌드해 GitHub Pages에 배포한다. CI와 별개 워크플로다.
+- 액션은 node24 런타임 메이저 버전을 쓴다(checkout v7, setup-node v7, configure-pages v6, upload-pages-artifact v5, deploy-pages v5). 빌드 Node 버전은 24다.
 
 ## 실행 방법
 
@@ -227,6 +246,7 @@ $env:SCREENSHOTS='1'; npm run test:e2e    # PowerShell
 - localStorage 스키마
   - `chameum.records.v1`: `[{ date: 'YYYY-MM-DD', itemId, amount, choice: 'saved' | 'spent' }]`
   - `chameum.settings.v1`: `{ depositRate, savingsRate, reduce3d }`
+  - `chameum.tarot.v1`: `{ date: 'YYYY-MM-DD', cardId }` (Phase 4, 한 건 덮어쓰기)
   - 읽을 때 허용 필드만 남기고 이율은 rates.json 범위로 보정한다.
 - 설정의 저사양 3D 끄기는 값만 저장한다. 실제 동작은 Phase 3에서 붙인다.
 - 디자인 값은 `src/styles/tokens.css`에만 둔다. 화면 스타일(`app.css`)은 토큰만 참조한다.
@@ -263,6 +283,27 @@ $env:SCREENSHOTS='1'; npm run test:e2e    # PowerShell
   - bash: `SCREENSHOTS=1 npm run test:e2e`
   - PowerShell: `$env:SCREENSHOTS='1'; npm run test:e2e`
 - 헤드리스 E2E는 소프트웨어 WebGL(swiftshader) 실행 인자를 쓴다.
+
+### Phase 4 재물운 타로와 3D 저울
+
+- 타로
+  - 카드는 로컬 날짜 키(`YYYY-MM-DD`, `toDateKey`)를 fnv-1a 32비트로 해시해 22로 나눈 나머지로 정한다. 같은 날에는 같은 카드가 나오고 날짜가 바뀌면 새로 정해진다. 전날과 같은 카드가 나올 수도 있다.
+  - localStorage(`chameum.tarot.v1`)에는 마지막으로 뒤집은 날짜와 카드 id 한 건만 덮어써 저장한다. 기록이 쌓이지 않으므로 뽑기 통계를 만들 수 없다. 데이터 초기화 때 함께 지운다.
+  - 날짜는 타로 화면에 들어올 때 정한다. 화면을 연 채로 자정을 넘기면 탭을 다시 눌러야 새 카드가 된다.
+  - tarot.json 조언 중 3개는 `{amount}` 자리표시자를 쓴다. 타로는 입력 금액과 무관하므로 숫자 대신 일반 단어 "금액"으로 채운다.
+  - 3D 카드(`TarotCard.tsx`)는 plane 메시와 프로시저럴 무늬(테두리, 마름모, 링, 별)만 쓴다. 텍스처는 쓰지 않는다. 카드 이름과 조언은 HTML로 보여 준다. drei의 Text는 외부 폰트를 받아오므로 쓰지 않았다.
+  - 2D 폴백은 CSS `rotateY` 전환이다. 동작 줄이기 환경에서는 전환 없이 바로 바뀐다.
+  - 접근성: 뒤집기는 일반 버튼이라 키보드로 조작할 수 있다. 카드 영역에는 "뒤집히지 않은 카드 뒷면" 또는 "오늘의 카드: 이름, 키워드 …" 대체 텍스트를 단다. 뒤집은 뒤에는 카드 이름으로 포커스를 옮긴다.
+  - 타로 화면에도 공통 고정 문구(가정 시뮬레이션…)를 함께 표시한다.
+- 저울
+  - 기울기 = 최대 기울기 × ln(배율) / ln(3)이다. 배율은 1/3~3으로 자른다. 배율이 3배 이상이면 최대 0.35rad(약 20°)이고, 1/3 이하면 반대쪽 최대다. 같은 금액이면 수평이다.
+  - 쓰는 금액이 0원이고 환산 금액이 양수면 환산 쪽 최대로 기운다. 반대 경우는 쓰는 금액 쪽 최대다. 둘 다 0원이거나 음수, NaN, 무한대가 들어오면 수평이다.
+  - 비교 기준은 저금통 코인과 같다. 예금형과 ETF형은 지금 쓰는 금액, 적금형은 총 납입액이다.
+  - 쓰는 금액 더미는 블록 10개(COIN_BASE, 원금 1배)로 고정한다. 환산 코인 더미는 `coinSplit`의 코인 수와 색 구분을 그대로 쓴다.
+  - 저금통과 저울 중 무엇을 골랐는지는 저장하지 않는다. 결과 화면에 들어올 때마다 저금통으로 시작한다.
+- 3D 판정 훅(`useUse3d`)과 에러 경계(`SceneBoundary`)를 저금통, 저울, 타로가 함께 쓴다. 폴백 조건은 Phase 3과 같다.
+- three.js와 react-three-fiber 공용 청크는 Vite가 공유 모듈 이름을 따서 `sceneColors-*.js`로 이름 붙인다. 3D 화면에 처음 들어갈 때만 받는다.
+- 금칙어 스캔의 티커 규칙 때문에 3D 코드의 대문자 상수는 `CARD_DEPTH`처럼 밑줄을 넣은 이름을 쓰고, 원주율은 `Math.acos(-1)`로 구한다.
 
 ### 배포 준비
 
