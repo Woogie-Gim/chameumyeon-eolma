@@ -9,17 +9,17 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: package.json 존재 확인
         id: pkg
         run: |
           if [ -f package.json ]; then echo "exists=true" >> "$GITHUB_OUTPUT"; else echo "exists=false" >> "$GITHUB_OUTPUT"; fi
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         if: steps.pkg.outputs.exists == 'true'
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: 의존성 설치
