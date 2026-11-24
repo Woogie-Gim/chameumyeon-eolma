@@ -5,7 +5,7 @@ import rates from '../data/rates.json' with { type: 'json' }
 import returns from '../data/returns.json' with { type: 'json' }
 import type { Settings as SettingsValue } from '../store/storage.ts'
 
-type Props = { settings: SettingsValue; onChange: (s: SettingsValue) => void; onReset: () => void }
+type Props = { settings: SettingsValue; onChange: (s: SettingsValue) => void; onReset: () => void; onOpenGuide: () => void }
 
 function RateSlider({ id, label, value, min, max, onChange }: { id: string; label: string; value: number; min: number; max: number; onChange: (v: number) => void }) {
   return (
@@ -20,7 +20,7 @@ function RateSlider({ id, label, value, min, max, onChange }: { id: string; labe
   )
 }
 
-export function Settings({ settings, onChange, onReset }: Props) {
+export function Settings({ settings, onChange, onReset, onOpenGuide }: Props) {
   const [confirming, setConfirming] = useState(false)
   const [done, setDone] = useState(false)
 
@@ -49,6 +49,9 @@ export function Settings({ settings, onChange, onReset }: Props) {
         <p className="section-label">데이터</p>
         <p className="meta">공개 통계 기반 가정값입니다.</p>
         <p className="meta">이율 기준 {rates.asOf} · 상승률 기준 {returns.asOf}</p>
+        <button type="button" className="btn btn-block" style={{ marginTop: 'var(--space-3)' }} onClick={onOpenGuide}>
+          이용 안내
+        </button>
       </div>
 
       <div className="card">

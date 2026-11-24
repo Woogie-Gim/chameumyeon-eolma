@@ -176,3 +176,7 @@ button, input { font: inherit; color: inherit; }
 .coin-legend .swatch-principal { background: var(--color-coin-principal); border: 1px solid var(--color-coin-principal-edge); }
 .coin-legend .swatch-grown { background: var(--color-coin-grown); border: 1px solid var(--color-coin-grown-edge); }
 .coin-fallback .label { fill: var(--color-text); font-size: 14px; font-weight: 700; }
+
+.guide-heading { font-size: var(--font-md); font-weight: var(--weight-bold); margin: 0 0 var(--space-2); }
+.guide-text { font-size: var(--font-sm); line-height: 1.6; margin: 0 0 var(--space-2); }
+.guide-text:last-child { margin-bottom: 0; }

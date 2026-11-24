@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { toDateKey, type Choice as ChoiceValue, type LogRecord } from './core/stats.ts'
 import { Choice } from './screens/Choice.tsx'
+import { Guide } from './screens/Guide.tsx'
 import { Input } from './screens/Input.tsx'
 import { Log } from './screens/Log.tsx'
 import { Result } from './screens/Result.tsx'
@@ -9,7 +10,7 @@ import { Settings } from './screens/Settings.tsx'
 import type { Draft } from './screens/types.ts'
 import { store, type Settings as SettingsValue } from './store/storage.ts'
 
-type Screen = 'input' | 'result' | 'choice' | 'log' | 'settings'
+type Screen = 'input' | 'result' | 'choice' | 'log' | 'settings' | 'guide'
 type Tab = 'input' | 'log' | 'settings'
 
 const TAB_ITEMS: { id: Tab; label: string }[] = [
@@ -24,7 +25,7 @@ function App() {
   const [settings, setSettings] = useState<SettingsValue>(() => store.getSettings())
   const [records, setRecords] = useState<LogRecord[]>(() => store.getRecords())
 
-  const activeTab: Tab = screen === 'log' || screen === 'settings' ? screen : 'input'
+  const activeTab: Tab = screen === 'guide' ? 'settings' : screen === 'log' || screen === 'settings' ? screen : 'input'
 
   function choose(c: ChoiceValue) {
     if (!draft) return
@@ -63,7 +64,10 @@ function App() {
         )}
         {screen === 'choice' && draft && <Choice draft={draft} onChoose={choose} />}
         {screen === 'log' && <Log records={records} today={new Date()} />}
-        {screen === 'settings' && <Settings settings={settings} onChange={changeSettings} onReset={reset} />}
+        {screen === 'settings' && (
+          <Settings settings={settings} onChange={changeSettings} onReset={reset} onOpenGuide={() => setScreen('guide')} />
+        )}
+        {screen === 'guide' && <Guide onBack={() => setScreen('settings')} />}
       </main>
       <nav className="tabbar" aria-label="화면 이동">
         <div className="tabbar-inner">

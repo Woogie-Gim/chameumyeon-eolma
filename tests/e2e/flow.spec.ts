@@ -74,3 +74,21 @@ test('사전에 없는 단어는 기타 소비로 받는다', async ({ page }) =
   await page.getByLabel('금액').fill('5000')
   await expect(page.getByRole('button', { name: '환산하기' })).toBeEnabled()
 })
+
+test('설정에서 이용 안내 화면으로 이동', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: '설정' }).click()
+  await page.getByRole('button', { name: '이용 안내' }).click()
+  await expect(page.getByRole('heading', { name: '이용 안내', level: 1 })).toBeVisible()
+  for (const t of ['서비스 소개', '데이터 출처', '면책', '개인정보', '타로']) {
+    await expect(page.getByRole('heading', { name: t, level: 2 })).toBeVisible()
+  }
+  await expect(page.getByText('배당, 보수, 환율은 반영하지 않았습니다', { exact: false })).toBeVisible()
+  await expect(page.getByText('서버로 아무것도 전송하지 않습니다', { exact: false })).toBeVisible()
+  await expect(page.getByTestId('disclaimer')).toHaveText(DISCLAIMER)
+  await shot(page, 'guide')
+  // 설정 탭이 활성 상태로 유지
+  await expect(page.getByRole('button', { name: '설정', exact: true })).toHaveAttribute('aria-current', 'page')
+  await page.getByRole('button', { name: '설정으로 돌아가기' }).click()
+  await expect(page.getByRole('heading', { name: '설정' })).toBeVisible()
+})
