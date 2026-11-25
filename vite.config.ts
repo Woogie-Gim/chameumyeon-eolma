@@ -3,8 +3,7 @@ import { copyFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import react from '@vitejs/plugin-react'
 import { defineConfig, type Plugin } from 'vite'
-
-import aitDevtools from "@apps-in-toss/devtools/unplugin";
+import aitDevtools from '@apps-in-toss/devtools/unplugin'
 
 // GitHub Pages 하위 경로 배포용. 미지정 시 루트
 const base = process.env.BASE_PATH || '/'
@@ -17,6 +16,11 @@ function ogMeta(): Plugin {
     name: 'og-meta',
     transformIndexHtml: (html) => html.replaceAll('%APP_SITE_URL%', siteUrl).replaceAll('%APP_OG_IMAGE%', `${siteUrl}og.png`),
   }
+}
+
+// 앱인토스 devtools(모의 SDK, 패널)는 개발 서버에서만. build, preview(E2E), Vitest에는 넣지 않는다
+function aitDevtoolsDevOnly(): Plugin {
+  return { ...aitDevtools.vite(), apply: (_config, env) => env.command === 'serve' && !env.isPreview && !process.env.VITEST }
 }
 
 // GitHub Pages는 없는 경로에 404.html을 준다. 새로고침과 하위 경로 진입에서도 앱이 열리도록 index.html을 복사
@@ -36,7 +40,7 @@ function spaFallback(): Plugin {
 
 export default defineConfig({
   base,
-  plugins: [aitDevtools.vite(), react(), ogMeta(), spaFallback()],
+  plugins: [aitDevtoolsDevOnly(), react(), ogMeta(), spaFallback()],
   build: {
     // 3D 청크(three 포함)는 3D 화면에서만 동적 로드되므로 경고 기준을 올림
     chunkSizeWarningLimit: 1000,
