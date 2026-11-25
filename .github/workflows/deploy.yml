@@ -29,12 +29,15 @@ jobs:
       - name: 의존성 설치
         run: npm ci
 
+      # Pages 주소(base_url)를 OG 절대 URL로 쓰기 위해 빌드 전에 설정
+      - id: pages
+        uses: actions/configure-pages@v6
+
       - name: 빌드
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
+          SITE_URL: ${{ steps.pages.outputs.base_url }}/
         run: npm run build
-
-      - uses: actions/configure-pages@v6
 
       - uses: actions/upload-pages-artifact@v5
         with:
