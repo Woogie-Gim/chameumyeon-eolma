@@ -165,3 +165,4 @@ TODO(확정 문구 필요): 이전에 정한 문구를 저장소에서 찾지 �
 - [ ] `npm run build` 통과
 - [ ] `npm run test:e2e` 통과
 - [ ] 위 TODO 항목을 모두 채움
+- [ ] 임시 경로 진단 패널 제거: `src/debug/` 폴더를 지우고 `src/App.tsx`의 `ENTRY`, `DEBUG`, `RouteDebug` 상수와 `{RouteDebug && ...}` 렌더 블록을 지운 뒤 `routing.spec.ts`의 진단 패널 테스트를 지운다.
