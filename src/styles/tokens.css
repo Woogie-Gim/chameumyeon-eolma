@@ -86,6 +86,8 @@
   --border-hair: 1px solid var(--color-border);
   --shadow-card: 0 1px 2px rgb(25 31 40 / 0.04);
   --focus-ring: 3px;
+  --focus-offset: 2px;
+  --underline: 2px;
   --disabled-opacity: 0.4;
 
   /* 크기 */
@@ -101,6 +103,7 @@
   --tarot-stage-h: 280px;
   --tarot-card-w: 140px;
   --tarot-card-h: 220px;
+  --tarot-perspective: 800px;
   --switch-w: 52px;
   --switch-h: 32px;
   --swatch: 12px;
@@ -111,6 +114,7 @@
   --dur-screen: 180ms;
   --dur-flip: 0.7s;
   --press-scale: 0.98;
+  --press-scale-icon: 0.92;
 }
 
 @media (prefers-color-scheme: dark) {

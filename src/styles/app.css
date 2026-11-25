@@ -15,7 +15,7 @@ body {
 button, input { font: inherit; color: inherit; }
 
 /* 키보드 포커스 표시. 외곽선 색은 주변 배경 대비 4.5:1 이상(--color-focus) */
-:focus-visible { outline: var(--focus-ring) solid var(--color-focus); outline-offset: 2px; }
+:focus-visible { outline: var(--focus-ring) solid var(--color-focus); outline-offset: var(--focus-offset); }
 
 .app-header {
   position: sticky;
@@ -95,14 +95,14 @@ button, input { font: inherit; color: inherit; }
 }
 .text-input:focus-visible, .chip:focus-visible, .btn:focus-visible, .tab:focus-visible {
   outline: var(--focus-ring) solid var(--color-focus);
-  outline-offset: 2px;
+  outline-offset: var(--focus-offset);
 }
 /* 입력 화면: 금액이 중심 요소 */
 .amount-row {
   display: flex;
   align-items: baseline;
   gap: var(--space-2);
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: var(--underline) solid var(--color-border);
   padding-bottom: var(--space-2);
 }
 .amount-row:focus-within { border-bottom-color: var(--color-primary); }
@@ -120,7 +120,7 @@ button, input { font: inherit; color: inherit; }
   font-variant-numeric: tabular-nums;
 }
 .amount-input::placeholder { color: var(--color-muted); }
-.amount-input:focus-visible { outline: var(--focus-ring) solid var(--color-focus); outline-offset: 2px; border-radius: var(--radius-s); }
+.amount-input:focus-visible { outline: var(--focus-ring) solid var(--color-focus); outline-offset: var(--focus-offset); border-radius: var(--radius-s); }
 .amount-unit { font-size: var(--font-lg); font-weight: var(--weight-bold); }
 
 /* 칩 그리드. 4열 정렬, 긴 이름은 줄바꿈 */
@@ -268,7 +268,7 @@ button, input { font: inherit; color: inherit; }
   border-radius: 0 0 var(--tab-indicator) var(--tab-indicator);
   background: var(--color-primary);
 }
-.tabbar .tab:focus-visible { outline-offset: -3px; }
+.tabbar .tab:focus-visible { outline-offset: calc(var(--focus-ring) * -1); }
 
 .coin-stage {
   position: relative;
@@ -319,11 +319,11 @@ button, input { font: inherit; color: inherit; }
 .tarot-stage canvas { display: block; }
 .tarot-result { display: flex; flex-direction: column; gap: var(--space-4); }
 .tarot-name { font-size: var(--text-title); font-weight: var(--weight-bold); line-height: 1.35; margin: 0 0 var(--space-1); }
-.tarot-name:focus-visible { outline: var(--focus-ring) solid var(--color-focus); outline-offset: 2px; border-radius: var(--radius-s); }
+.tarot-name:focus-visible { outline: var(--focus-ring) solid var(--color-focus); outline-offset: var(--focus-offset); border-radius: var(--radius-s); }
 .tarot-advice { line-height: 1.6; }
 
 /* 2D 폴백 카드 뒤집기 */
-.tarot-flip { height: 100%; display: flex; align-items: center; justify-content: center; perspective: 800px; }
+.tarot-flip { height: 100%; display: flex; align-items: center; justify-content: center; perspective: var(--tarot-perspective); }
 .tarot-inner {
   position: relative;
   width: var(--tarot-card-w);
@@ -358,6 +358,25 @@ button, input { font: inherit; color: inherit; }
   background: var(--color-surface);
   color: var(--color-muted);
   border: var(--border-hair);
+}
+
+/* 마이크로 인터랙션: 버튼 눌림, 화면 전환 페이드 */
+.btn, .chip, .tab, .header-btn {
+  transition: transform var(--dur-press) ease-out, background-color var(--dur-press) ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:not(:disabled):active, .chip:active, .segmented .tab:active, .header-btn:active { transform: scale(var(--press-scale)); }
+.btn:not(:disabled):active, .chip[aria-pressed='false']:active, .header-btn:not([aria-current]):active { background: var(--color-pressed); }
+.btn-primary:not(:disabled):active, .chip[aria-pressed='true']:active { background: var(--color-primary-pressed); }
+.tabbar .tab:active .tab-icon { transform: scale(var(--press-scale-icon)); }
+.tab-icon { transition: transform var(--dur-press) ease-out; }
+/* 위치 고정 버튼(.cta-bar)이 흔들리지 않도록 투명도만 바꾼다 */
+.screen { animation: screen-fade var(--dur-screen) ease-out; }
+@keyframes screen-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .screen { animation: none; }
+  .btn, .chip, .tab, .header-btn, .tab-icon { transition: none; }
+  .btn:not(:disabled):active, .chip:active, .segmented .tab:active, .header-btn:active, .tabbar .tab:active .tab-icon { transform: none; }
 }
 
 /* 간격 유틸. 컴포넌트 규칙보다 우선하도록 맨 끝에 둔다 */
