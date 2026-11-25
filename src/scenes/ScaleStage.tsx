@@ -26,7 +26,7 @@ export function ScaleStage({ spend, converted, spendLabel, reduce3d }: Props) {
         {use3d ? (
           <SceneBoundary fallback={fallback} onError={onFail}>
             <Suspense fallback={<SceneLoading>{fallback}</SceneLoading>}>
-              <Scale tilt={scaleTilt(spend, converted)} coins={split.total} principal={split.principal} />
+              <Scale tilt={scaleTilt(spend, converted)} coins={split.total} principal={split.principal} onLost={onFail} />
             </Suspense>
           </SceneBoundary>
         ) : (

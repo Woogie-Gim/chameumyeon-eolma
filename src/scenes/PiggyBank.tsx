@@ -4,6 +4,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo, useRef } from 'react'
 import { Color, CylinderGeometry, InstancedMesh, MeshStandardMaterial, Object3D } from 'three'
 import { COIN_MAX } from '../core/coinCount.ts'
+import { watchContextLost } from './contextLost.ts'
 import { readSceneColors, type SceneColors } from './sceneColors.ts'
 
 const COIN_R = 0.2
@@ -121,7 +122,7 @@ function Coins({ target, principal, colors }: { target: number; principal: numbe
   return <instancedMesh ref={mesh} args={[geometry, material, COIN_MAX]} />
 }
 
-export default function PiggyBank({ principal, grown }: { principal: number; grown: number }) {
+export default function PiggyBank({ principal, grown, onLost }: { principal: number; grown: number; onLost: () => void }) {
   const colors = useMemo(() => readSceneColors(), [])
   return (
     <Canvas
@@ -130,7 +131,10 @@ export default function PiggyBank({ principal, grown }: { principal: number; gro
       dpr={[1, 2]}
       gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
       camera={{ position: [0.6, 1.6, 4.4], fov: 40 }}
-      onCreated={({ camera }) => camera.lookAt(0.2, 0.6, 0)}
+      onCreated={({ camera, gl }) => {
+        camera.lookAt(0.2, 0.6, 0)
+        watchContextLost(gl.domElement, onLost)
+      }}
     >
       <ambientLight intensity={0.7} />
       <directionalLight position={[3, 5, 4]} intensity={1.6} />

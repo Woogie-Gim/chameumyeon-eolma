@@ -3,6 +3,7 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { DoubleSide, Shape, type Group } from 'three'
+import { watchContextLost } from './contextLost.ts'
 import { readSceneColors, type SceneColors } from './sceneColors.ts'
 import { starPoints, tarotPattern } from './tarotPattern.ts'
 
@@ -134,7 +135,7 @@ function Card({ id, drawn, colors }: { id: number; drawn: boolean; colors: Scene
   )
 }
 
-export default function TarotCard({ id, drawn }: { id: number; drawn: boolean }) {
+export default function TarotCard({ id, drawn, onLost }: { id: number; drawn: boolean; onLost: () => void }) {
   const colors = useMemo(() => readSceneColors(), [])
   return (
     <Canvas
@@ -143,6 +144,7 @@ export default function TarotCard({ id, drawn }: { id: number; drawn: boolean })
       dpr={[1, 2]}
       gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
       camera={{ position: [0, 0, 4.2], fov: 40 }}
+      onCreated={({ gl }) => watchContextLost(gl.domElement, onLost)}
     >
       <ambientLight intensity={1.3} />
       <directionalLight position={[2, 3, 4]} intensity={1.4} />

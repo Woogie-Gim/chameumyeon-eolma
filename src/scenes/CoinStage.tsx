@@ -24,7 +24,7 @@ export function CoinStage({ split, reduce3d }: { split: CoinSplit; reduce3d: boo
         {use3d ? (
           <SceneBoundary fallback={fallback} onError={onFail}>
             <Suspense fallback={<SceneLoading>{fallback}</SceneLoading>}>
-              <PiggyBank principal={principal} grown={grown} />
+              <PiggyBank principal={principal} grown={grown} onLost={onFail} />
             </Suspense>
           </SceneBoundary>
         ) : (

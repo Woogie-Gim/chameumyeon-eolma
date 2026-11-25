@@ -1,4 +1,5 @@
 // 3D 사용 여부 훅. WebGL 미지원, 저사양 토글, 동작 줄이기 중 하나라도 해당하면 2D
+// onFail은 3D 로딩, 렌더 실패나 WebGL 컨텍스트 소실 때 불러 2D로 전환
 import { useEffect, useState } from 'react'
 import { detectWebgl, prefersReducedMotion, shouldUse3d } from '../core/fallback.ts'
 

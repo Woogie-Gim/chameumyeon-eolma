@@ -43,3 +43,39 @@ test('정상 환경에서는 저장소 안내가 없다', async ({ page }) => {
   await page.getByRole('button', { name: '설정' }).click()
   await expect(page.getByTestId('storage-notice')).toHaveCount(0)
 })
+
+// 캔버스의 WebGL 컨텍스트를 강제로 잃게 한다
+async function loseContext(page: import('@playwright/test').Page, testId: string) {
+  await page.getByTestId(testId).locator('canvas').evaluate((c: HTMLCanvasElement) => {
+    const gl = (c.getContext('webgl2') ?? c.getContext('webgl')) as WebGLRenderingContext | null
+    gl?.getExtension('WEBGL_lose_context')?.loseContext()
+  })
+}
+
+test('WebGL 컨텍스트가 소실되면 저금통이 2D로 바뀐다', async ({ page }) => {
+  await gotoResult(page)
+  await expect(page.getByTestId('coin-stage-3d').locator('canvas')).toBeVisible()
+  await loseContext(page, 'coin-stage-3d')
+  await expect(page.getByTestId('coin-stage-2d')).toBeVisible()
+  await expect(page.locator('canvas')).toHaveCount(0)
+  await expect(page.getByRole('img', { name: /^원금 코인 \d+개/ })).toBeVisible()
+})
+
+test('WebGL 컨텍스트가 소실되면 저울이 2D로 바뀐다', async ({ page }) => {
+  await gotoResult(page)
+  await page.getByRole('group', { name: '연출 선택' }).getByRole('button', { name: '저울' }).click()
+  await expect(page.getByTestId('scale-stage-3d').locator('canvas')).toBeVisible()
+  await loseContext(page, 'scale-stage-3d')
+  await expect(page.getByTestId('scale-stage-2d')).toBeVisible()
+  await expect(page.getByTestId('scale-stage-2d').locator('.scale-bar')).toHaveCount(2)
+})
+
+test('WebGL 컨텍스트가 소실되면 타로 카드가 2D로 바뀐다', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: '타로' }).click()
+  await expect(page.getByTestId('tarot-stage-3d').locator('canvas')).toBeVisible()
+  await loseContext(page, 'tarot-stage-3d')
+  await expect(page.getByTestId('tarot-stage-2d')).toBeVisible()
+  await page.getByRole('button', { name: '카드 뒤집기' }).click()
+  await expect(page.getByTestId('tarot-name')).toBeVisible()
+})

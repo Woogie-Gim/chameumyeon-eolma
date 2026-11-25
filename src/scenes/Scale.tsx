@@ -4,6 +4,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 import { Color, CylinderGeometry, InstancedMesh, MeshStandardMaterial, Object3D, Quaternion, Vector3, type Group, type Mesh } from 'three'
 import { COIN_BASE, COIN_MAX } from '../core/coinCount.ts'
+import { watchContextLost } from './contextLost.ts'
 import { readSceneColors, type SceneColors } from './sceneColors.ts'
 
 const PIVOT_Y = 1.7
@@ -182,7 +183,7 @@ function Balance({ tilt, coins, principal, colors }: { tilt: number; coins: numb
   )
 }
 
-export default function Scale({ tilt, coins, principal }: { tilt: number; coins: number; principal: number }) {
+export default function Scale({ tilt, coins, principal, onLost }: { tilt: number; coins: number; principal: number; onLost: () => void }) {
   const colors = useMemo(() => readSceneColors(), [])
   return (
     <Canvas
@@ -191,7 +192,10 @@ export default function Scale({ tilt, coins, principal }: { tilt: number; coins:
       dpr={[1, 2]}
       gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
       camera={{ position: [0, 1.5, 4.6], fov: 40 }}
-      onCreated={({ camera }) => camera.lookAt(0, 1.0, 0)}
+      onCreated={({ camera, gl }) => {
+        camera.lookAt(0, 1.0, 0)
+        watchContextLost(gl.domElement, onLost)
+      }}
     >
       <ambientLight intensity={0.8} />
       <directionalLight position={[3, 5, 4]} intensity={1.5} />

@@ -22,7 +22,7 @@ export function TarotStage({ id, name, keyword, drawn, reduce3d }: Props) {
       {use3d ? (
         <SceneBoundary fallback={fallback} onError={onFail}>
           <Suspense fallback={<SceneLoading>{fallback}</SceneLoading>}>
-            <TarotCard id={id} drawn={drawn} />
+            <TarotCard id={id} drawn={drawn} onLost={onFail} />
           </Suspense>
         </SceneBoundary>
       ) : (
