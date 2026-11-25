@@ -11,10 +11,17 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     rolldownOptions: {
       output: {
-        // three와 react-three 계열을 three 청크로 묶는다
-        // 의존성(react 등)까지 끌어오면 메인 청크가 three 청크를 정적으로 가져가므로 끈다
+        // three, react-three와 그 전용 의존성을 three 청크로 묶는다
+        // 의존성 재귀 포함을 켜면 react까지 끌려와 메인 청크가 three 청크를 정적으로 가져가므로 끈다
+        // scheduler는 react-dom과 공유하므로 넣지 않는다
         codeSplitting: {
-          groups: [{ name: 'three', test: /node_modules[\\/](three|@react-three)[\\/]/, includeDependenciesRecursively: false }],
+          groups: [
+            {
+              name: 'three',
+              test: /node_modules[\\/](three|@react-three|zustand|its-fine|suspend-react|use-sync-external-store|react-use-measure)[\\/]/,
+              includeDependenciesRecursively: false,
+            },
+          ],
         },
       },
     },
