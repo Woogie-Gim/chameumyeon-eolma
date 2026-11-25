@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && ait build",
     "preview": "vite preview",
     "lint": "oxlint",
     "test": "vitest run",
@@ -16,9 +16,11 @@
     "store:console": "tsx scripts/console-fields.ts",
     "scan:banned": "tsx scripts/scan-banned.ts",
     "fetch:data": "tsx scripts/fetch-data.ts",
-    "build:blocklist": "tsx scripts/build-blocklist.ts"
+    "build:blocklist": "tsx scripts/build-blocklist.ts",
+    "deploy": "ait deploy"
   },
   "dependencies": {
+    "@apps-in-toss/web-framework": "^3.11.0",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
     "react": "^19.3.1",
@@ -40,6 +42,7 @@
     "tsx": "^4.23.15",
     "typescript": "~7.0.2",
     "vite": "^8.3.6",
-    "vitest": "^5.1.1"
+    "vitest": "^5.1.1",
+    "@apps-in-toss/devtools": "^3.11.0"
   }
 }

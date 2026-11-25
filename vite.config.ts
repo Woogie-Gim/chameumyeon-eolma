@@ -4,6 +4,8 @@ import { resolve } from 'node:path'
 import react from '@vitejs/plugin-react'
 import { defineConfig, type Plugin } from 'vite'
 
+import aitDevtools from "@apps-in-toss/devtools/unplugin";
+
 // GitHub Pages 하위 경로 배포용. 미지정 시 루트
 const base = process.env.BASE_PATH || '/'
 // 배포 주소(끝 슬래시 포함). OG 태그는 절대 URL이 필요해 deploy.yml에서 넣는다. 없으면 base 기준 경로
@@ -34,7 +36,7 @@ function spaFallback(): Plugin {
 
 export default defineConfig({
   base,
-  plugins: [react(), ogMeta(), spaFallback()],
+  plugins: [aitDevtools.vite(), react(), ogMeta(), spaFallback()],
   build: {
     // 3D 청크(three 포함)는 3D 화면에서만 동적 로드되므로 경고 기준을 올림
     chunkSizeWarningLimit: 1000,
