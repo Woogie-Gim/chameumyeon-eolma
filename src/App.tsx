@@ -1,5 +1,5 @@
 // 앱 셸. 라우터 없이 상태로 화면 전환
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toDateKey, type Choice as ChoiceValue, type LogRecord } from './core/stats.ts'
 import { Choice } from './screens/Choice.tsx'
 import { Guide } from './screens/Guide.tsx'
@@ -28,8 +28,21 @@ function App() {
   const [settings, setSettings] = useState<SettingsValue>(() => store.getSettings())
   const [records, setRecords] = useState<LogRecord[]>(() => store.getRecords())
   const today = useToday()
+  // 안내 화면을 열기 전 화면. 돌아가기에 사용
+  const [guideFrom, setGuideFrom] = useState<Exclude<Screen, 'guide'>>('settings')
 
-  const activeTab: Tab = screen === 'guide' ? 'settings' : screen === 'log' || screen === 'tarot' || screen === 'settings' ? screen : 'input'
+  const base = screen === 'guide' ? guideFrom : screen
+  const activeTab: Tab = base === 'log' || base === 'tarot' || base === 'settings' ? base : 'input'
+
+  // 화면이 바뀌면 맨 위부터 보여 준다
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [screen])
+
+  function openGuide() {
+    if (screen !== 'guide') setGuideFrom(screen)
+    setScreen('guide')
+  }
 
   function choose(c: ChoiceValue) {
     if (!draft) return
@@ -53,6 +66,14 @@ function App() {
 
   return (
     <>
+      <header className="app-header">
+        <div className="app-header-inner">
+          <span className="app-name">참으면 얼마?</span>
+          <button type="button" className="header-btn" aria-current={screen === 'guide' ? 'page' : undefined} onClick={openGuide}>
+            안내
+          </button>
+        </div>
+      </header>
       <main className="app">
         {screen === 'input' && (
           <Input
@@ -70,9 +91,9 @@ function App() {
         {screen === 'log' && <Log records={records} today={today} />}
         {screen === 'tarot' && <Tarot todayKey={toDateKey(today)} reduce3d={settings.reduce3d} />}
         {screen === 'settings' && (
-          <Settings settings={settings} persistent={store.isPersistent()} onChange={changeSettings} onReset={reset} onOpenGuide={() => setScreen('guide')} />
+          <Settings settings={settings} persistent={store.isPersistent()} onChange={changeSettings} onReset={reset} onOpenGuide={openGuide} />
         )}
-        {screen === 'guide' && <Guide onBack={() => setScreen('settings')} />}
+        {screen === 'guide' && <Guide onBack={() => setScreen(guideFrom)} />}
       </main>
       <nav className="tabbar" aria-label="화면 이동">
         <div className="tabbar-inner">

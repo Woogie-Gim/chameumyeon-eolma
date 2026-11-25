@@ -89,6 +89,6 @@ test('설정에서 이용 안내 화면으로 이동', async ({ page }) => {
   await shot(page, 'guide')
   // 설정 탭이 활성 상태로 유지
   await expect(page.getByRole('button', { name: '설정', exact: true })).toHaveAttribute('aria-current', 'page')
-  await page.getByRole('button', { name: '설정으로 돌아가기' }).click()
+  await page.getByRole('button', { name: '돌아가기' }).click()
   await expect(page.getByRole('heading', { name: '설정' })).toBeVisible()
 })

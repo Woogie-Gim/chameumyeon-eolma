@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { scanText } from '../../scripts/scan-banned.ts'
-import { AMOUNT_MESSAGES, DISCLAIMER, ERROR_COPY, STORAGE_MEMORY_NOTICE, TAROT_NOTICE, guideSections } from '../../src/core/copy.ts'
+import { AMOUNT_MESSAGES, DISCLAIMER, ERROR_COPY, PRIVACY_DETAIL, PRIVACY_NOTE, STORAGE_MEMORY_NOTICE, TAROT_NOTICE, guideSections } from '../../src/core/copy.ts'
 
 const ROOT = resolve(import.meta.dirname, '../..')
 const readList = (file: string) =>
@@ -75,5 +75,19 @@ describe('금액 입력 안내 문구', () => {
   // 입력 안내는 "입력해 주세요" 형태의 요청을 허용(입력 필터 안내와 같은 규칙). 권유 표현과 금칙어만 검사
   it('금칙어와 권유 표현 없음', () => {
     for (const t of Object.values(AMOUNT_MESSAGES)) expect(scanText(t, 'copy', allow, banned), t).toEqual([])
+  })
+})
+
+describe('개인정보 안내 문구', () => {
+  it('요청 원문 그대로이고 기기 저장 사실을 보충한다', () => {
+    expect(PRIVACY_NOTE).toBe('입력 내용은 서버로 전송되거나 저장되지 않아요.')
+    expect(PRIVACY_DETAIL).toContain('이 기기에만')
+  })
+
+  it('권유 어미, 금칙어 없음', () => {
+    for (const t of [PRIVACY_NOTE, PRIVACY_DETAIL]) {
+      expect(t).not.toMatch(IMPERATIVE)
+      expect(scanText(t, 'copy', allow, banned), t).toEqual([])
+    }
   })
 })

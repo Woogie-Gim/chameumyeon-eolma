@@ -9,6 +9,11 @@ export const ETF_DISCLAIMER = '지수 가격 기준이며 배당, 보수, 환율
 // 타로 화면 고정 문구
 export const TAROT_NOTICE = '재미로만 보는 오락 콘텐츠입니다. 카드 결과는 환산 결과나 소비 기록과 관계없습니다.'
 
+// 개인정보 안내. 안내 화면 상단과 입력 화면에 표시
+export const PRIVACY_NOTE = '입력 내용은 서버로 전송되거나 저장되지 않아요.'
+// 기록은 기기 저장소에 남으므로 함께 표시
+export const PRIVACY_DETAIL = '참은 기록(품목, 금액, 날짜)은 이 기기에만 남아요.'
+
 // 저장소를 쓸 수 없을 때 설정 화면 안내
 export const STORAGE_MEMORY_NOTICE = '이 브라우저에서는 기록을 저장할 수 없어 앱을 닫으면 사라져요.'
 

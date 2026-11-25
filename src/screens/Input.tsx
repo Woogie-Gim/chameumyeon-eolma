@@ -1,7 +1,7 @@
 // 입력 화면. 직접 입력 원문은 입력 칸에만 잠시 머물고 판정 후 비운다
 import { useState, type FormEvent } from 'react'
 import { parseAmountInput } from '../core/amount.ts'
-import { AMOUNT_MESSAGES } from '../core/copy.ts'
+import { AMOUNT_MESSAGES, PRIVACY_NOTE } from '../core/copy.ts'
 import { formatNumber } from '../core/format.ts'
 import { filterInput, type Category } from '../core/inputFilter.ts'
 import { attachParticle } from '../core/template.ts'
@@ -99,6 +99,7 @@ export function Input({ initial, onSubmit }: { initial: Draft | null; onSubmit: 
           />
           <button type="submit" className="btn" disabled={text.trim() === ''}>확인</button>
         </div>
+        <p className="meta" style={{ marginTop: 'var(--space-2)' }}>{PRIVACY_NOTE}</p>
         {notice && (
           <p className={`notice notice-${notice.kind}`} role={notice.kind === 'error' ? 'alert' : 'status'}>
             {notice.text}
