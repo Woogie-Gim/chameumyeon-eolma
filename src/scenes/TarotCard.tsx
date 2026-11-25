@@ -146,8 +146,8 @@ export default function TarotCard({ id, drawn, onLost }: { id: number; drawn: bo
       camera={{ position: [0, 0, 4.2], fov: 40 }}
       onCreated={({ gl }) => watchContextLost(gl.domElement, onLost)}
     >
-      <ambientLight intensity={1.3} />
-      <directionalLight position={[2, 3, 4]} intensity={1.4} />
+      <ambientLight intensity={1.9} />
+      <directionalLight position={[2, 3, 4]} intensity={1.5} />
       <Card id={id} drawn={drawn} colors={colors} />
     </Canvas>
   )

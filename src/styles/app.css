@@ -285,17 +285,21 @@ button, input { font: inherit; color: inherit; }
 .guide-text { font-size: var(--text-caption); line-height: 1.6; margin: 0 0 var(--space-2); }
 .guide-text:last-child { margin-bottom: 0; }
 
+/* 타로 화면: 카드 영역 > 결과 카드. 앞뒷면 모두 네이비 + 틸 톤 */
+.tarot-notice { margin: 0; }
 .tarot-stage {
   position: relative;
   height: var(--tarot-stage-h);
+  border: var(--border-hair);
   border-radius: var(--radius-card);
   background: var(--color-stage-bg);
   overflow: hidden;
 }
 .tarot-stage canvas { display: block; }
-.tarot-name { font-size: var(--font-lg); font-weight: var(--weight-bold); margin: 0 0 var(--space-1); }
-.tarot-name:focus-visible { outline: var(--focus-ring) solid var(--color-focus); outline-offset: 2px; }
-.tarot-advice { margin-top: var(--space-3); margin-bottom: var(--space-3); }
+.tarot-result { display: flex; flex-direction: column; gap: var(--space-4); }
+.tarot-name { font-size: var(--text-title); font-weight: var(--weight-bold); line-height: 1.35; margin: 0 0 var(--space-1); }
+.tarot-name:focus-visible { outline: var(--focus-ring) solid var(--color-focus); outline-offset: 2px; border-radius: var(--radius-s); }
+.tarot-advice { line-height: 1.6; }
 
 /* 2D 폴백 카드 뒤집기 */
 .tarot-flip { height: 100%; display: flex; align-items: center; justify-content: center; perspective: 800px; }

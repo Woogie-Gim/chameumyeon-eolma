@@ -31,15 +31,17 @@ export function Tarot({ todayKey, reduce3d }: { todayKey: string; reduce3d: bool
   return (
     <section className="screen" aria-labelledby="tarot-title">
       <h1 id="tarot-title" className="screen-title">오늘의 재물운 타로</h1>
-      <p className="notice notice-other" data-testid="tarot-notice">{TAROT_NOTICE}</p>
+      <p className="notice notice-other tarot-notice" data-testid="tarot-notice">{TAROT_NOTICE}</p>
 
       <TarotStage id={card.id} name={card.name} keyword={card.keyword} drawn={drawn} reduce3d={reduce3d} />
 
-      <div className="card" aria-live="polite">
+      <div className="card tarot-result" aria-live="polite">
         {drawn ? (
           <>
-            <h2 ref={titleRef} tabIndex={-1} className="tarot-name" data-testid="tarot-name">{card.name}</h2>
-            <p className="meta">키워드 · <strong>{card.keyword}</strong></p>
+            <div>
+              <h2 ref={titleRef} tabIndex={-1} className="tarot-name" data-testid="tarot-name">{card.name}</h2>
+              <p className="meta">키워드 · <strong>{card.keyword}</strong></p>
+            </div>
             <p className="quote tarot-advice">{card.adviceTemplate}</p>
             <p className="meta">오늘의 카드는 내일 바뀌어요.</p>
           </>
