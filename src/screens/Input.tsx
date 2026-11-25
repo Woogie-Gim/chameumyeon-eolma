@@ -59,12 +59,33 @@ export function Input({ initial, onSubmit }: { initial: Draft | null; onSubmit: 
   const ready = picked !== null && amount >= 1
 
   return (
-    <section className="screen" aria-labelledby="input-title">
+    <section className="screen screen-with-cta" aria-labelledby="input-title">
       <h1 id="input-title" className="screen-title">무엇을 참아 볼까요?</h1>
+
+      <div className="card amount-card">
+        <label className="section-label" htmlFor="amount">금액</label>
+        <div className="amount-row">
+          <input
+            id="amount"
+            className="amount-input"
+            aria-label="금액"
+            inputMode="numeric"
+            autoComplete="off"
+            placeholder="0"
+            value={amount > 0 ? formatNumber(amount) : ''}
+            onChange={(e) => changeAmount(e.target.value)}
+          />
+          <span className="amount-unit">원</span>
+        </div>
+        {amountNotice && (
+          <p className="notice notice-other" role="status" data-testid="amount-notice">{amountNotice}</p>
+        )}
+        {picked && <p className="meta mt-2">선택한 품목: {picked.label}</p>}
+      </div>
 
       <div className="card">
         <p className="section-label">어떤 마음인가요</p>
-        <div className="chips" role="group" aria-label="카테고리">
+        <div className="chip-grid" role="group" aria-label="카테고리">
           {CATEGORIES.map((c) => (
             <button key={c} type="button" className="chip" aria-pressed={category === c} onClick={() => pickCategory(c)}>
               {CATEGORY_LABELS[c]}
@@ -74,7 +95,7 @@ export function Input({ initial, onSubmit }: { initial: Draft | null; onSubmit: 
         {chipItems.length > 0 && (
           <>
             <p className="section-label mt-4">품목</p>
-            <div className="chips" role="group" aria-label="품목">
+            <div className="chip-grid" role="group" aria-label="품목">
               {chipItems.map((i) => (
                 <button key={i.id} type="button" className="chip" aria-pressed={picked?.itemId === i.id} onClick={() => pickItem(i)}>
                   {i.label}
@@ -107,35 +128,17 @@ export function Input({ initial, onSubmit }: { initial: Draft | null; onSubmit: 
         )}
       </form>
 
-      <div className="card">
-        <label className="section-label" htmlFor="amount">금액</label>
-        <div className="field-row">
-          <input
-            id="amount"
-            className="text-input amount-input"
-            aria-label="금액"
-            inputMode="numeric"
-            autoComplete="off"
-            placeholder="0"
-            value={amount > 0 ? formatNumber(amount) : ''}
-            onChange={(e) => changeAmount(e.target.value)}
-          />
-          <span className="amount-unit">원</span>
-        </div>
-        {amountNotice && (
-          <p className="notice notice-other" role="status" data-testid="amount-notice">{amountNotice}</p>
-        )}
-        {picked && <p className="meta mt-2">선택한 품목: {picked.label}</p>}
+      {/* 주요 버튼. 탭 바 위에 고정 */}
+      <div className="cta-bar">
+        <button
+          type="button"
+          className="btn btn-primary btn-block"
+          disabled={!ready}
+          onClick={() => picked && onSubmit({ ...picked, amount })}
+        >
+          환산하기
+        </button>
       </div>
-
-      <button
-        type="button"
-        className="btn btn-primary btn-block"
-        disabled={!ready}
-        onClick={() => picked && onSubmit({ ...picked, amount })}
-      >
-        환산하기
-      </button>
     </section>
   )
 }

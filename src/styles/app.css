@@ -17,11 +17,6 @@ button, input { font: inherit; color: inherit; }
 /* 키보드 포커스 표시. 외곽선 색은 주변 배경 대비 4.5:1 이상(--color-focus) */
 :focus-visible { outline: var(--focus-ring) solid var(--color-focus); outline-offset: 2px; }
 
-/* 간격 유틸 */
-.mt-2 { margin-top: var(--space-2); }
-.mt-3 { margin-top: var(--space-3); }
-.mt-4 { margin-top: var(--space-4); }
-
 .app-header {
   position: sticky;
   top: 0;
@@ -102,8 +97,57 @@ button, input { font: inherit; color: inherit; }
   outline: var(--focus-ring) solid var(--color-focus);
   outline-offset: 2px;
 }
-.amount-input { font-size: var(--text-title); font-weight: var(--weight-bold); text-align: right; font-variant-numeric: tabular-nums; }
-.amount-unit { align-self: center; font-size: var(--font-lg); }
+/* 입력 화면: 금액이 중심 요소 */
+.amount-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: var(--space-2);
+}
+.amount-row:focus-within { border-bottom-color: var(--color-primary); }
+.amount-input {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--btn-h-lg);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: var(--text-hero);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-hero);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.amount-input::placeholder { color: var(--color-muted); }
+.amount-input:focus-visible { outline: var(--focus-ring) solid var(--color-focus); outline-offset: 2px; border-radius: var(--radius-s); }
+.amount-unit { font-size: var(--font-lg); font-weight: var(--weight-bold); }
+
+/* 칩 그리드. 4열 정렬, 긴 이름은 줄바꿈 */
+.chip-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); }
+.chip-grid .chip {
+  padding: var(--space-1);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-alt);
+  border-color: transparent;
+  line-height: 1.25;
+  word-break: keep-all;
+}
+.chip-grid .chip[aria-pressed='true'] { background: var(--color-primary); border-color: var(--color-primary); }
+
+/* 하단 고정 주요 버튼. 탭 바 바로 위 */
+.screen-with-cta { padding-bottom: calc(var(--btn-h-lg) + var(--space-4)); }
+.cta-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+  z-index: 1;
+  padding: var(--space-3) var(--gutter);
+  background: var(--color-bg);
+  border-top: var(--border-hair);
+}
+.cta-bar .btn { display: block; max-width: calc(var(--content-max) - var(--gutter) * 2); margin: 0 auto; }
 
 .btn {
   min-height: var(--touch-min);
@@ -281,3 +325,8 @@ button, input { font: inherit; color: inherit; }
   color: var(--color-muted);
   border: var(--border-hair);
 }
+
+/* 간격 유틸. 컴포넌트 규칙보다 우선하도록 맨 끝에 둔다 */
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
