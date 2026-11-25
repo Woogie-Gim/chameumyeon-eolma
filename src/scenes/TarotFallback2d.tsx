@@ -4,7 +4,7 @@ import { starPoints, tarotPattern } from './tarotPattern.ts'
 const W = 140
 const H = 220
 
-function FrontFace({ id }: { id: number }) {
+export function FrontFace({ id }: { id: number }) {
   const p = tarotPattern(id)
   return (
     <svg viewBox={`${-W / 2} ${-H / 2} ${W} ${H}`} className="tarot-face-svg">
@@ -23,7 +23,7 @@ function FrontFace({ id }: { id: number }) {
   )
 }
 
-function BackFace() {
+export function BackFace() {
   return (
     <svg viewBox={`${-W / 2} ${-H / 2} ${W} ${H}`} className="tarot-face-svg">
       <rect className="tarot-back-bg" x={-W / 2} y={-H / 2} width={W} height={H} rx={10} />

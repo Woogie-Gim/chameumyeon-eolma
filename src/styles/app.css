@@ -394,6 +394,33 @@ html { background: var(--color-bg); }
 .tarot-name:focus-visible { outline: var(--focus-ring) solid var(--color-focus); outline-offset: var(--focus-offset); border-radius: var(--radius-s); }
 .tarot-advice { line-height: 1.6; }
 
+/* 타로 펼침: 캔버스(3D) 위에 같은 위치의 버튼 레이어. 2D면 버튼 안에 카드를 그린다 */
+.tarot-guide { margin: 0; }
+.tarot-spread { height: var(--tarot-spread-h); }
+.spread-canvas, .spread-cards { position: absolute; inset: 0; }
+.spread-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  cursor: pointer;
+  perspective: var(--tarot-perspective);
+  transition: transform var(--dur-lift) ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+.spread-card[aria-disabled='true'] { cursor: default; }
+.spread-card:focus-visible { outline: var(--focus-ring) solid var(--color-focus); outline-offset: var(--focus-offset); }
+.spread-card .tarot-inner { width: 100%; height: 100%; display: block; transition: transform var(--dur-flip) ease, opacity var(--dur-flip) ease; }
+.spread-card .tarot-face { display: block; }
+.spread-card[data-state='dimmed'] .tarot-inner { opacity: var(--spread-dim); }
+.spread-card.is-ghost { background: transparent; }
+@media (prefers-reduced-motion: reduce) {
+  .spread-card, .spread-card .tarot-inner { transition: none; }
+}
+
 /* 2D 폴백 카드 뒤집기 */
 .tarot-flip { height: 100%; display: flex; align-items: center; justify-content: center; perspective: var(--tarot-perspective); }
 .tarot-inner {

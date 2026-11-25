@@ -112,6 +112,8 @@
   --tarot-card-w: 140px;
   --tarot-card-h: 220px;
   --tarot-perspective: 800px;
+  --tarot-spread-h: 236px;
+  --spread-dim: 0.35; /* 고르지 않은 카드. spreadMotion.ts SPREAD_DIM과 같은 값 */
   --switch-w: 52px;
   --switch-h: 32px;
   --swatch: 12px;
@@ -127,6 +129,7 @@
   --dur-screen: 180ms;
   --dur-flip: 0.7s;
   --dur-sparkle: 700ms;
+  --dur-lift: 200ms;
   --press-scale: 0.98;
   --press-scale-icon: 0.92;
 }

@@ -13,6 +13,7 @@ export type SceneColors = {
   scalePan: string
   spendPile: string
   coinShine: string
+  stageBg: string
 }
 
 const FALLBACK: SceneColors = {
@@ -29,6 +30,7 @@ const FALLBACK: SceneColors = {
   scalePan: '#c9cfd6',
   spendPile: '#7b5ce0',
   coinShine: '#fff3c9',
+  stageBg: '#f5f0ea',
 }
 
 export function readSceneColors(): SceneColors {
@@ -49,6 +51,7 @@ export function readSceneColors(): SceneColors {
       scalePan: v('--color-scale-pan', FALLBACK.scalePan),
       spendPile: v('--color-spend-pile', FALLBACK.spendPile),
       coinShine: v('--color-coin-shine', FALLBACK.coinShine),
+      stageBg: v('--color-stage-bg', FALLBACK.stageBg),
     }
   } catch {
     return FALLBACK

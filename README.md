@@ -4,15 +4,19 @@
 
 > 가정 시뮬레이션이며 수익을 보장하지 않습니다. 과거 성과는 미래를 보장하지 않습니다.
 
-| 입력 | 결과(3D 저금통) | 결과(3D 저울) | 결과(2D 폴백) |
+| 입력(라이트) | 결과(라이트) | 타로 고르기 전(라이트) | 타로 고른 뒤(라이트) |
 | --- | --- | --- | --- |
-| <img src="docs/screenshots/input.png" width="160" alt="입력 화면"> | <img src="docs/screenshots/result-3d.png" width="160" alt="결과 화면 3D 저금통"> | <img src="docs/screenshots/result-scale.png" width="160" alt="결과 화면 3D 저울"> | <img src="docs/screenshots/result-2d.png" width="160" alt="결과 화면 2D 폴백"> |
+| <img src="docs/screenshots/input-light.png" width="160" alt="입력 화면 라이트"> | <img src="docs/screenshots/result-light.png" width="160" alt="결과 화면 라이트"> | <img src="docs/screenshots/tarot-spread-light.png" width="160" alt="타로 5장 펼침 라이트"> | <img src="docs/screenshots/tarot-picked-light.png" width="160" alt="타로 한 장 고른 뒤 라이트"> |
 
-| 기록 | 재물운 타로 | 이용 안내 |
-| --- | --- | --- |
-| <img src="docs/screenshots/log.png" width="160" alt="기록 화면"> | <img src="docs/screenshots/tarot.png" width="160" alt="재물운 타로 화면"> | <img src="docs/screenshots/guide.png" width="160" alt="이용 안내 화면"> |
+| 입력(다크) | 결과(다크) | 타로 고르기 전(다크) | 타로 고른 뒤(다크) |
+| --- | --- | --- | --- |
+| <img src="docs/screenshots/input-dark.png" width="160" alt="입력 화면 다크"> | <img src="docs/screenshots/result-dark.png" width="160" alt="결과 화면 다크"> | <img src="docs/screenshots/tarot-spread-dark.png" width="160" alt="타로 5장 펼침 다크"> | <img src="docs/screenshots/tarot-picked-dark.png" width="160" alt="타로 한 장 고른 뒤 다크"> |
 
-스크린샷은 E2E 테스트가 모바일 뷰포트(390×844) 한 화면 크기로 저장한 것이다. 각 화면의 맨 위에서 캡처하므로 아래쪽 내용은 잘릴 수 있다.
+| 결과(3D 저금통) | 결과(3D 저울) | 결과(2D 폴백) | 기록 | 이용 안내 |
+| --- | --- | --- | --- | --- |
+| <img src="docs/screenshots/result-3d.png" width="140" alt="결과 화면 3D 저금통"> | <img src="docs/screenshots/result-scale.png" width="140" alt="결과 화면 3D 저울"> | <img src="docs/screenshots/result-2d.png" width="140" alt="결과 화면 2D 폴백"> | <img src="docs/screenshots/log.png" width="140" alt="기록 화면"> | <img src="docs/screenshots/guide.png" width="140" alt="이용 안내 화면"> |
+
+스크린샷은 E2E 테스트가 모바일 뷰포트(390×844) 한 화면 크기로 저장한 것이다. 각 화면의 맨 위에서 캡처하므로 아래쪽 내용은 잘릴 수 있다. 라이트와 다크는 `screenshots.spec.ts`가 테마마다 새 브라우저 컨텍스트로 찍는다.
 
 ## 주요 기능
 
@@ -21,12 +25,13 @@
   - 예금형: 일시 예치, 연 복리
   - 적금형: 매달 같은 금액을 넣는 월 복리
   - ETF 타임머신형: N년 전 초에 넣었다면 기준 연도 말에 얼마인지 계산한다. 기술주 ETF형과 대형주 ETF형의 과거 연간 상승률을 쓴다.
-- **3D 저금통**: 원금 대비 배율만큼 코인을 쌓는다. 원금 코인과 불어난 코인은 색으로 구분한다. WebGL 미지원, 동작 줄이기 설정, 저사양 3D 끄기 설정에서는 같은 정보를 2D 그래픽으로 보여 준다.
+- **3D 저금통**: 원금 대비 배율만큼 코인을 쌓는다. 원금 코인과 불어난 코인은 색으로 구분한다. 금액은 카운트업으로 보여 주고, 코인이 다 쌓이면 맨 위 코인이 잠깐 반짝인다. WebGL 미지원, 동작 줄이기 설정, 저사양 3D 끄기 설정에서는 같은 정보를 2D 그래픽으로 보여 준다.
 - **3D 저울**: 결과 화면에서 저금통과 저울을 바꿔 볼 수 있다(기본은 저금통). 한쪽 접시에는 지금 쓰는 금액 더미, 다른 쪽에는 환산 금액 코인 더미를 올리고 두 금액의 비율만큼 기울인다. ETF형이 하락한 구간에서는 쓰는 금액 쪽으로 기운다. 2D 폴백은 막대 두 개 비교다.
 - **한마디**: 미리 작성해 둔 문구 사전에서 카테고리, 금액 구간, 톤에 맞는 문구를 하나 고른다.
 - **선택과 기록**: 참았어요 또는 샀어요/먹었어요를 기록한다. 누적 참은 금액, 연속 일수, 최근 7일 그래프를 보여 준다.
-- **재물운 타로**: 하루에 한 장, 날짜로 정해지는 카드를 뒤집어 카드 이름, 키워드, 소비 조언 한 줄을 본다. 재미로만 보는 오락 콘텐츠이며 환산 결과와 소비 기록에는 영향이 없다. 다시 뽑기, 포인트, 등급, 뽑기 기록은 없다. 3D 카드 뒤집기와 CSS 뒤집기 2D 폴백이 있다.
-- **설정**: 가정 이율을 데이터 범위 안에서 조정할 수 있다. 저사양 3D 끄기, 데이터 초기화, 이용 안내 화면을 제공한다.
+- **재물운 타로**: 화면에 들어오면 22장 중 5장을 무작위로 골라 순서를 섞어 뒷면으로 펼친다. 한 장을 탭하면 효과음과 함께 그 카드가 뒤집히고 나머지는 흐려진다. 카드 이름, 키워드, 소비 조언 한 줄을 본다. 고른 카드는 그날 하루 고정되고, 다시 들어오면 펼침 없이 오늘 카드와 "내일 다시 볼 수 있어요" 안내를 보여 준다. 재미로만 보는 오락 콘텐츠이며 환산 결과와 소비 기록에는 영향이 없다. 다시 뽑기, 포인트, 등급, 뽑기 기록은 없다. 3D 펼침과 CSS 2D 폴백이 같은 선택 흐름(탭, 방향키와 엔터)을 제공한다.
+- **설정**: 가정 이율을 데이터 범위 안에서 조정할 수 있다. 저사양 3D 끄기, 효과음(진동 포함) 켜고 끄기, 데이터 초기화, 이용 안내 화면을 제공한다.
+- **효과음**: 음원 파일 없이 Web Audio API로 짧은 톤을 합성한다(버튼 탭, 결과 공개, 카드 넘김, 입력 오류). 지원하는 기기에서는 짧은 진동도 함께 낸다. 기본 켜짐, 볼륨은 작다.
 
 ## 설계 근거
 
@@ -68,18 +73,22 @@ src/
     calc.ts          예금형, 적금형, ETF 타임머신 계산과 시작 연도 범위
     coinCount.ts     배율 → 코인 수, 원금 코인과 불어난 코인 분리
     scaleTilt.ts     두 금액 비율 → 저울 기울기, 대체 텍스트
-    tarot.ts         날짜 시드 카드 선택, 하루 한 장 판정, 조언 문구
+    tarot.ts         5장 무작위 펼침(난수 주입 가능), 오늘의 카드 고정 판정, 부채꼴 배치
     inputFilter.ts   직접 입력 판정(사전 매칭, 해시 대조)
     messagePick.ts   문구 선택
     template.ts      자리표시자 치환, 조사 보정
     copy.ts          고정 문구, 입력 안내, 이용 안내 문구
+    countUp.ts       결과 금액 카운트업 보간
     format.ts, stats.ts, fallback.ts, textNorm.ts
   data/        정적 JSON (rates, returns, items, messages, messagesEtf, tarot, blockedHashes)
   scenes/      useUse3d(3D/2D 판정 훅), SceneBoundary(3D 실패 시 폴백), SceneLoading(3D 로딩 중 2D 표시)
                CoinStage → PiggyBank(3D, 지연 로드) / CoinFallback2d(SVG)
                ScaleStage → Scale(3D, 지연 로드) / ScaleFallback2d(막대 SVG)
-               TarotStage → TarotCard(3D, 지연 로드) / TarotFallback2d(CSS 뒤집기)
-  hooks/       useToday(오늘 날짜 상태, 복귀 시 갱신)
+               TarotSpreadStage(공통 버튼 레이어) → TarotSpread3d(3D 펼침, 지연 로드) / 버튼 안 SVG 카드(CSS 뒤집기)
+               TarotStage → TarotCard(오늘 이미 고른 카드, 3D 지연 로드) / TarotFallback2d
+               SceneLights(세 장면 공용 조명), spreadMotion(펼침 들어 올림과 흐림 값)
+  hooks/       useToday(오늘 날짜 상태, 복귀 시 갱신), useCountUp(금액 카운트업)
+  sound/       SoundPlayer(Web Audio 합성 효과음과 진동), 컨텍스트
   screens/     Input, Result, Choice, Log, Tarot, Settings, Guide, AppErrorBoundary
   store/       localStorage 래퍼(허용 필드만 읽고 씀, 저장소를 못 쓰면 메모리 대체)
   styles/      tokens.css(디자인 토큰), app.css
@@ -102,7 +111,9 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSIO
   └─ messagePick → fillTemplate  ← messages.json, messagesEtf.json
 선택 화면 → store.addRecord { date, itemId, amount, choice } → localStorage
 기록 화면 ← store.getRecords → stats(누적, 연속 일수, 7일 그래프)
-타로 화면 ← toDateKey(오늘) + store.getTarot → resolveToday → tarot.json   (환산, 기록과 독립)
+타로 화면 ← toDateKey(오늘) + store.getTarot → resolveToday
+  ├─ 오늘 기록 있음 → 오늘 카드 + 내일 안내
+  └─ 없음 → drawSpread(Math.random) 5장 → 한 장 고르기 → store.saveTarot { date, cardId }   (환산, 기록과 독립)
           뒤집기 → store.saveTarot { date, cardId }   (한 건 덮어쓰기)
 ```
 
@@ -123,27 +134,29 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSIO
 
 ## 품질 보증
 
-### 단위 테스트 (Vitest): 23개 파일, 273개
+### 단위 테스트 (Vitest): 25개 파일, 320개
 
 | 파일 | 개수 | 내용 |
 | --- | --- | --- |
-| contrast.test.ts | 41 | tokens.css 대비(라이트, 다크): 텍스트 16조합 4.5:1, 포커스 외곽선 4조합 3:1 |
+| contrast.test.ts | 58 | tokens.css 대비(라이트, 다크): 텍스트 19조합, 포커스 외곽선 4조합, 배경 그라데이션 양 끝과 도형 겹침 합성색 위 글자와 포커스 모두 4.5:1 |
 | calc.test.ts | 29 | 복리, 적금, 타임머신 계산, 경계값, 범위 오류, 시작 연도 범위 |
+| tarot.test.ts | 26 | 5장 무작위 펼침(중복 없음, 범위, 주입 난수 재현성, 22장 모두 등장, 경계 난수), 오늘의 카드 고정, 부채꼴 배치(무대 안, 44px 노출, 좁으면 기울기 축소), 들어 올림, 조언 자리표시자 없음, 타로 문구 금칙어 |
 | inputFilter.test.ts | 21 | 상호명 거부, 일반 명칭 허용, 영문 거부, 결과에 원문 없음, 품목 사전 무결성, 해시 목록 동기화 |
 | data.test.ts | 19 | rates, returns 스키마, 연도 연속성, isSample 일관성, 티커와 지수명 없음 |
-| storage.test.ts | 16 | 허용 필드만 저장, 이율 보정, 손상 데이터 복구, 초기화, 타로 저장, 저장소 차단과 용량 초과 시 메모리 대체 |
-| tarot.test.ts | 15 | 날짜 시드 결정성과 범위, 하루 한 장 판정, 날짜 변경 시 새 카드, 조언에 자리표시자 없음, 타로 문구 금칙어 |
+| storage.test.ts | 17 | 허용 필드만 저장, 이율 보정, 효과음 설정, 손상 데이터 복구, 초기화, 타로 저장, 저장소 차단과 용량 초과 시 메모리 대체 |
 | messages.test.ts | 15 | 문구 규칙(자리표시자, 길이, 권유 어미, 과장, 금칙어, 시제) |
 | scanBanned.test.ts | 13 | 티커 규칙 범위(식별자, 주석, 모듈 경로, CSS 통과 / 문자열, 템플릿, JSX 텍스트, 데이터 JSON 실패), 권유 표현과 상품명은 전체 적용, 줄 번호 |
 | coinCount.test.ts | 13 | 코인 수 경계, 단조성, 원금 코인과 불어난 코인 분리 |
 | scaleTilt.test.ts | 12 | 저울 기울기: 0원, 같은 금액, 비율 상한과 하한 경계, 하락 구간, 잘못된 입력, 대체 텍스트 |
+| sound.test.ts | 11 | 가짜 AudioContext 주입: 첫 재생 전 생성 없음, 종류별 톤 수와 길이, 작은 볼륨, 꺼짐이면 소리와 진동 없음, 생성 실패와 재생 예외 무시, suspended면 resume, 진동 패턴과 진동 예외 무시 |
 | copy.test.ts | 10 | 이용 안내 필수 내용, 타로 고지, 개인정보, 오류와 저장소와 금액 안내 문구의 권유 어미와 금칙어 |
 | amount.test.ts | 10 | 금액 입력: 0, 음수, 1억 초과, 소수점, 쉼표와 원, 전각, 지수 표기, 빈 값 |
 | stats.test.ts | 9 | 누적 금액, 연속 일수, 7일 집계 |
 | fallback.test.ts | 8 | 2D 폴백 조건 전체 조합, WebGL과 동작 줄이기 감지 |
+| countUp.test.ts | 7 | 카운트업 곡선, 시작과 끝, 정수 중간값, 감소 방향, 처음 공개 1초 이내 |
 | messages.render.test.ts | 7 | 모든 품목 대입 시 조사 일치, 자리표시자 잔존 없음 |
 | format.test.ts | 6 | 원 단위 반올림, 콤마, 원과 퍼센트 표기 |
-| today.test.ts | 5 | 날짜 갱신 판정(같은 날, 자정, 월과 연 경계, 시계 역행), 타로 시드 연동 |
+| today.test.ts | 5 | 날짜 갱신 판정(같은 날, 자정, 월과 연 경계, 시계 역행), 타로 오늘의 카드 고정 연동 |
 | meta.test.ts | 5 | index.html 메타(설명, 뷰포트, 테마 색, OG), 자체 제작 파비콘, OG와 아이콘 크기 |
 | messagePick.test.ts | 5 | 카테고리, 금액 구간, 톤별 문구 선택 |
 | template.test.ts | 4 | 자리표시자 치환, 조사 보정 |
@@ -151,17 +164,19 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSIO
 | appErrorBoundary.test.tsx | 4 | 렌더 오류 안내 화면, 오류 원문 미노출, 다시 시도 복구, 반복 실패 시 새로고침(happy-dom) |
 | contextLost.test.ts | 2 | WebGL 컨텍스트 소실 이벤트 감지 |
 
-### E2E (Playwright, Chromium): 8개 파일, 37개
+### E2E (Playwright, Chromium): 10개 파일, 42개(스크린샷 2개는 `SCREENSHOTS=1`일 때만 실행)
 
 - `flow.spec.ts` (3개): 상호명 거부, 원문 미표시와 미저장, 환산, 참았어요 기록, 기타 소비 처리, 이용 안내 이동
 - `scene.spec.ts` (8개): 3D 캔버스와 대체 텍스트, 2D 폴백(WebGL 미지원, 동작 줄이기, 설정 토글), 2D 코인 색 구분, ETF 한마디 시제, ETF 시작 연도 범위, 저금통/저울 전환, 저울 2D 폴백
-- `tarot.spec.ts` (5개): 탭 이동 → 키보드로 뒤집기 → 새로고침 후 같은 카드와 뒤집기 버튼 없음, 어제 기록이면 다시 뒤집기 가능, WebGL 미지원 CSS 폴백, 동작 줄이기 2D, 자정 넘김 후 앱 복귀 시 새 카드(가짜 시계)
-- `loading.spec.ts` (4개): 첫 화면에서 three 청크 미요청, 저금통/저울/타로 3D 청크를 붙잡아 두는 동안 2D 대체 화면과 준비 중 표시, 이후 3D 전환
+- `tarot.spec.ts` (5개): 5장 펼침이 한 화면에 들어오고 카드마다 44px 이상 노출, 로빙 tabindex와 방향키(처음과 끝 순환, Home/End) → 엔터로 고르기 → 이름에 포커스, 나머지 흐림과 비활성, 다른 카드 눌러도 그대로, 저장 키는 날짜와 카드 id만, 새로고침하면 펼침 없이 같은 카드와 내일 안내 / 어제 기록이면 다시 펼침 / WebGL 미지원 CSS 2D 같은 흐름 / 3D 펼침(투명 버튼 레이어)과 동작 줄이기 2D / 자정 넘김 후 앱 복귀 시 새 펼침(가짜 시계)
+- `loading.spec.ts` (4개): 첫 화면에서 three 청크 미요청, 저금통/저울/타로 펼침 3D 청크를 붙잡아 두는 동안 2D 대체 화면과 준비 중 표시(타로는 로딩 중에도 고르기 가능), 이후 3D 전환
 - `stability.spec.ts` (7개): localStorage 차단과 용량 초과에서 흐름 동작과 안내, WebGL 컨텍스트 소실 시 저금통/저울/타로 2D 전환, 금액 입력 경계값과 붙여넣기
-- `a11y.spec.ts` (4개): 7개 화면 터치 영역 44px, 키보드 탐색과 포커스 외곽선, 3D 대체 텍스트, 동작 줄이기
+- `sound.spec.ts` (3개): 첫 입력 전 AudioContext 없음과 이후 한 번만 생성, 효과음 끄기 저장과 새로고침 후 유지, 오디오와 진동이 막힌 환경에서 오류 없음
+- `a11y.spec.ts` (4개): 7개 화면 터치 영역 44px, 키보드 탐색과 포커스 외곽선, 3D 대체 텍스트와 타로 카드 버튼 이름, 동작 줄이기
 - `guide.spec.ts` (3개): 어느 화면에서든 안내 열기와 돌아가기, 고정 면책과 개인정보 문구, 입력 화면 개인정보 문구
 - `base-path.spec.ts` (3개, `base-path` 프로젝트): `BASE_PATH=/chameumyeon-eolma/` 빌드에서 자산 404 없음, 새로고침, 딥링크, 404.html
-- 헤드리스에서는 소프트웨어 WebGL(swiftshader)로 3D를 렌더링한다.
+- `screenshots.spec.ts` (2개): 입력, 결과, 타로 고르기 전과 후를 라이트와 다크로 각각 새 컨텍스트에서 캡처
+- 헤드리스에서는 소프트웨어 WebGL(swiftshader)로 3D를 렌더링한다. 3D 캔버스가 처음 뜨기를 기다리는 단언은 `SCENE_TIMEOUT`(15초)을 쓴다.
 
 ### 금칙어 스캔 (`npm run scan:banned`)
 
@@ -302,7 +317,7 @@ $env:SCREENSHOTS='1'; npm run test:e2e    # PowerShell
 ### Phase 4 재물운 타로와 3D 저울
 
 - 타로
-  - 카드는 로컬 날짜 키(`YYYY-MM-DD`, `toDateKey`)를 fnv-1a 32비트로 해시해 22로 나눈 나머지로 정한다. 같은 날에는 같은 카드가 나오고 날짜가 바뀌면 새로 정해진다. 전날과 같은 카드가 나올 수도 있다.
+  - (Phase 7에서 대체) 카드는 로컬 날짜 키(`YYYY-MM-DD`, `toDateKey`)를 fnv-1a 32비트로 해시해 22로 나눈 나머지로 정한다. 같은 날에는 같은 카드가 나오고 날짜가 바뀌면 새로 정해진다. 전날과 같은 카드가 나올 수도 있다.
   - localStorage(`chameum.tarot.v1`)에는 마지막으로 뒤집은 날짜와 카드 id 한 건만 덮어써 저장한다. 기록이 쌓이지 않으므로 뽑기 통계를 만들 수 없다. 데이터 초기화 때 함께 지운다.
   - 날짜는 타로 화면에 들어올 때 정한다. 화면을 연 채로 자정을 넘기면 탭을 다시 눌러야 새 카드가 된다.
   - (보정) tarot.json 조언에는 자리표시자를 쓰지 않는다. `{amount}`가 있던 3개(id 1, 8, 21)는 완성 문장으로 다시 썼고, 문구 검사에서 타로의 `{amount}` 허용을 없앴다. 필드 이름 `adviceTemplate`은 문서(PROMPT_DEV, PROMPT_MESSAGES)와 맞추려고 그대로 두었다.
@@ -327,7 +342,7 @@ $env:SCREENSHOTS='1'; npm run test:e2e    # PowerShell
 
 ### Phase 5 출시 품질 점검
 
-- 날짜: 앱 시작 시 한 번 읽고(`useToday`), 앱이 다시 보이거나(visibilitychange) 포커스될 때 날짜 키가 바뀌었으면 갱신한다. 기록 화면과 타로 일일 시드가 같은 값을 쓴다. 화면을 계속 띄워 둔 채로 자정을 넘기면 다음 복귀 때 바뀐다. 기록 저장 날짜는 버튼을 누른 시점의 시각이다.
+- 날짜: 앱 시작 시 한 번 읽고(`useToday`), 앱이 다시 보이거나(visibilitychange) 포커스될 때 날짜 키가 바뀌었으면 갱신한다. 기록 화면과 타로(Phase 7부터는 오늘의 카드 고정 판정)가 같은 값을 쓴다. 화면을 계속 띄워 둔 채로 자정을 넘기면 다음 복귀 때 바뀐다. 기록 저장 날짜는 버튼을 누른 시점의 시각이다.
 - 저장소: `resilientKV`가 브라우저 저장소 앞에 메모리 사본을 둔다. 차단(SecurityError), 시크릿 모드, 용량 초과면 같은 세션에서는 메모리로 동작하고, 설정 화면에 "앱을 닫으면 사라져요" 안내를 띄운다. 시작 시 쓰기를 한 번 시험한다(`chameum.probe`, 바로 지움).
 - 오류: `AppErrorBoundary`가 앱 전체를 감싼다. 오류 원문은 보여 주지 않는다. 다시 시도는 먼저 다시 렌더하고, 3초 안에 또 실패하면 새로고침한다. JSON 데이터는 번들에 포함된 정적 import라 별도 로딩 실패는 없고 렌더 오류로 처리된다.
 - WebGL 컨텍스트 소실(`webglcontextlost`)이면 그 3D 영역만 2D로 바꾼다. 다른 3D 영역은 다음에 열 때 다시 3D를 시도한다.
@@ -370,6 +385,39 @@ $env:SCREENSHOTS='1'; npm run test:e2e    # PowerShell
 - 결과 화면은 핵심 문장과 금액 카드, 연출 카드(고정 높이), 수치 요약 카드 순으로 둔다.
 - 화면 전환 페이드는 투명도만 바꾼다. 이동(transform)을 쓰면 애니메이션 동안 고정 버튼의 기준이 바뀌어 흔들리기 때문이다. 동작 줄이기 환경에서는 페이드와 눌림 축소를 모두 끈다.
 - 3D 타로 카드는 흰 앞면이 톤 매핑으로 회색처럼 보여서 조명을 조금 밝혔다(ambient 1.3에서 1.9).
+
+### Phase 7 비주얼 보강, 효과음, 타로 선택
+
+- 색
+  - 포인트 색은 보라로 골랐다. 코랄은 오류 표시 빨강(danger)과 헷갈린다. 기존 보조 네이비를 보라로 바꿔 "메인 1 + 포인트 1"을 유지한다. 포인트 색은 포커스 외곽선, 배경 도형, 타로 뒷면, 저울 쓰는 금액 더미, 결과 카드 위쪽 띠에 쓴다.
+  - 라이트 배경은 따뜻한 밝은 틴트(#f7f3ee), 다크 배경은 깊은 남색(#0d1424)에 위쪽이 조금 밝은 그라데이션이다. 틸 채도를 올렸다(라이트 #087266, 다크 #3fd1bf). 파비콘과 OG 이미지는 다시 만들지 않았다.
+  - 금색은 계속 불어난 코인과 환산 코인에만 쓴다.
+  - 배경 도형은 대비 테스트가 검사한다. 배경 위에 바로 놓이는 글자(본문, muted, 포커스, primary-strong)가 그라데이션 양 끝과 도형 최대 알파 합성색 위에서도 4.5:1 이상이다.
+- 배경 깊이감
+  - 큰 원 세 개를 `radial-gradient`로 그린 고정 레이어(`.app-backdrop`, `will-change: transform`)다. `filter: blur`와 이미지는 쓰지 않는다. 화면별 변화는 뒤집기 transform으로만 주고 전환 애니메이션은 넣지 않았다.
+  - 루트 배경이나 문서 흐름 안에 그리는 방식도 시험했다. 내용이 바뀔 때마다 그라데이션을 다시 그려 소프트웨어 렌더링에서 3D 첫 렌더가 수백 ms 늦어져 고정 합성 레이어로 정했다.
+- 3D 조명과 재질
+  - 세 장면이 같은 조명 구성(환경광 1 + 주광 1, `SceneLights`)을 쓰고 세기와 위치만 바꾼다. 조명 종류나 새 재질(matcap, 환경 맵, 그림자 평면, 점 스프라이트)을 늘리면 셰이더 컴파일이 늘어 헤드리스 swiftshader에서 결과 화면 스크립트 시간이 약 0.1초에서 1.1초로 늘었다. 그래서 모두 되돌렸다.
+  - 코인 금속감은 metalness 0.45, roughness 0.3과 주광 위치 조정으로 낸다. 환경 맵(RoomEnvironment, PMREM)은 쓰지 않는다.
+  - 바닥 그림자는 투명 캔버스 뒤 무대 배경의 CSS 타원 그라데이션이다(WebGL 비용 없음). 카메라가 고정이라 위치가 어긋나지 않는다.
+  - 반짝임은 코인이 다 쌓인 순간 맨 위 불어난 코인 3개의 인스턴스 색을 0.7초 동안 밝은 금색으로 섞었다가 되돌린다. 보상 연출로 보이지 않게 작고 짧게 했다. 2D 폴백은 맨 위에 작은 별 3개가 한 번 나타났다 사라진다. 동작 줄이기 환경에서는 3D가 꺼지고 2D 반짝임도 숨긴다.
+- 결과 금액 카운트업: 처음 공개는 0원부터 0.8초, 기간이나 방식을 바꾸면 직전 표시값부터 0.3초다. 끝으로 갈수록 느려지는 곡선(easeOutCubic)이다. 동작 줄이기면 바로 최종값이다. 보조 기기에는 최종값 문장만 읽히고 움직이는 숫자는 숨긴다.
+- 효과음
+  - `src/sound/sound.ts`의 `SoundPlayer` 인터페이스로 분리하고 React 컨텍스트로 주입한다. 기본값은 무음이라 단독 렌더와 테스트에서도 안전하다.
+  - AudioContext는 첫 재생 요청 때 만든다. 재생 요청은 항상 사용자 입력 핸들러 안에서 나온다(결과 공개음은 환산하기를 누른 직후). 생성에 실패하면 다시 시도하지 않는다. suspended면 resume을 부르고, 재생과 resume 실패는 모두 무시한다.
+  - 전체 볼륨은 0.06이다. 톤: 탭(사인 660Hz 0.04초), 결과 공개(삼각파 상행 3음, 코인 쌓임), 카드 넘김(300→900Hz 0.12초), 입력 오류(낮은 사각파 2음). 모두 0.3초 안에 끝난다.
+  - 진동: 결과 공개 20ms, 카드 넘김 15ms, 입력 오류 30-40-30ms. 버튼 탭은 진동하지 않는다. 효과음 토글이 진동도 함께 켜고 끈다.
+  - 버튼 탭 소리는 문서 클릭 리스너 하나로 처리한다. 자체 소리를 내는 버튼(환산하기, 타로 카드)은 `data-sound="custom"`으로 제외한다. 금액 안내는 새로 뜰 때만 오류음을 낸다.
+  - 효과음을 켜는 순간 확인용으로 탭 소리를 한 번 낸다.
+- 타로 선택
+  - 날짜 시드(fnv-1a)는 없앴다. 화면에 들어올 때 `Math.random`으로 22장 중 5장을 부분 Fisher-Yates로 뽑아 섞는다. 테스트에서는 `Tarot`의 `random` prop이나 `drawSpread`의 인자로 난수 함수를 주입한다.
+  - 고른 카드는 기존 `chameum.tarot.v1`에 `{date, cardId}`로 저장해 그날 하루 고정한다. 고르기 전에 화면을 나갔다 들어오면 5장을 새로 섞는다. 고른 뒤 다시 들어오면 펼침 없이 오늘 카드(기존 단일 카드 장면)와 "오늘은 이미 카드를 골랐어요. 내일 다시 볼 수 있어요." 안내를 보여 준다. 날짜는 `useToday`를 따르므로 자정이 지나 앱이 다시 보이면 새로 펼친다.
+  - 배치는 부채꼴이다. 카드 88×138px, 바깥 카드 기울기 최대 14°다. 기울어진 폭까지 무대 안에 들어가게 간격을 정하고, 좁은 화면에서는 기울기를 줄여 카드마다 노출 폭 44px 이상을 지킨다.
+  - 입력은 3D와 2D 공통 DOM 버튼 레이어가 받는다. 3D는 직교 카메라(1 단위 = 1 CSS px)라 버튼 위치와 정확히 겹치고, 버튼은 투명해진다. 3D 모듈을 받는 동안과 WebGL을 못 쓰는 환경에서는 버튼 안에 SVG 카드를 그리고 CSS `rotateY`로 뒤집는다.
+  - 고르지 않은 카드는 2D에서 투명도 0.35, 3D에서는 겹친 면이 비쳐 보이지 않도록 무대 배경색 쪽으로 sRGB에서 65% 섞는다.
+  - 키보드: 카드 묶음은 탭 순서에 한 번만 들어간다(로빙 tabindex). 방향키로 이동(끝에서 순환), Home/End, 엔터와 스페이스로 고른다. 카드 버튼 이름은 "N번째 카드 뒷면, 눌러서 뒤집기"이고, 고른 뒤에는 "고른 카드: 이름, 키워드 …"다. 고른 뒤 카드 이름 제목으로 포커스를 옮긴다.
+- E2E 시간: 로컬(논리 코어 20개, 기본 워커 수)에서 전체 E2E가 약 21초에서 약 50~60초로 늘었다. 고정 배경 레이어 합성과 3D 펼침이 소프트웨어 렌더링(swiftshader)에서 무겁고, 테스트도 7개 늘었다. 그래서 3D 첫 표시 대기 단언에 `SCENE_TIMEOUT`(15초)을 둔다.
+- 번들(Phase 6 대비): three 청크 918.31 kB(gzip 242.57 kB) 그대로, 메인 JS 328.29 → 336.44 kB(gzip 96.15 → 99.29 kB), CSS 17.00 → 20.58 kB(gzip 3.90 → 4.80 kB), 타로 펼침 청크 2.03 kB 추가.
 
 ### 배포 준비
 

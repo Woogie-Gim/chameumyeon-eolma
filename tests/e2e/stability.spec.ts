@@ -76,7 +76,8 @@ test('WebGL 컨텍스트가 소실되면 타로 카드가 2D로 바뀐다', asyn
   await expect(page.getByTestId('tarot-stage-3d').locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   await loseContext(page, 'tarot-stage-3d')
   await expect(page.getByTestId('tarot-stage-2d')).toBeVisible()
-  await page.getByRole('button', { name: '카드 뒤집기' }).click()
+  await expect(page.getByTestId('tarot-stage-2d').locator('.tarot-inner')).toHaveCount(5)
+  await page.getByTestId('spread-card').first().click()
   await expect(page.getByTestId('tarot-name')).toBeVisible()
 })
 

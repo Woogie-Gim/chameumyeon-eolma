@@ -126,6 +126,16 @@ function Card({ id, drawn, colors }: { id: number; drawn: boolean; colors: Scene
 
   return (
     <group ref={group} rotation={[0, initial, 0]}>
+      <CardFaces id={id} colors={colors} />
+    </group>
+  )
+}
+
+// 카드 본체(옆면, 앞면, 뒷면). widthPx를 주면 그 폭(장면 단위)에 맞춰 키운다. 펼침 장면에서 재사용
+export function CardFaces({ id, colors, widthPx }: { id: number; colors: SceneColors; widthPx?: number }) {
+  const s = widthPx ? widthPx / W : 1
+  return (
+    <group scale={[s, s, s]}>
       <mesh>
         <boxGeometry args={[W, H, CARD_DEPTH]} />
         <meshStandardMaterial color={colors.tarotEdge} roughness={0.6} />

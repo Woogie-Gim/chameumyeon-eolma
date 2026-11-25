@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest'
 import { toDateKey } from '../../src/core/stats.ts'
 import { nextToday } from '../../src/core/today.ts'
-import { dailyCardId } from '../../src/core/tarot.ts'
+import { resolveToday } from '../../src/core/tarot.ts'
 
 describe('nextToday', () => {
   it('같은 날이면 이전 객체 그대로', () => {
@@ -26,10 +26,11 @@ describe('nextToday', () => {
     expect(nextToday(new Date(2026, 10, 25, 12), now)).toBe(now)
   })
 
-  it('타로 시드는 갱신된 날짜 키를 쓴다', () => {
+  it('타로 오늘의 카드 고정은 갱신된 날짜 키를 따른다', () => {
     const before = nextToday(new Date(2026, 10, 25, 23, 59), new Date(2026, 10, 25, 23, 59, 30))
+    const stored = { date: toDateKey(before), cardId: 7 }
+    expect(resolveToday(stored, toDateKey(before))).toBe(7)
     const after = nextToday(before, new Date(2026, 10, 26, 0, 1))
-    expect(dailyCardId(toDateKey(before))).toBe(dailyCardId('2026-11-25'))
-    expect(dailyCardId(toDateKey(after))).toBe(dailyCardId('2026-11-26'))
+    expect(resolveToday(stored, toDateKey(after))).toBeNull()
   })
 })

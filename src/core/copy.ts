@@ -8,6 +8,13 @@ export const ETF_DISCLAIMER = '지수 가격 기준이며 배당, 보수, 환율
 
 // 타로 화면 고정 문구
 export const TAROT_NOTICE = '재미로만 보는 오락 콘텐츠입니다. 카드 결과는 환산 결과나 소비 기록과 관계없습니다.'
+// 타로 선택 안내
+export const TAROT_COPY = {
+  pickGuide: '마음이 가는 카드 한 장을 골라 보세요. 하루에 한 장만 고를 수 있어요.',
+  spreadLabel: '카드 다섯 장 중 한 장 고르기',
+  picked: '오늘의 카드로 정해졌어요. 내일 다시 볼 수 있어요.',
+  already: '오늘은 이미 카드를 골랐어요. 내일 다시 볼 수 있어요.',
+}
 
 // 개인정보 안내. 안내 화면 상단과 입력 화면에 표시
 export const PRIVACY_NOTE = '입력 내용은 서버로 전송되거나 저장되지 않아요.'

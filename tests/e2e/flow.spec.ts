@@ -25,7 +25,6 @@ test('상호명 거부, 환산, 참았어요, 기록 확인', async ({ page }) =
   await expect(page.getByRole('status')).toContainText('치킨으로 인식했어요')
   await page.getByLabel('금액').fill('18000')
   await expect(page.getByLabel('금액')).toHaveValue('18,000')
-  await shot(page, 'input')
 
   // 결과
   await page.getByRole('button', { name: '환산하기' }).click()
@@ -33,7 +32,6 @@ test('상호명 거부, 환산, 참았어요, 기록 확인', async ({ page }) =
   await expect(page.getByText('적용 이율 연')).toBeVisible()
   await expect(page.getByTestId('result-value')).toContainText('원')
   await expect(page.getByTestId('disclaimer')).toHaveText(DISCLAIMER)
-  await shot(page, 'result')
 
   // 적금형
   await page.getByRole('tab', { name: '적금형' }).click()

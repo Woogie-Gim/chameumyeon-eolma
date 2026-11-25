@@ -67,7 +67,9 @@ test('3D 영역 세 곳 모두 대체 텍스트가 있다', async ({ page }) => 
   await page.getByRole('group', { name: '연출 선택' }).getByRole('button', { name: '저울' }).click()
   await expect(page.getByTestId('scale-stage-3d')).toHaveAttribute('aria-label', /환산 금액 약 [\d,]+원\./)
   await page.getByRole('button', { name: '타로' }).click()
-  await expect(page.getByTestId('tarot-stage-3d')).toHaveAttribute('aria-label', '뒤집히지 않은 카드 뒷면')
+  // 타로 펼침은 이름 붙은 그룹과 카드별 버튼 이름으로 읽힌다
+  await expect(page.getByRole('group', { name: '카드 다섯 장 중 한 장 고르기' })).toBeVisible()
+  await expect(page.getByTestId('spread-card').nth(2)).toHaveAccessibleName('3번째 카드 뒷면, 눌러서 뒤집기')
   // 캔버스는 aria-hidden 래퍼 안에 있어 보조 기기에서 숨김
   await expect(page.getByTestId('tarot-stage-3d').locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   expect(await page.getByTestId('tarot-stage-3d').locator('canvas').evaluate((c) => c.closest('[aria-hidden="true"]') !== null)).toBe(true)
@@ -81,7 +83,7 @@ test('동작 줄이기: 저금통, 저울, 타로 모두 2D이고 카드 전환 
   await expect(page.getByTestId('scale-stage-2d')).toBeVisible()
   await page.getByRole('button', { name: '타로' }).click()
   await expect(page.getByTestId('tarot-stage-2d')).toBeVisible()
-  const duration = await page.locator('.tarot-inner').evaluate((el) => getComputedStyle(el).transitionDuration)
-  expect(duration).toBe('0s')
+  const duration = await page.locator('.tarot-inner').first().evaluate((el) => getComputedStyle(el).transitionDuration)
+  expect(duration).toMatch(/^0s(, 0s)*$/)
   await expect(page.locator('canvas')).toHaveCount(0)
 })

@@ -61,19 +61,22 @@ test('저울: 로딩 중 2D 막대, 이후 3D', async ({ page }) => {
   await expect(stage.getByTestId('scene-loading')).toHaveCount(0)
 })
 
-test('타로: 로딩 중 2D 카드, 이후 3D', async ({ page }) => {
-  const release = await holdChunk(page, 'TarotCard')
+test('타로: 로딩 중 2D 펼침, 이후 3D', async ({ page }) => {
+  const release = await holdChunk(page, 'TarotSpread3d')
   await page.goto('/')
   await page.getByRole('button', { name: '타로' }).click()
   const stage = page.getByTestId('tarot-stage-3d')
   await expect(stage.getByTestId('scene-loading')).toBeVisible()
-  await expect(stage.locator('.tarot-flip')).toBeVisible()
+  await expect(stage.locator('.tarot-inner')).toHaveCount(5)
   await expect(stage.locator('canvas')).toHaveCount(0)
-  // 로딩 중에도 뒤집기는 동작한다
-  await page.getByRole('button', { name: '카드 뒤집기' }).click()
+  // 로딩 중에도 고르기는 동작한다
+  await stage.getByTestId('spread-card').nth(1).click()
   await expect(page.getByTestId('tarot-name')).toBeVisible()
 
   release()
   await expect(stage.locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   await expect(stage.getByTestId('scene-loading')).toHaveCount(0)
+  // 3D가 준비되면 버튼 안 2D 카드는 걷히고, 고른 상태는 그대로
+  await expect(stage.locator('.tarot-inner')).toHaveCount(0)
+  await expect(stage.getByTestId('spread-card').nth(1)).toHaveAttribute('data-state', 'picked')
 })
