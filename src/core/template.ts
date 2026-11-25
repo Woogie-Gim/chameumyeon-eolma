@@ -47,7 +47,7 @@ export function attachParticle(word: string, particle: string): string {
 const PARTICLE_ALT = PARTICLES.map(([p]) => p).join('|')
 
 function replaceWithParticle(text: string, key: string, value: string): string {
-  const re = new RegExp(`\{${key}\}(${PARTICLE_ALT})?`, 'g')
+  const re = new RegExp(`{${key}}(${PARTICLE_ALT})?`, 'g')
   return text.replace(re, (_, p: string | undefined) => (p ? attachParticle(value, p) : value))
 }
 
