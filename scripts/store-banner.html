@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<!-- 스토어 가로형 배너 원본. scripts/make-banner.ts가 1504x741로 캡처. 색은 tokens.css 변수만 사용 -->
+<link rel="stylesheet" href="../src/styles/tokens.css">
+<style>
+  html, body { margin: 0; }
+  body {
+    width: 1504px; height: 741px; overflow: hidden; position: relative; box-sizing: border-box;
+    font-family: var(--font-family); color: var(--color-text);
+    background:
+      radial-gradient(circle at 78% 30%, color-mix(in srgb, var(--color-blob-a) 26%, transparent), transparent 46%),
+      radial-gradient(circle at 92% 88%, color-mix(in srgb, var(--color-blob-b) 22%, transparent), transparent 40%),
+      linear-gradient(160deg, var(--color-bg-top), var(--color-bg) 55%, var(--color-primary-soft));
+  }
+  .copy { position: absolute; left: 112px; top: 0; bottom: 0; width: 640px; display: flex; flex-direction: column; justify-content: center; }
+  .logo { position: absolute; left: 112px; top: 64px; width: 84px; height: 84px; border-radius: 22px; box-shadow: 0 6px 18px rgba(25, 31, 40, 0.14); }
+  h1 { font-size: 92px; line-height: 1.1; margin: 0 0 28px; letter-spacing: -3px; color: var(--color-primary-strong); }
+  p { font-size: 38px; line-height: 1.35; margin: 0; color: var(--color-text); font-weight: 600; letter-spacing: -1px; }
+  small { position: absolute; left: 112px; bottom: 56px; font-size: 20px; color: var(--color-muted); }
+  .phone {
+    position: absolute; width: 330px; height: 544px; padding: 12px; border-radius: 52px;
+    background: var(--color-text); box-shadow: 0 28px 60px rgba(25, 31, 40, 0.28);
+  }
+  .phone img { display: block; width: 330px; height: 544px; border-radius: 40px; }
+  .back { right: 400px; top: 58px; }
+  .front { right: 92px; top: 112px; }
+</style>
+</head>
+<body>
+  <img class="logo" src="../docs/store/logo-light.png" alt="">
+  <div class="copy">
+    <h1>참으면 얼마?</h1>
+    <p>참은 돈이 불어나는 모습 미리보기</p>
+  </div>
+  <small>가정 시뮬레이션이며 수익을 보장하지 않습니다.</small>
+  <div class="phone back"><img src="../docs/store/screenshots/02-result-piggy.png" alt=""></div>
+  <div class="phone front"><img src="../docs/store/screenshots/04-tarot-spread.png" alt=""></div>
+</body>
+</html>
