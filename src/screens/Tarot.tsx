@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { DISCLAIMER, TAROT_NOTICE } from '../core/copy.ts'
 import { toDateKey } from '../core/stats.ts'
-import { resolveToday, tarotAdvice, tarotCard } from '../core/tarot.ts'
+import { resolveToday, tarotCard } from '../core/tarot.ts'
 import { TarotStage } from '../scenes/TarotStage.tsx'
 import { store } from '../store/storage.ts'
 
@@ -42,7 +42,7 @@ export function Tarot({ reduce3d }: { reduce3d: boolean }) {
           <>
             <h2 ref={titleRef} tabIndex={-1} className="tarot-name" data-testid="tarot-name">{card.name}</h2>
             <p className="meta">키워드 · <strong>{card.keyword}</strong></p>
-            <p className="quote tarot-advice">{tarotAdvice(card)}</p>
+            <p className="quote tarot-advice">{card.adviceTemplate}</p>
             <p className="meta">오늘의 카드는 내일 바뀌어요.</p>
           </>
         ) : (

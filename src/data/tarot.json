@@ -9,7 +9,7 @@
     "id": 1,
     "name": "동전 마법사",
     "keyword": "계획",
-    "adviceTemplate": "작은 {amount}도 계획에 들어가면 다르게 보이는 날일 수 있어요."
+    "adviceTemplate": "작은 지출도 계획에 들어가면 다르게 보이는 날일 수 있어요."
   },
   {
     "id": 2,
@@ -51,7 +51,7 @@
     "id": 8,
     "name": "참을성의 사자",
     "keyword": "인내",
-    "adviceTemplate": "오늘 넘긴 {amount}이 은근히 뿌듯하게 느껴질지도 몰라요."
+    "adviceTemplate": "오늘 한 번 참은 일이 은근히 뿌듯하게 느껴질지도 몰라요."
   },
   {
     "id": 9,
@@ -129,6 +129,6 @@
     "id": 21,
     "name": "완성된 지갑",
     "keyword": "완성",
-    "adviceTemplate": "{amount}만큼의 여유가 차곡차곡 느껴지는 하루일 수 있어요."
+    "adviceTemplate": "아껴 둔 만큼의 여유가 차곡차곡 느껴지는 하루일 수 있어요."
   }
 ]

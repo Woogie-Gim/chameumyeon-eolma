@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest'
 import { scanText } from '../../scripts/scan-banned.ts'
 import { TAROT_NOTICE } from '../../src/core/copy.ts'
 import { toDateKey } from '../../src/core/stats.ts'
-import { TAROT_COUNT, dailyCardId, resolveToday, tarotAdvice, tarotCard } from '../../src/core/tarot.ts'
+import { TAROT_COUNT, dailyCardId, resolveToday, tarotCard } from '../../src/core/tarot.ts'
 import tarot from '../../src/data/tarot.json' with { type: 'json' }
 
 const ROOT = resolve(import.meta.dirname, '../..')
@@ -82,18 +82,18 @@ describe('resolveToday', () => {
   })
 })
 
-describe('tarotAdvice', () => {
-  it('자리표시자가 남지 않고 금액 숫자가 없다', () => {
+describe('타로 조언과 카드 조회', () => {
+  it('조언은 자리표시자와 숫자 없이 그대로 읽힌다', () => {
     for (const card of tarot) {
-      const text = tarotAdvice(tarotCard(card.id))
-      expect(text, text).not.toMatch(/[{}]/)
-      expect(text, text).not.toMatch(/\d/)
+      expect(card.adviceTemplate, card.adviceTemplate).not.toMatch(/[{}]/)
+      expect(card.adviceTemplate, card.adviceTemplate).not.toMatch(/\d/)
     }
   })
 
-  it('{amount}는 일반 단어로 바뀐다', () => {
-    const withAmount = tarot.find((t) => t.adviceTemplate.includes('{amount}'))!
-    expect(tarotAdvice(withAmount)).toContain('금액')
+  it('다시 쓴 조언 id는 그대로', () => {
+    expect(tarotCard(1).name).toBe('동전 마법사')
+    expect(tarotCard(8).name).toBe('참을성의 사자')
+    expect(tarotCard(21).name).toBe('완성된 지갑')
   })
 
   it('카드 조회는 범위 밖이면 0번', () => {
@@ -107,7 +107,7 @@ describe('타로 금칙어 스캔', () => {
   const banned = readList('banned-terms.txt')
 
   it('카드 이름, 키워드, 조언, 고지 문구 위반 0건', () => {
-    const texts = [TAROT_NOTICE, ...tarot.flatMap((t) => [t.name, t.keyword, tarotAdvice(t)])]
+    const texts = [TAROT_NOTICE, ...tarot.flatMap((t) => [t.name, t.keyword, t.adviceTemplate])]
     expect(texts.flatMap((t) => scanText(t, 'tarot', allow, banned))).toEqual([])
   })
 

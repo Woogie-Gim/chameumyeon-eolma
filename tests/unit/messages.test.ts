@@ -92,7 +92,7 @@ describe('tarot.json', () => {
 
   it('문구 규칙과 단정 표현 금지', () => {
     for (const t of tarot) {
-      commonChecks(t.adviceTemplate, ['{amount}'])
+      commonChecks(t.adviceTemplate, [])
       commonChecks(t.name, [])
       commonChecks(t.keyword, [])
       expect(t.adviceTemplate, t.adviceTemplate).not.toMatch(DEFINITE)
