@@ -105,3 +105,56 @@ describe('store 타로', () => {
     expect(s.getTarot()).toBeNull()
   })
 })
+
+describe('저장소를 쓸 수 없을 때 메모리 대체', () => {
+  const rec = { date: '2026-11-25', itemId: 'coffee', amount: 4500, choice: 'saved' as const }
+  const quota = () => {
+    const e = new Error('QuotaExceededError')
+    e.name = 'QuotaExceededError'
+    throw e
+  }
+
+  it('저장소 없음(null): 같은 세션에서는 기록과 설정과 타로가 유지된다', () => {
+    const s = createStore(null)
+    expect(s.isPersistent()).toBe(false)
+    s.addRecord(rec)
+    s.saveSettings({ ...s.getSettings(), reduce3d: true })
+    s.saveTarot({ date: '2026-11-25', cardId: 4 })
+    expect(s.getRecords()).toEqual([rec])
+    expect(s.getSettings().reduce3d).toBe(true)
+    expect(s.getTarot()).toEqual({ date: '2026-11-25', cardId: 4 })
+  })
+
+  it('용량 초과(setItem 예외): 메모리로 계속 동작하고 비영속으로 표시', () => {
+    const kv = memory()
+    const s = createStore({ ...kv, setItem: quota })
+    expect(s.isPersistent()).toBe(false)
+    s.addRecord(rec)
+    s.addRecord({ ...rec, amount: 1000 })
+    expect(s.getRecords()).toHaveLength(2)
+  })
+
+  it('읽기 차단(getItem 예외)', () => {
+    const s = createStore({ getItem: () => { throw new Error('SecurityError') }, setItem: () => {}, removeItem: () => {} })
+    expect(s.getRecords()).toEqual([])
+    s.addRecord(rec)
+    expect(s.getRecords()).toEqual([rec])
+    expect(s.isPersistent()).toBe(false)
+  })
+
+  it('정상 저장소면 영속이고 실제 저장소에 쓴다', () => {
+    const kv = memory()
+    const s = createStore(kv)
+    expect(s.isPersistent()).toBe(true)
+    s.addRecord(rec)
+    expect(createStore(kv).getRecords()).toEqual([rec])
+    expect(kv.getItem('chameum.probe')).toBeNull()
+  })
+
+  it('초기화 후 메모리 사본도 비워진다', () => {
+    const s = createStore(null)
+    s.addRecord(rec)
+    s.resetAll()
+    expect(s.getRecords()).toEqual([])
+  })
+})

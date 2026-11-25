@@ -1,11 +1,11 @@
 // 설정 화면. 이율은 rates.json 범위 안에서만 조정
 import { useState } from 'react'
-import { DISCLAIMER, ETF_DISCLAIMER } from '../core/copy.ts'
+import { DISCLAIMER, ETF_DISCLAIMER, STORAGE_MEMORY_NOTICE } from '../core/copy.ts'
 import rates from '../data/rates.json' with { type: 'json' }
 import returns from '../data/returns.json' with { type: 'json' }
 import type { Settings as SettingsValue } from '../store/storage.ts'
 
-type Props = { settings: SettingsValue; onChange: (s: SettingsValue) => void; onReset: () => void; onOpenGuide: () => void }
+type Props = { settings: SettingsValue; persistent: boolean; onChange: (s: SettingsValue) => void; onReset: () => void; onOpenGuide: () => void }
 
 function RateSlider({ id, label, value, min, max, onChange }: { id: string; label: string; value: number; min: number; max: number; onChange: (v: number) => void }) {
   return (
@@ -20,7 +20,7 @@ function RateSlider({ id, label, value, min, max, onChange }: { id: string; labe
   )
 }
 
-export function Settings({ settings, onChange, onReset, onOpenGuide }: Props) {
+export function Settings({ settings, persistent, onChange, onReset, onOpenGuide }: Props) {
   const [confirming, setConfirming] = useState(false)
   const [done, setDone] = useState(false)
 
@@ -49,6 +49,9 @@ export function Settings({ settings, onChange, onReset, onOpenGuide }: Props) {
         <p className="section-label">데이터</p>
         <p className="meta">공개 통계 기반 가정값입니다.</p>
         <p className="meta">이율 기준 {rates.asOf} · 상승률 기준 {returns.asOf}</p>
+        {!persistent && (
+          <p className="notice notice-other" role="status" data-testid="storage-notice">{STORAGE_MEMORY_NOTICE}</p>
+        )}
         <button type="button" className="btn btn-block" style={{ marginTop: 'var(--space-3)' }} onClick={onOpenGuide}>
           이용 안내
         </button>

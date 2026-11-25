@@ -50,10 +50,61 @@ function sanitizeSettings(v: unknown): Settings {
   }
 }
 
-export function createStore(kv: KeyValue | null) {
+const PROBE_KEY = 'chameum.probe'
+
+// 브라우저 저장소 앞에 메모리 사본을 둔다. 저장소가 없거나(차단, 시크릿 모드) 쓰기가 실패해도(용량 초과)
+// 같은 세션 안에서는 메모리 값으로 계속 동작한다
+export function resilientKV(primary: KeyValue | null): { kv: KeyValue; isPersistent: () => boolean } {
+  const mem = new Map<string, string | null>() // null은 삭제 표시
+  let persistent = primary !== null
+  const fail = () => {
+    persistent = false
+  }
+  // 시작 시 쓰기 가능 여부 확인
+  if (primary) {
+    try {
+      primary.setItem(PROBE_KEY, '1')
+      primary.removeItem(PROBE_KEY)
+    } catch {
+      fail()
+    }
+  }
+  const kv: KeyValue = {
+    getItem(key) {
+      if (mem.has(key)) return mem.get(key) ?? null
+      try {
+        return primary ? primary.getItem(key) : null
+      } catch {
+        fail()
+        return null
+      }
+    },
+    setItem(key, value) {
+      mem.set(key, value)
+      try {
+        if (!primary) return
+        primary.setItem(key, value)
+      } catch {
+        fail()
+      }
+    },
+    removeItem(key) {
+      mem.set(key, null)
+      try {
+        primary?.removeItem(key)
+      } catch {
+        fail()
+      }
+    },
+  }
+  return { kv, isPersistent: () => persistent }
+}
+
+export function createStore(primary: KeyValue | null) {
+  const { kv, isPersistent } = resilientKV(primary)
   const read = (key: string): unknown => {
     try {
-      const raw = kv?.getItem(key)
+      const raw = kv.getItem(key)
       return raw ? JSON.parse(raw) : null
     } catch {
       return null
@@ -61,9 +112,9 @@ export function createStore(kv: KeyValue | null) {
   }
   const write = (key: string, value: unknown) => {
     try {
-      kv?.setItem(key, JSON.stringify(value))
+      kv.setItem(key, JSON.stringify(value))
     } catch {
-      // 저장 실패는 무시
+      // resilientKV가 실패를 흡수하므로 직렬화 오류만 해당
     }
   }
 
@@ -73,6 +124,8 @@ export function createStore(kv: KeyValue | null) {
   }
 
   return {
+    // false면 기록이 이 세션 메모리에만 남는다
+    isPersistent,
     getRecords,
     addRecord(r: LogRecord) {
       const clean = sanitizeRecord(r)
@@ -89,9 +142,9 @@ export function createStore(kv: KeyValue | null) {
     },
     resetAll() {
       try {
-        kv?.removeItem(RECORDS_KEY)
-        kv?.removeItem(SETTINGS_KEY)
-        kv?.removeItem(TAROT_KEY)
+        kv.removeItem(RECORDS_KEY)
+        kv.removeItem(SETTINGS_KEY)
+        kv.removeItem(TAROT_KEY)
       } catch {
         // 무시
       }

@@ -70,7 +70,7 @@ function App() {
         {screen === 'log' && <Log records={records} today={today} />}
         {screen === 'tarot' && <Tarot todayKey={toDateKey(today)} reduce3d={settings.reduce3d} />}
         {screen === 'settings' && (
-          <Settings settings={settings} onChange={changeSettings} onReset={reset} onOpenGuide={() => setScreen('guide')} />
+          <Settings settings={settings} persistent={store.isPersistent()} onChange={changeSettings} onReset={reset} onOpenGuide={() => setScreen('guide')} />
         )}
         {screen === 'guide' && <Guide onBack={() => setScreen('settings')} />}
       </main>
