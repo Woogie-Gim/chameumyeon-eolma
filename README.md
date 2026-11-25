@@ -75,7 +75,7 @@ src/
     copy.ts          고정 문구, 입력 안내, 이용 안내 문구
     format.ts, stats.ts, fallback.ts, textNorm.ts
   data/        정적 JSON (rates, returns, items, messages, messagesEtf, tarot, blockedHashes)
-  scenes/      useUse3d(3D/2D 판정 훅), SceneBoundary(3D 실패 시 폴백)
+  scenes/      useUse3d(3D/2D 판정 훅), SceneBoundary(3D 실패 시 폴백), SceneLoading(3D 로딩 중 2D 표시)
                CoinStage → PiggyBank(3D, 지연 로드) / CoinFallback2d(SVG)
                ScaleStage → Scale(3D, 지연 로드) / ScaleFallback2d(막대 SVG)
                TarotStage → TarotCard(3D, 지연 로드) / TarotFallback2d(CSS 뒤집기)
@@ -122,15 +122,16 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSIO
 
 ## 품질 보증
 
-### 단위 테스트 (Vitest): 15개 파일, 180개
+### 단위 테스트 (Vitest): 17개 파일, 197개
 
 | 파일 | 개수 | 내용 |
 | --- | --- | --- |
 | calc.test.ts | 29 | 복리, 적금, 타임머신 계산, 경계값, 범위 오류, 시작 연도 범위 |
 | inputFilter.test.ts | 21 | 상호명 거부, 일반 명칭 허용, 영문 거부, 결과에 원문 없음, 품목 사전 무결성, 해시 목록 동기화 |
 | data.test.ts | 19 | rates, returns 스키마, 연도 연속성, isSample 일관성, 티커와 지수명 없음 |
-| tarot.test.ts | 15 | 날짜 시드 결정성과 범위, 하루 한 장 판정, 날짜 변경 시 새 카드, 조언 치환, 타로 문구 금칙어 |
+| tarot.test.ts | 15 | 날짜 시드 결정성과 범위, 하루 한 장 판정, 날짜 변경 시 새 카드, 조언에 자리표시자 없음, 타로 문구 금칙어 |
 | messages.test.ts | 15 | 문구 규칙(자리표시자, 길이, 권유 어미, 과장, 금칙어, 시제) |
+| scanBanned.test.ts | 13 | 티커 규칙 범위(식별자, 주석, 모듈 경로, CSS 통과 / 문자열, 템플릿, JSX 텍스트, 데이터 JSON 실패), 권유 표현과 상품명은 전체 적용, 줄 번호 |
 | coinCount.test.ts | 13 | 코인 수 경계, 단조성, 원금 코인과 불어난 코인 분리 |
 | scaleTilt.test.ts | 12 | 저울 기울기: 0원, 같은 금액, 비율 상한과 하한 경계, 하락 구간, 잘못된 입력, 대체 텍스트 |
 | storage.test.ts | 11 | 허용 필드만 저장, 이율 보정, 손상 데이터 복구, 초기화, 타로 날짜와 id만 저장 |
@@ -141,20 +142,23 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSIO
 | copy.test.ts | 6 | 이용 안내 필수 내용, 타로 고지 문구, 권유 어미, 금칙어 |
 | messagePick.test.ts | 5 | 카테고리, 금액 구간, 톤별 문구 선택 |
 | template.test.ts | 4 | 자리표시자 치환, 조사 보정 |
+| sceneColors.test.ts | 4 | 3D 색을 tokens.css 변수에서 읽기, 없으면 기본값 |
 
-### E2E (Playwright, Chromium): 3개 파일, 15개
+### E2E (Playwright, Chromium): 4개 파일, 19개
 
 - `flow.spec.ts` (3개): 상호명 거부, 원문 미표시와 미저장, 환산, 참았어요 기록, 기타 소비 처리, 이용 안내 이동
 - `scene.spec.ts` (8개): 3D 캔버스와 대체 텍스트, 2D 폴백(WebGL 미지원, 동작 줄이기, 설정 토글), 2D 코인 색 구분, ETF 한마디 시제, ETF 시작 연도 범위, 저금통/저울 전환, 저울 2D 폴백
 - `tarot.spec.ts` (4개): 탭 이동 → 키보드로 뒤집기 → 새로고침 후 같은 카드와 뒤집기 버튼 없음, 어제 기록이면 다시 뒤집기 가능, WebGL 미지원 CSS 폴백, 동작 줄이기 2D
+- `loading.spec.ts` (4개): 첫 화면에서 three 청크 미요청, 저금통/저울/타로 3D 청크를 붙잡아 두는 동안 2D 대체 화면과 준비 중 표시, 이후 3D 전환
 - 헤드리스에서는 소프트웨어 WebGL(swiftshader)로 3D를 렌더링한다.
 
 ### 금칙어 스캔 (`npm run scan:banned`)
 
-- 대상: `src/` 전체(코드, JSON, CSS)
-- 권유 표현(사세요, 넣으세요, 투자하세요, 매수, 매도 등)을 검사한다.
-- 영문 대문자 2~5자 토큰은 티커 의심으로 본다. 허용 목록은 `scripts/allow-tokens.txt`다.
-- `scripts/banned-terms.txt`의 상품명을 검사한다.
+- 권유 표현(사세요, 넣으세요, 투자하세요, 매수, 매도 등)과 `scripts/banned-terms.txt`의 상품명은 `src/` 전체 텍스트(코드, 주석, JSON, CSS)에서 검사한다.
+- 영문 대문자 2~5자 토큰은 티커 의심으로 본다. 대상은 화면에 보일 수 있는 문자열과 `src/data/*.json`이다.
+  - 코드 파일은 AST(`rolldown/parseAst`)로 문자열 리터럴, 템플릿 문자열, JSX 텍스트(속성 문자열 포함)만 뽑아 검사한다.
+  - 코드 식별자, 주석, import 경로, CSS는 티커 검사에서 제외한다.
+  - 허용 목록은 `scripts/allow-tokens.txt`(ETF, NFC)다.
 - 위반이 하나라도 있으면 종료 코드 1이다. 같은 검사 함수를 문구 단위 테스트에서도 쓴다.
 
 ### CI
@@ -290,7 +294,7 @@ $env:SCREENSHOTS='1'; npm run test:e2e    # PowerShell
   - 카드는 로컬 날짜 키(`YYYY-MM-DD`, `toDateKey`)를 fnv-1a 32비트로 해시해 22로 나눈 나머지로 정한다. 같은 날에는 같은 카드가 나오고 날짜가 바뀌면 새로 정해진다. 전날과 같은 카드가 나올 수도 있다.
   - localStorage(`chameum.tarot.v1`)에는 마지막으로 뒤집은 날짜와 카드 id 한 건만 덮어써 저장한다. 기록이 쌓이지 않으므로 뽑기 통계를 만들 수 없다. 데이터 초기화 때 함께 지운다.
   - 날짜는 타로 화면에 들어올 때 정한다. 화면을 연 채로 자정을 넘기면 탭을 다시 눌러야 새 카드가 된다.
-  - tarot.json 조언 중 3개는 `{amount}` 자리표시자를 쓴다. 타로는 입력 금액과 무관하므로 숫자 대신 일반 단어 "금액"으로 채운다.
+  - (보정) tarot.json 조언에는 자리표시자를 쓰지 않는다. `{amount}`가 있던 3개(id 1, 8, 21)는 완성 문장으로 다시 썼고, 문구 검사에서 타로의 `{amount}` 허용을 없앴다. 필드 이름 `adviceTemplate`은 문서(PROMPT_DEV, PROMPT_MESSAGES)와 맞추려고 그대로 두었다.
   - 3D 카드(`TarotCard.tsx`)는 plane 메시와 프로시저럴 무늬(테두리, 마름모, 링, 별)만 쓴다. 텍스처는 쓰지 않는다. 카드 이름과 조언은 HTML로 보여 준다. drei의 Text는 외부 폰트를 받아오므로 쓰지 않았다.
   - 2D 폴백은 CSS `rotateY` 전환이다. 동작 줄이기 환경에서는 전환 없이 바로 바뀐다.
   - 접근성: 뒤집기는 일반 버튼이라 키보드로 조작할 수 있다. 카드 영역에는 "뒤집히지 않은 카드 뒷면" 또는 "오늘의 카드: 이름, 키워드 …" 대체 텍스트를 단다. 뒤집은 뒤에는 카드 이름으로 포커스를 옮긴다.
@@ -302,8 +306,13 @@ $env:SCREENSHOTS='1'; npm run test:e2e    # PowerShell
   - 쓰는 금액 더미는 블록 10개(COIN_BASE, 원금 1배)로 고정한다. 환산 코인 더미는 `coinSplit`의 코인 수와 색 구분을 그대로 쓴다.
   - 저금통과 저울 중 무엇을 골랐는지는 저장하지 않는다. 결과 화면에 들어올 때마다 저금통으로 시작한다.
 - 3D 판정 훅(`useUse3d`)과 에러 경계(`SceneBoundary`)를 저금통, 저울, 타로가 함께 쓴다. 폴백 조건은 Phase 3과 같다.
-- three.js와 react-three-fiber 공용 청크는 Vite가 공유 모듈 이름을 따서 `sceneColors-*.js`로 이름 붙인다. 3D 화면에 처음 들어갈 때만 받는다.
-- 금칙어 스캔의 티커 규칙 때문에 3D 코드의 대문자 상수는 `CARD_DEPTH`처럼 밑줄을 넣은 이름을 쓰고, 원주율은 `Math.acos(-1)`로 구한다.
+- (보정) `vite.config.ts`의 rolldown `codeSplitting` 그룹으로 three, @react-three와 그 전용 의존성(zustand, its-fine, suspend-react, use-sync-external-store, react-use-measure)을 `three-*.js` 청크로 묶는다.
+  - `includeDependenciesRecursively`를 끈다. 켜 두면 react까지 끌려와 메인 청크가 three 청크를 정적으로 가져가고 첫 화면에서 미리 받는다.
+  - scheduler는 react-dom과 공유하므로 넣지 않는다.
+  - 첫 화면에서 three 청크를 받지 않는 것은 E2E로 확인한다.
+- (보정) 3D 모듈을 받는 동안에는 Suspense 대체 화면으로 같은 정보의 2D 그래픽 위에 "3D 준비 중" 표시를 띄운다(`SceneLoading`). 이 표시는 보조 기기에서 숨긴다. 정보는 영역의 대체 텍스트에 이미 있다. 타로는 로딩 중에도 뒤집기 버튼이 동작한다.
+- (보정) 금칙어 스캔의 티커 규칙을 화면 문자열과 데이터 JSON으로 한정했다. 그래서 규칙을 피하려고 바꿨던 코드(`Math.acos`, 밑줄 상수명, 주석 표기)를 되돌렸다.
+- (보정) oxlint `use-memo` 경고 3건(PiggyBank, Scale, TarotCard)은 `useMemo` 첫 인자를 인라인 함수로 바꿔 정리했다. 남은 경고는 이전 Phase부터 있던 3건이다. `template.ts`의 정규식 문자열 이스케이프 2건과 `App.tsx`의 렌더 중 `new Date()` 1건이다.
 
 ### 배포 준비
 
