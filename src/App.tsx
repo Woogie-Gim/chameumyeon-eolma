@@ -7,6 +7,7 @@ import { Input } from './screens/Input.tsx'
 import { Log } from './screens/Log.tsx'
 import { Result } from './screens/Result.tsx'
 import { Settings } from './screens/Settings.tsx'
+import { TabIcon } from './screens/TabIcon.tsx'
 import { Tarot } from './screens/Tarot.tsx'
 import type { Draft } from './screens/types.ts'
 import { useToday } from './hooks/useToday.ts'
@@ -105,7 +106,8 @@ function App() {
               aria-current={activeTab === t.id ? 'page' : undefined}
               onClick={() => setScreen(t.id === 'input' && draft ? 'input' : t.id)}
             >
-              {t.label}
+              <TabIcon name={t.id} />
+              <span className="tab-label">{t.label}</span>
             </button>
           ))}
         </div>

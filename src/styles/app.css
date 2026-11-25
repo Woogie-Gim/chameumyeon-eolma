@@ -240,14 +240,35 @@ button, input { font: inherit; color: inherit; }
 }
 .tabbar-inner { display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; max-width: var(--content-max); }
 .tabbar .tab {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
   border: 0;
   background: transparent;
-  font-size: var(--text-caption);
+  font-size: var(--text-tiny);
+  line-height: 1;
   min-height: var(--touch-min);
   cursor: pointer;
   color: var(--color-muted);
 }
+.tab-icon { width: var(--icon-size); height: var(--icon-size); display: block; }
+/* 선택 상태: 색, 굵기, 위쪽 표시줄 세 가지로 구분 */
 .tabbar .tab[aria-current='page'] { color: var(--color-primary-strong); font-weight: var(--weight-bold); }
+.tabbar .tab[aria-current='page'] .tab-icon { stroke-width: 2.2; }
+.tabbar .tab[aria-current='page']::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30%;
+  right: 30%;
+  height: var(--tab-indicator);
+  border-radius: 0 0 var(--tab-indicator) var(--tab-indicator);
+  background: var(--color-primary);
+}
+.tabbar .tab:focus-visible { outline-offset: -3px; }
 
 .coin-stage {
   position: relative;
