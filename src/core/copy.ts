@@ -12,6 +12,13 @@ export const TAROT_NOTICE = '재미로만 보는 오락 콘텐츠입니다. 카�
 // 저장소를 쓸 수 없을 때 설정 화면 안내
 export const STORAGE_MEMORY_NOTICE = '이 브라우저에서는 기록을 저장할 수 없어 앱을 닫으면 사라져요.'
 
+// 렌더 오류 안내 화면
+export const ERROR_COPY = {
+  title: '화면을 표시하는 중 문제가 생겼어요',
+  body: '저장된 기록은 그대로 있어요. 다시 시도하면 처음 화면부터 다시 열어요.',
+  retry: '다시 시도',
+} as const
+
 // 사전에 없는 품목 표시명
 export const OTHER_LABEL = '기타 소비'
 
