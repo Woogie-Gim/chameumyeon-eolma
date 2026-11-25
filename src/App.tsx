@@ -1,6 +1,6 @@
 // 앱 셸. 라우터 없이 상태로 화면 전환하고 history API로 경로를 맞춘다
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { pathToScreen, screenToPath, type RouteScreen } from './core/route.ts'
+import { canonicalSearch, resolveRoute, screenToPath, type RouteScreen } from './core/route.ts'
 import { toDateKey, type Choice as ChoiceValue, type LogRecord } from './core/stats.ts'
 import { Choice } from './screens/Choice.tsx'
 import { Guide } from './screens/Guide.tsx'
@@ -45,7 +45,8 @@ function readNavState(v: unknown): NavState | null {
 }
 
 // 처음 진입 화면. 없는 경로는 입력(홈). 결과 경로는 따로 없고 입력값도 없으므로 입력에서 시작
-const initialScreen = (): RouteScreen => pathToScreen(window.location.pathname, BASE) ?? 'input'
+const initialScreen = (): RouteScreen => resolveRoute(window.location, BASE)
+
 
 function App() {
   const [screen, setScreen] = useState<Screen>(initialScreen)
@@ -84,10 +85,11 @@ function App() {
   }, [draft])
   useEffect(() => {
     const first = initialScreen()
-    window.history.replaceState({ screen: first, idx: 0 } satisfies NavState, '', screenToPath(first, BASE) + window.location.search)
+    // 해시와 화면 지정 쿼리는 지우고 정규 경로로 바꿔 적는다
+    window.history.replaceState({ screen: first, idx: 0 } satisfies NavState, '', screenToPath(first, BASE) + canonicalSearch(window.location.search))
     const onPop = (e: PopStateEvent) => {
       const st = readNavState(e.state)
-      let next: Screen = st?.screen ?? pathToScreen(window.location.pathname, BASE) ?? 'input'
+      let next: Screen = st?.screen ?? resolveRoute(window.location, BASE)
       // 입력값 없이 결과나 선택으로 돌아오면 입력으로
       if ((next === 'result' || next === 'choice') && !draftRef.current) next = 'input'
       if (next === 'guide') setGuideFrom(st?.from ?? 'settings')

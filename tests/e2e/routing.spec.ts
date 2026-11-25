@@ -82,3 +82,22 @@ test('없는 경로와 결과 경로는 홈으로 열고 주소도 홈으로 바
     await expect(page).toHaveURL(/localhost:\d+\/$/)
   }
 })
+
+// 앱인토스 웹뷰가 주는 경로 형태가 가이드에 없어 변형을 허용하고 주소는 정규 경로로 교정
+for (const [entry, title, canonical] of [
+  ['/chameumyeon-eolma/tarot', '오늘의 재물운 타로', '/tarot'],
+  ['/tarot/', '오늘의 재물운 타로', '/tarot'],
+  ['/#/record', '기록', '/record'],
+] as const) {
+  test(`경로 변형 ${entry} 진입은 해당 화면을 열고 주소를 ${canonical}로 교정`, async ({ page }) => {
+    await page.goto(entry)
+    await expect(heading(page, title)).toBeVisible()
+    const url = new URL(page.url())
+    expect(url.pathname).toBe(canonical)
+    expect(url.hash).toBe('')
+    // 교정은 기록을 쌓지 않으므로 탭 이동 후 뒤로가기는 이 화면으로
+    await page.getByRole('button', { name: '설정' }).click()
+    await page.goBack()
+    await expect(heading(page, title)).toBeVisible()
+  })
+}

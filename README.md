@@ -440,6 +440,13 @@ $env:SCREENSHOTS='1'; npm run test:e2e    # PowerShell
 - base는 `import.meta.env.BASE_URL`로 처리해 루트 배포(앱인토스)와 하위 경로 배포(GitHub Pages) 모두 같은 코드로 동작한다.
 - 앱인토스 기기 뒤로가기: 가이드는 `graniteEvent`의 `backEvent`를 구독하면 기본 뒤로가기가 막힌다고만 적고, 구독하지 않았을 때 웹뷰 `history.back()`이 불리는지 미니앱이 닫히는지는 적지 않는다. 그래서 구독하지 않고 기본 동작에 맡긴다. 실기기(QR 테스트)에서 확인이 필요하다.
 
+### Phase 11 딥링크 경로 해석 보강
+
+- 앱인토스 웹뷰가 `intoss://chameumyeon-eolma/tarot` 진입 시 주는 `location.pathname` 형태가 가이드에 없어 해석을 너그럽게 했다. base를 뗀 뒤 대소문자, 앞뒤와 겹친 슬래시, 앱 이름 접두어(`chameumyeon-eolma`), `index.html` 세그먼트를 무시하고 마지막 세그먼트가 tarot, record, settings, info면 그 화면을 연다. 그 외는 홈이며 주소도 홈으로 교정한다. `/tarot/extra`처럼 뒤에 다른 세그먼트가 붙으면 홈이다.
+- 경로가 홈이거나 해석되지 않으면 해시(`#/tarot`, `#tarot`, `#!/tarot`), 그다음 쿼리(`?page=tarot`) 순으로 본다. 주소는 정규 경로로 교정하면서 해시와 `page`만 지우고 다른 쿼리(`debug`, 앱인토스 `referrer` 등)는 남긴다. 교정은 `replaceState`라 기록이 쌓이지 않는다.
+- 하위 경로 배포에서 base 밖 경로(예: `/tarot`)도 마지막 세그먼트로 해석한다. GitHub Pages에서는 그런 경로에 앱이 뜨지 않으므로 실제 영향은 없다.
+- 뒤로가기는 Phase 10과 같다. `backEvent`는 구독하지 않는다.
+
 ### 배포 준비
 
 - `vite.config.ts`의 `base`는 환경변수 `BASE_PATH`로 받는다. 없으면 `/`이다.
