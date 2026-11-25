@@ -8,7 +8,7 @@ test.use({ viewport: SHOT_VIEWPORT })
 async function holdChunk(page: Page, name: string) {
   let release = () => {}
   const gate = new Promise<void>((r) => (release = r))
-  await page.route(new RegExp(`/assets/${name}-[^/]*\.js$`), async (route) => {
+  await page.route(new RegExp(`/assets/${name}-[^/]*[.]js$`), async (route) => {
     await gate
     await route.continue()
   })
