@@ -1,5 +1,6 @@
-// 앱 셸. 라우터 없이 상태로 화면 전환
-import { useEffect, useMemo, useState } from 'react'
+// 앱 셸. 라우터 없이 상태로 화면 전환하고 history API로 경로를 맞춘다
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { pathToScreen, screenToPath, type RouteScreen } from './core/route.ts'
 import { toDateKey, type Choice as ChoiceValue, type LogRecord } from './core/stats.ts'
 import { Choice } from './screens/Choice.tsx'
 import { Guide } from './screens/Guide.tsx'
@@ -25,8 +26,29 @@ const TAB_ITEMS: { id: Tab; label: string }[] = [
   { id: 'settings', label: '설정' },
 ]
 
+const SCREENS: Screen[] = ['input', 'result', 'choice', 'log', 'tarot', 'settings', 'guide']
+const BASE = import.meta.env.BASE_URL
+
+// history.state에 넣는 값. idx는 앱 안에서 쌓은 항목 수(0이면 뒤로 갈 앱 화면 없음)
+type NavState = { screen: Screen; from?: Exclude<Screen, 'guide'>; idx: number }
+
+const isScreen = (v: unknown): v is Screen => typeof v === 'string' && (SCREENS as string[]).includes(v)
+// 결과와 선택은 입력과 같은 경로를 쓴다
+const routeOf = (s: Screen): RouteScreen => (s === 'result' || s === 'choice' ? 'input' : s)
+
+function readNavState(v: unknown): NavState | null {
+  if (!v || typeof v !== 'object') return null
+  const o = v as Record<string, unknown>
+  if (!isScreen(o.screen) || typeof o.idx !== 'number') return null
+  const from = isScreen(o.from) && o.from !== 'guide' ? o.from : undefined
+  return { screen: o.screen, from, idx: o.idx }
+}
+
+// 처음 진입 화면. 없는 경로는 입력(홈). 결과 경로는 따로 없고 입력값도 없으므로 입력에서 시작
+const initialScreen = (): RouteScreen => pathToScreen(window.location.pathname, BASE) ?? 'input'
+
 function App() {
-  const [screen, setScreen] = useState<Screen>('input')
+  const [screen, setScreen] = useState<Screen>(initialScreen)
   const [draft, setDraft] = useState<Draft | null>(null)
   const [settings, setSettings] = useState<SettingsValue>(() => store.getSettings())
   const [records, setRecords] = useState<LogRecord[]>(() => store.getRecords())
@@ -54,14 +76,53 @@ function App() {
     return () => document.removeEventListener('click', onClick)
   }, [sound])
 
+  // 경로 동기화. 진입 시 현재 화면을 정규 경로로 바꿔 적고(없는 경로는 홈), 뒤로가기에 맞춰 화면을 복원한다
+  const idxRef = useRef(0)
+  const draftRef = useRef(draft)
+  useEffect(() => {
+    draftRef.current = draft
+  }, [draft])
+  useEffect(() => {
+    const first = initialScreen()
+    window.history.replaceState({ screen: first, idx: 0 } satisfies NavState, '', screenToPath(first, BASE) + window.location.search)
+    const onPop = (e: PopStateEvent) => {
+      const st = readNavState(e.state)
+      let next: Screen = st?.screen ?? pathToScreen(window.location.pathname, BASE) ?? 'input'
+      // 입력값 없이 결과나 선택으로 돌아오면 입력으로
+      if ((next === 'result' || next === 'choice') && !draftRef.current) next = 'input'
+      if (next === 'guide') setGuideFrom(st?.from ?? 'settings')
+      idxRef.current = st?.idx ?? 0
+      setScreen(next)
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
+
+  // 화면 이동. 기본은 새 기록을 쌓고, replace면 현재 기록을 바꾼다
+  function navigate(next: Screen, opts: { replace?: boolean; from?: Exclude<Screen, 'guide'> } = {}) {
+    const idx = opts.replace ? idxRef.current : idxRef.current + 1
+    const state: NavState = { screen: next, from: opts.from, idx }
+    const url = screenToPath(routeOf(next), BASE)
+    if (opts.replace) window.history.replaceState(state, '', url)
+    else window.history.pushState(state, '', url)
+    idxRef.current = idx
+    if (next === 'guide' && opts.from) setGuideFrom(opts.from)
+    setScreen(next)
+  }
+
+  // 앱 안에서 쌓은 기록이 있으면 뒤로가기, 없으면(딥링크 진입 등) fallback으로 바꿔 적는다
+  function goBack(fallback: Screen) {
+    if (idxRef.current > 0) window.history.back()
+    else navigate(fallback, { replace: true })
+  }
+
   // 화면이 바뀌면 맨 위부터 보여 준다
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [screen])
 
   function openGuide() {
-    if (screen !== 'guide') setGuideFrom(screen)
-    setScreen('guide')
+    if (screen !== 'guide') navigate('guide', { from: screen })
   }
 
   function choose(c: ChoiceValue) {
@@ -69,7 +130,7 @@ function App() {
     store.addRecord({ date: toDateKey(new Date()), itemId: draft.itemId, amount: draft.amount, choice: c })
     setRecords(store.getRecords())
     setDraft(null)
-    setScreen('log')
+    navigate('log')
   }
 
   function changeSettings(s: SettingsValue) {
@@ -108,12 +169,12 @@ function App() {
             initial={draft}
             onSubmit={(d) => {
               setDraft(d)
-              setScreen('result')
+              navigate('result')
             }}
           />
         )}
         {screen === 'result' && draft && (
-          <Result draft={draft} settings={settings} onNext={() => setScreen('choice')} onBack={() => setScreen('input')} />
+          <Result draft={draft} settings={settings} onNext={() => navigate('choice')} onBack={() => goBack('input')} />
         )}
         {screen === 'choice' && draft && <Choice draft={draft} onChoose={choose} />}
         {screen === 'log' && <Log records={records} today={today} />}
@@ -121,7 +182,7 @@ function App() {
         {screen === 'settings' && (
           <Settings settings={settings} persistent={store.isPersistent()} onChange={changeSettings} onReset={reset} onOpenGuide={openGuide} />
         )}
-        {screen === 'guide' && <Guide onBack={() => setScreen(guideFrom)} />}
+        {screen === 'guide' && <Guide onBack={() => goBack(guideFrom)} />}
       </main>
       <nav className="tabbar" aria-label="화면 이동">
         <div className="tabbar-inner">
@@ -131,7 +192,10 @@ function App() {
               type="button"
               className="tab"
               aria-current={activeTab === t.id ? 'page' : undefined}
-              onClick={() => setScreen(t.id === 'input' && draft ? 'input' : t.id)}
+              onClick={() => {
+                // 같은 탭을 다시 누르면 기록을 쌓지 않는다
+                if (screen !== t.id) navigate(t.id)
+              }}
             >
               <TabIcon name={t.id} />
               <span className="tab-label">{t.label}</span>
