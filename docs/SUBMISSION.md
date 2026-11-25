@@ -157,6 +157,17 @@ Worth the Wait
 
 참고용 사실: 3D 모듈(약 920KB, gzip 약 244KB)은 결과 화면에서만 동적 로드한다. WebGL 미지원 기기, 동작 줄이기 설정, 저사양 3D 끄기에서는 2D로 표시한다.
 
+## 6-1. 실기기 테스트 결과
+
+| 날짜 | 방법 | 확인 내용 | 결과 |
+| --- | --- | --- | --- |
+| 2026-11-25 | 콘솔 출시하기 메뉴 QR 테스트(`intoss-private://chameumyeon-eolma/tarot`) | 주요 기능 경로 진입 시 웹뷰의 `location.pathname` | `/tarot`으로 전달됨. 타로 화면이 열림 |
+| 2026-11-25 | 같은 테스트 | 웹뷰 origin 형식 | `https://<appName>.private-apps.tossmini.com` (이 앱은 `https://chameumyeon-eolma.private-apps.tossmini.com`) |
+
+- 확인 수단: 임시 경로 진단 패널(`?debug=1`). 확인 후 제거했다.
+- 결과에 따라 번들은 루트 경로(`/assets/`) 기준으로 두고, 주요 기능 주소는 `/`, `/tarot`, `/record`를 그대로 쓴다. 느슨한 경로 해석과 해시, 쿼리 대체 해석은 예외 대비로 유지한다.
+- 아직 실기기에서 확인하지 않은 항목: 기기 뒤로가기 동작(`backEvent` 미구독 상태에서 이전 화면으로 가는지, 미니앱이 닫히는지), `/record` 진입.
+
 ## 7. 심사 메모
 
 - [ ] 심사자에게 전달할 테스트 방법: TODO(가이드 확인: 양식)
