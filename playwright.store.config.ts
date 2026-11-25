@@ -1,15 +1,15 @@
 import { defineConfig, devices } from '@playwright/test'
 
 // 스토어 스크린샷 전용 설정. npm run store:screens로만 실행(기본 E2E에는 포함되지 않음)
-// 규격 미확정이라 390x844 뷰포트를 3배율로 캡처(1170x2532)
+// 콘솔 세로형 규격 636x1048. 같은 비율(390:643)의 뷰포트를 2배율로 찍고 스펙에서 축소
 export default defineConfig({
   testDir: 'tests/store',
   workers: 1,
   timeout: 120_000,
   use: {
     ...devices['Desktop Chrome'],
-    viewport: { width: 390, height: 844 },
-    deviceScaleFactor: 3,
+    viewport: { width: 390, height: 643 },
+    deviceScaleFactor: 2,
     isMobile: true,
     hasTouch: true,
     colorScheme: 'light',
