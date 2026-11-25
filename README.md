@@ -79,10 +79,11 @@ src/
                CoinStage → PiggyBank(3D, 지연 로드) / CoinFallback2d(SVG)
                ScaleStage → Scale(3D, 지연 로드) / ScaleFallback2d(막대 SVG)
                TarotStage → TarotCard(3D, 지연 로드) / TarotFallback2d(CSS 뒤집기)
-  screens/     Input, Result, Choice, Log, Tarot, Settings, Guide
-  store/       localStorage 래퍼(허용 필드만 읽고 씀)
+  hooks/       useToday(오늘 날짜 상태, 복귀 시 갱신)
+  screens/     Input, Result, Choice, Log, Tarot, Settings, Guide, AppErrorBoundary
+  store/       localStorage 래퍼(허용 필드만 읽고 씀, 저장소를 못 쓰면 메모리 대체)
   styles/      tokens.css(디자인 토큰), app.css
-scripts/       fetch-data.ts, scan-banned.ts, build-blocklist.ts, banned-terms.txt, allow-tokens.txt
+scripts/       fetch-data.ts, scan-banned.ts, build-blocklist.ts, make-icons.ts, banned-terms.txt, allow-tokens.txt
 tests/         unit(Vitest), e2e(Playwright)
 docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSION, screenshots
 ```
@@ -122,34 +123,44 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSIO
 
 ## 품질 보증
 
-### 단위 테스트 (Vitest): 17개 파일, 197개
+### 단위 테스트 (Vitest): 23개 파일, 273개
 
 | 파일 | 개수 | 내용 |
 | --- | --- | --- |
+| contrast.test.ts | 41 | tokens.css 대비(라이트, 다크): 텍스트 16조합 4.5:1, 포커스 외곽선 4조합 3:1 |
 | calc.test.ts | 29 | 복리, 적금, 타임머신 계산, 경계값, 범위 오류, 시작 연도 범위 |
 | inputFilter.test.ts | 21 | 상호명 거부, 일반 명칭 허용, 영문 거부, 결과에 원문 없음, 품목 사전 무결성, 해시 목록 동기화 |
 | data.test.ts | 19 | rates, returns 스키마, 연도 연속성, isSample 일관성, 티커와 지수명 없음 |
+| storage.test.ts | 16 | 허용 필드만 저장, 이율 보정, 손상 데이터 복구, 초기화, 타로 저장, 저장소 차단과 용량 초과 시 메모리 대체 |
 | tarot.test.ts | 15 | 날짜 시드 결정성과 범위, 하루 한 장 판정, 날짜 변경 시 새 카드, 조언에 자리표시자 없음, 타로 문구 금칙어 |
 | messages.test.ts | 15 | 문구 규칙(자리표시자, 길이, 권유 어미, 과장, 금칙어, 시제) |
 | scanBanned.test.ts | 13 | 티커 규칙 범위(식별자, 주석, 모듈 경로, CSS 통과 / 문자열, 템플릿, JSX 텍스트, 데이터 JSON 실패), 권유 표현과 상품명은 전체 적용, 줄 번호 |
 | coinCount.test.ts | 13 | 코인 수 경계, 단조성, 원금 코인과 불어난 코인 분리 |
 | scaleTilt.test.ts | 12 | 저울 기울기: 0원, 같은 금액, 비율 상한과 하한 경계, 하락 구간, 잘못된 입력, 대체 텍스트 |
-| storage.test.ts | 11 | 허용 필드만 저장, 이율 보정, 손상 데이터 복구, 초기화, 타로 날짜와 id만 저장 |
+| copy.test.ts | 10 | 이용 안내 필수 내용, 타로 고지, 개인정보, 오류와 저장소와 금액 안내 문구의 권유 어미와 금칙어 |
+| amount.test.ts | 10 | 금액 입력: 0, 음수, 1억 초과, 소수점, 쉼표와 원, 전각, 지수 표기, 빈 값 |
 | stats.test.ts | 9 | 누적 금액, 연속 일수, 7일 집계 |
 | fallback.test.ts | 8 | 2D 폴백 조건 전체 조합, WebGL과 동작 줄이기 감지 |
 | messages.render.test.ts | 7 | 모든 품목 대입 시 조사 일치, 자리표시자 잔존 없음 |
 | format.test.ts | 6 | 원 단위 반올림, 콤마, 원과 퍼센트 표기 |
-| copy.test.ts | 6 | 이용 안내 필수 내용, 타로 고지 문구, 권유 어미, 금칙어 |
+| today.test.ts | 5 | 날짜 갱신 판정(같은 날, 자정, 월과 연 경계, 시계 역행), 타로 시드 연동 |
+| meta.test.ts | 5 | index.html 메타(설명, 뷰포트, 테마 색, OG), 자체 제작 파비콘, OG와 아이콘 크기 |
 | messagePick.test.ts | 5 | 카테고리, 금액 구간, 톤별 문구 선택 |
 | template.test.ts | 4 | 자리표시자 치환, 조사 보정 |
 | sceneColors.test.ts | 4 | 3D 색을 tokens.css 변수에서 읽기, 없으면 기본값 |
+| appErrorBoundary.test.tsx | 4 | 렌더 오류 안내 화면, 오류 원문 미노출, 다시 시도 복구, 반복 실패 시 새로고침(happy-dom) |
+| contextLost.test.ts | 2 | WebGL 컨텍스트 소실 이벤트 감지 |
 
-### E2E (Playwright, Chromium): 4개 파일, 19개
+### E2E (Playwright, Chromium): 8개 파일, 37개
 
 - `flow.spec.ts` (3개): 상호명 거부, 원문 미표시와 미저장, 환산, 참았어요 기록, 기타 소비 처리, 이용 안내 이동
 - `scene.spec.ts` (8개): 3D 캔버스와 대체 텍스트, 2D 폴백(WebGL 미지원, 동작 줄이기, 설정 토글), 2D 코인 색 구분, ETF 한마디 시제, ETF 시작 연도 범위, 저금통/저울 전환, 저울 2D 폴백
-- `tarot.spec.ts` (4개): 탭 이동 → 키보드로 뒤집기 → 새로고침 후 같은 카드와 뒤집기 버튼 없음, 어제 기록이면 다시 뒤집기 가능, WebGL 미지원 CSS 폴백, 동작 줄이기 2D
+- `tarot.spec.ts` (5개): 탭 이동 → 키보드로 뒤집기 → 새로고침 후 같은 카드와 뒤집기 버튼 없음, 어제 기록이면 다시 뒤집기 가능, WebGL 미지원 CSS 폴백, 동작 줄이기 2D, 자정 넘김 후 앱 복귀 시 새 카드(가짜 시계)
 - `loading.spec.ts` (4개): 첫 화면에서 three 청크 미요청, 저금통/저울/타로 3D 청크를 붙잡아 두는 동안 2D 대체 화면과 준비 중 표시, 이후 3D 전환
+- `stability.spec.ts` (7개): localStorage 차단과 용량 초과에서 흐름 동작과 안내, WebGL 컨텍스트 소실 시 저금통/저울/타로 2D 전환, 금액 입력 경계값과 붙여넣기
+- `a11y.spec.ts` (4개): 7개 화면 터치 영역 44px, 키보드 탐색과 포커스 외곽선, 3D 대체 텍스트, 동작 줄이기
+- `guide.spec.ts` (3개): 어느 화면에서든 안내 열기와 돌아가기, 고정 면책과 개인정보 문구, 입력 화면 개인정보 문구
+- `base-path.spec.ts` (3개, `base-path` 프로젝트): `BASE_PATH=/chameumyeon-eolma/` 빌드에서 자산 404 없음, 새로고침, 딥링크, 404.html
 - 헤드리스에서는 소프트웨어 WebGL(swiftshader)로 3D를 렌더링한다.
 
 ### 금칙어 스캔 (`npm run scan:banned`)
@@ -190,7 +201,7 @@ BASE_PATH=/chameumyeon-eolma/ npm run build
 npm test                          # 단위 테스트
 npm run scan:banned               # 금칙어 스캔
 npx playwright install chromium   # 최초 1회
-npm run test:e2e                  # E2E(빌드 후 preview 서버로 실행)
+npm run test:e2e                  # E2E(루트 빌드 4173, BASE_PATH 빌드 4174 preview 서버로 실행)
 ```
 
 스크린샷 갱신:
@@ -313,6 +324,33 @@ $env:SCREENSHOTS='1'; npm run test:e2e    # PowerShell
 - (보정) 3D 모듈을 받는 동안에는 Suspense 대체 화면으로 같은 정보의 2D 그래픽 위에 "3D 준비 중" 표시를 띄운다(`SceneLoading`). 이 표시는 보조 기기에서 숨긴다. 정보는 영역의 대체 텍스트에 이미 있다. 타로는 로딩 중에도 뒤집기 버튼이 동작한다.
 - (보정) 금칙어 스캔의 티커 규칙을 화면 문자열과 데이터 JSON으로 한정했다. 그래서 규칙을 피하려고 바꿨던 코드(`Math.acos`, 밑줄 상수명, 주석 표기)를 되돌렸다.
 - (보정) oxlint `use-memo` 경고 3건(PiggyBank, Scale, TarotCard)은 `useMemo` 첫 인자를 인라인 함수로 바꿔 정리했다. 남은 경고는 이전 Phase부터 있던 3건이다. `template.ts`의 정규식 문자열 이스케이프 2건과 `App.tsx`의 렌더 중 `new Date()` 1건이다.
+
+### Phase 5 출시 품질 점검
+
+- 날짜: 앱 시작 시 한 번 읽고(`useToday`), 앱이 다시 보이거나(visibilitychange) 포커스될 때 날짜 키가 바뀌었으면 갱신한다. 기록 화면과 타로 일일 시드가 같은 값을 쓴다. 화면을 계속 띄워 둔 채로 자정을 넘기면 다음 복귀 때 바뀐다. 기록 저장 날짜는 버튼을 누른 시점의 시각이다.
+- 저장소: `resilientKV`가 브라우저 저장소 앞에 메모리 사본을 둔다. 차단(SecurityError), 시크릿 모드, 용량 초과면 같은 세션에서는 메모리로 동작하고, 설정 화면에 "앱을 닫으면 사라져요" 안내를 띄운다. 시작 시 쓰기를 한 번 시험한다(`chameum.probe`, 바로 지움).
+- 오류: `AppErrorBoundary`가 앱 전체를 감싼다. 오류 원문은 보여 주지 않는다. 다시 시도는 먼저 다시 렌더하고, 3초 안에 또 실패하면 새로고침한다. JSON 데이터는 번들에 포함된 정적 import라 별도 로딩 실패는 없고 렌더 오류로 처리된다.
+- WebGL 컨텍스트 소실(`webglcontextlost`)이면 그 3D 영역만 2D로 바꾼다. 다른 3D 영역은 다음에 열 때 다시 3D를 시도한다.
+- 금액 입력(`parseAmountInput`)
+  - 소수점 아래는 버린다. 이전에는 `1234.56`이 123,456으로 해석되는 버그가 있었다.
+  - 쉼표, 공백, 원, ₩는 무시하고, 전각 숫자는 NFKC로 바꾼다.
+  - 앞에 마이너스가 있으면 0으로 보고 안내한다.
+  - 1억 원을 넘으면 1억으로 자르고 안내한다.
+  - `1e5`처럼 지수 표기는 숫자만 남겨 15가 된다.
+- 터치 영역: 버튼, 탭, 칩, 체크박스(감싸는 label 기준)는 최소 44px이다.
+- 포커스: 전역 `:focus-visible` 외곽선을 쓴다. 기존 accent 색은 라이트 배경 대비가 2.85:1이라 포커스 전용 색 `--color-focus`(라이트 #a5601a, 4.46:1)를 두었다.
+- 대비: 텍스트 조합은 라이트와 다크 모두 4.5:1 이상이다. accent는 인용 테두리 같은 장식에만 쓴다.
+- 안내 접근: 모든 화면 상단 고정 헤더에 안내 버튼을 둔다. 안내 화면 상단에 면책 문구와 "입력 내용은 서버로 전송되거나 저장되지 않아요."를 고정한다. 기록이 기기에 남는 사실은 보충 문장으로 함께 밝힌다. 화면을 바꾸면 맨 위로 스크롤한다.
+- 배포 메타
+  - 파비콘은 직접 그린 코인 SVG다.
+  - OG 이미지와 홈 화면 아이콘은 `scripts/make-icons.ts`가 직접 만든 HTML 카드를 캡처해 `public/`에 만든다.
+  - OG URL은 `SITE_URL`(deploy.yml이 configure-pages의 base_url을 넘김)로 절대 경로를 쓰고, 없으면 base 기준 경로를 쓴다.
+- 404: 라우터 없이 상태로 화면을 바꾸므로 URL은 바뀌지 않는다. GitHub Pages에서 하위 경로나 쿼리로 들어와도 열리도록 빌드 후 `404.html`을 `index.html` 복사본으로 만든다.
+- Lighthouse 13.6.0(모바일 에뮬레이션, 시뮬레이션 스로틀링, 로컬 preview 첫 화면, 2026-11-25)
+  - 점수: 성능 100, 접근성 100, 권장사항 100
+  - 지표: FCP 0.8s, LCP 0.8s, TBT 10ms, CLS 0
+  - 3D 화면(three 청크 gzip 약 243 kB)은 첫 화면이 아니라 측정 대상이 아니다.
+- 테스트 도구: 컴포넌트 테스트용으로 happy-dom과 Testing Library를 devDependency로 추가했다. Lighthouse는 `npx`로 한 번만 실행했고 의존성에 넣지 않았다.
 
 ### 배포 준비
 
