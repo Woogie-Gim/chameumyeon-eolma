@@ -6,6 +6,7 @@ import { formatNumber } from '../core/format.ts'
 import { filterInput, type Category } from '../core/inputFilter.ts'
 import { attachParticle } from '../core/template.ts'
 import items from '../data/items.json' with { type: 'json' }
+import { useSound } from '../sound/soundContext.ts'
 import { CATEGORY_LABELS, type Draft } from './types.ts'
 
 type Picked = { itemId: string; label: string; category: Category }
@@ -21,6 +22,8 @@ export function Input({ initial, onSubmit }: { initial: Draft | null; onSubmit: 
   const [notice, setNotice] = useState<Notice>(null)
   const [amount, setAmount] = useState<number>(initial?.amount ?? 0)
   const [amountNotice, setAmountNotice] = useState<string | null>(null)
+
+  const sound = useSound()
 
   const chipItems = category ? items.filter((i) => i.category === category).slice(0, CHIPS_PER_CATEGORY) : []
 
@@ -47,13 +50,17 @@ export function Input({ initial, onSubmit }: { initial: Draft | null; onSubmit: 
       setNotice({ kind: 'other', text: '사전에 없는 품목이라 기타 소비로 기록해요.' })
     } else {
       setNotice({ kind: 'error', text: r.message })
+      sound.play('error')
     }
   }
 
   function changeAmount(v: string) {
     const r = parseAmountInput(v)
     setAmount(r.value)
-    setAmountNotice(r.capped ? AMOUNT_MESSAGES.capped : r.negative ? AMOUNT_MESSAGES.negative : null)
+    const next = r.capped ? AMOUNT_MESSAGES.capped : r.negative ? AMOUNT_MESSAGES.negative : null
+    // 안내가 새로 뜰 때만 한 번 알린다(같은 안내가 이어지면 조용히)
+    if (next && next !== amountNotice) sound.play('error')
+    setAmountNotice(next)
   }
 
   const ready = picked !== null && amount >= 1
@@ -133,6 +140,7 @@ export function Input({ initial, onSubmit }: { initial: Draft | null; onSubmit: 
         <button
           type="button"
           className="btn btn-primary btn-block"
+          data-sound="custom"
           disabled={!ready}
           onClick={() => picked && onSubmit({ ...picked, amount })}
         >

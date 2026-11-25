@@ -4,7 +4,7 @@ import type { Choice, LogRecord } from '../core/stats.ts'
 import { isValidCardId, type TarotStored } from '../core/tarot.ts'
 
 export type KeyValue = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>
-export type Settings = { depositRate: number; savingsRate: number; reduce3d: boolean }
+export type Settings = { depositRate: number; savingsRate: number; reduce3d: boolean; sound: boolean }
 
 const RECORDS_KEY = 'chameum.records.v1'
 const SETTINGS_KEY = 'chameum.settings.v1'
@@ -15,6 +15,7 @@ export const DEFAULT_SETTINGS: Settings = {
   depositRate: rates.deposit.default,
   savingsRate: rates.savings.default,
   reduce3d: false,
+  sound: true, // 효과음과 진동
 }
 
 const clamp = (v: unknown, min: number, max: number, fallback: number) =>
@@ -47,6 +48,7 @@ function sanitizeSettings(v: unknown): Settings {
     depositRate: clamp(s.depositRate, rates.deposit.min, rates.deposit.max, DEFAULT_SETTINGS.depositRate),
     savingsRate: clamp(s.savingsRate, rates.savings.min, rates.savings.max, DEFAULT_SETTINGS.savingsRate),
     reduce3d: typeof s.reduce3d === 'boolean' ? s.reduce3d : DEFAULT_SETTINGS.reduce3d,
+    sound: typeof s.sound === 'boolean' ? s.sound : DEFAULT_SETTINGS.sound,
   }
 }
 

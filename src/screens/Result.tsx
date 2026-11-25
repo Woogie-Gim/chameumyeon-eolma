@@ -1,5 +1,5 @@
 // 결과 화면. 예금형은 이율, 적금형은 이율과 납입액, ETF형은 유형 상승률만 표시
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { coinSplit } from '../core/coinCount.ts'
 import { ETF_MIN_YEARS, amountBand, futureValueCompound, installmentFutureValue, startYearRange, timeMachine } from '../core/calc.ts'
 import { DISCLAIMER, ETF_DISCLAIMER } from '../core/copy.ts'
@@ -11,6 +11,7 @@ import messagesEtf from '../data/messagesEtf.json' with { type: 'json' }
 import returns from '../data/returns.json' with { type: 'json' }
 import { useCountUp } from '../hooks/useCountUp.ts'
 import { CoinStage } from '../scenes/CoinStage.tsx'
+import { useSound } from '../sound/soundContext.ts'
 import { ScaleStage } from '../scenes/ScaleStage.tsx'
 import type { Settings } from '../store/storage.ts'
 import type { Draft } from './types.ts'
@@ -34,6 +35,15 @@ export function Result({ draft, settings, onNext, onBack }: { draft: Draft; sett
   const [years, setYears] = useState(5)
   const [assetId, setAssetId] = useState(returns.assetTypes[0].id)
   const [view, setView] = useState<View>('piggy')
+
+  // 결과 공개(코인 쌓임) 소리. 환산하기를 누른 직후라 자동 재생 제한에 걸리지 않는다
+  const sound = useSound()
+  const revealed = useRef(false)
+  useEffect(() => {
+    if (revealed.current) return
+    revealed.current = true
+    sound.play('reveal')
+  }, [sound])
 
   // 한마디는 입력이 바뀔 때만 새로 고른다
   const message = useMemo(() => pickMessage(messages, draft.category, amountBand(draft.amount)), [draft])

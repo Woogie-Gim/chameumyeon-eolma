@@ -64,6 +64,11 @@ export function Settings({ settings, persistent, onChange, onReset, onOpenGuide 
           <input id="reduce3d" className="switch" type="checkbox" checked={settings.reduce3d} onChange={(e) => onChange({ ...settings, reduce3d: e.target.checked })} />
         </label>
         <p className="meta">켜면 저금통 연출을 2D 그래픽으로 보여 줘요. 동작 줄이기 설정이 켜진 기기와 3D를 지원하지 않는 기기도 2D로 보여요.</p>
+        <label className="setting-row mt-3" htmlFor="sound">
+          <span>효과음</span>
+          <input id="sound" className="switch" type="checkbox" checked={settings.sound} onChange={(e) => onChange({ ...settings, sound: e.target.checked })} />
+        </label>
+        <p className="meta">버튼 소리와 짧은 진동을 함께 켜고 꺼요. 기기가 무음이면 소리가 나지 않아요.</p>
       </div>
 
       <div className="card">

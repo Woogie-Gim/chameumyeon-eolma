@@ -16,7 +16,16 @@ function memory(): KeyValue & { dump: () => string } {
 describe('store', () => {
   it('기본 설정은 rates default', () => {
     const s = createStore(memory())
-    expect(s.getSettings()).toEqual({ depositRate: rates.deposit.default, savingsRate: rates.savings.default, reduce3d: false })
+    expect(s.getSettings()).toEqual({ depositRate: rates.deposit.default, savingsRate: rates.savings.default, reduce3d: false, sound: true })
+  })
+
+  it('효과음 설정 저장과 복원, 잘못된 값은 기본값(켜짐)', () => {
+    const kv = memory()
+    const s = createStore(kv)
+    s.saveSettings({ ...s.getSettings(), sound: false })
+    expect(createStore(kv).getSettings().sound).toBe(false)
+    kv.setItem('chameum.settings.v1', JSON.stringify({ sound: 'yes' }))
+    expect(createStore(kv).getSettings().sound).toBe(true)
   })
 
   it('기록 추가와 조회, 허용 필드만 저장', () => {
@@ -29,8 +38,8 @@ describe('store', () => {
 
   it('이율은 min~max로 보정', () => {
     const s = createStore(memory())
-    s.saveSettings({ depositRate: 99, savingsRate: -1, reduce3d: true })
-    expect(s.getSettings()).toEqual({ depositRate: rates.deposit.max, savingsRate: rates.savings.min, reduce3d: true })
+    s.saveSettings({ depositRate: 99, savingsRate: -1, reduce3d: true, sound: false })
+    expect(s.getSettings()).toEqual({ depositRate: rates.deposit.max, savingsRate: rates.savings.min, reduce3d: true, sound: false })
   })
 
   it('손상된 데이터는 기본값', () => {
