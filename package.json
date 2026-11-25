@@ -10,6 +10,7 @@
     "lint": "oxlint",
     "test": "vitest run",
     "test:e2e": "playwright test --pass-with-no-tests",
+    "store:logo": "tsx scripts/make-logo.ts",
     "scan:banned": "tsx scripts/scan-banned.ts",
     "fetch:data": "tsx scripts/fetch-data.ts",
     "build:blocklist": "tsx scripts/build-blocklist.ts"
