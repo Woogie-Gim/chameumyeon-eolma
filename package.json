@@ -13,6 +13,7 @@
     "store:logo": "tsx scripts/make-logo.ts",
     "store:screens": "playwright test -c playwright.store.config.ts",
     "store:banner": "tsx scripts/make-banner.ts",
+    "store:console": "tsx scripts/console-fields.ts",
     "scan:banned": "tsx scripts/scan-banned.ts",
     "fetch:data": "tsx scripts/fetch-data.ts",
     "build:blocklist": "tsx scripts/build-blocklist.ts"
