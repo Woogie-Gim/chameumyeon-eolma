@@ -1,52 +1,60 @@
 /* 디자인 토큰. 디자인 변경은 이 파일만 수정 */
-/* 색: 메인(틸) 1색 + 보조(네이비) 1색 + 중립 회색. 금색은 불어난 코인 전용. 빨강은 오류 표시 전용 */
+/* 색: 메인(틸) 1색 + 포인트(보라) 1색 + 중립. 금색은 불어난 코인 전용. 빨강은 오류 표시 전용 */
 :root {
-  /* 중립 */
-  --color-bg: #f2f4f6;
+  /* 중립. 배경은 따뜻한 밝은 틴트 */
+  --color-bg: #f7f3ee;
+  --color-bg-top: #faf7f3; /* 배경 그라데이션 위쪽 */
   --color-surface: #ffffff;
-  --color-surface-alt: #eaedf1;
-  --color-stage-bg: #f7f8fa;
+  --color-surface-alt: #f1ece5;
+  --color-stage-bg: #f5f0ea;
   --color-text: #191f28;
   --color-muted: #4e5968;
-  --color-border: #e5e8eb;
-  --color-pressed: #dfe3e8; /* 눌림 배경 */
+  --color-border: #e7e0d7;
+  --color-pressed: #e6ded3; /* 눌림 배경 */
 
-  /* 메인 */
-  --color-primary: #1d6e65;
-  --color-primary-strong: #145149;
-  --color-primary-pressed: #175a52;
-  --color-primary-soft: #e2f1ee;
+  /* 메인(틸). 채도를 올림 */
+  --color-primary: #087266;
+  --color-primary-strong: #05564d;
+  --color-primary-pressed: #06625a;
+  --color-primary-soft: #dcf2ee;
   --color-on-primary: #ffffff;
 
-  /* 보조 */
-  --color-secondary: #2c4775;
-  --color-secondary-soft: #e7ecf5;
-  --color-focus: #2c4775; /* 포커스 외곽선. 주변 배경 대비 4.5:1 이상 */
+  /* 포인트(보라). 포커스, 배경 도형, 타로 뒷면, 저울 쓰는 금액 더미 */
+  --color-secondary: #6a45d1;
+  --color-secondary-soft: #efeafc;
+  --color-focus: #6a45d1; /* 포커스 외곽선. 주변 배경 대비 4.5:1 이상 */
+
+  /* 배경 도형. 큰 원을 radial-gradient로 흐리게 그린다. 알파는 대비 테스트가 검사 */
+  --color-blob-a: #1fb5a2;
+  --color-blob-b: #8a6cf0;
+  --blob-alpha: 0.18;
 
   /* 상태 */
   --color-danger: #b23a2c;
   --color-danger-soft: #fbeae7;
 
   /* 그래프 */
-  --color-chart-bar: #1d6e65;
-  --color-chart-empty: #dfe3e8;
+  --color-chart-bar: #087266;
+  --color-chart-empty: #e6ded3;
 
   /* 장면 */
-  --color-piggy: #a9d8d0;
-  --color-piggy-shade: #6fb0a5;
+  --color-piggy: #9fdcd2;
+  --color-piggy-shade: #5fb3a6;
   --color-piggy-eye: #191f28;
-  --color-coin-principal: #8b95a1;
+  --color-coin-principal: #9aa4b1;
   --color-coin-principal-edge: #6b7684;
-  --color-coin-grown: #e0b04a;
+  --color-coin-grown: #e8b445;
   --color-coin-grown-edge: #b98a2a;
-  --color-tarot-back: #2c4775;
+  --color-coin-shine: #fff3c9; /* 2D 코인 윗면 하이라이트, 반짝임 */
+  --color-floor-shadow: #3a2f52; /* 바닥 그림자 */
+  --color-tarot-back: #5434b0;
   --color-tarot-front: #ffffff;
-  --color-tarot-ink: #5fb3a7;
-  --color-tarot-edge: #1f3557;
+  --color-tarot-ink: #2fbfad;
+  --color-tarot-edge: #3b2585;
   --color-scale-frame: #8b95a1;
-  --color-scale-pan: #c5ccd4;
-  --color-spend-pile: #4a6699;
-  --color-spend-pile-edge: #2c4775;
+  --color-scale-pan: #c9cfd6;
+  --color-spend-pile: #7b5ce0;
+  --color-spend-pile-edge: #5434b0;
 
   /* 간격. 4px 기반 */
   --space-1: 4px;
@@ -84,7 +92,7 @@
   --radius-card: 16px;
   --radius-pill: 999px;
   --border-hair: 1px solid var(--color-border);
-  --shadow-card: 0 1px 2px rgb(25 31 40 / 0.04);
+  --shadow-card: 0 1px 2px rgb(58 47 82 / 0.05), 0 4px 16px rgb(58 47 82 / 0.04);
   --focus-ring: 3px;
   --focus-offset: 2px;
   --underline: 2px;
@@ -108,52 +116,65 @@
   --switch-h: 32px;
   --swatch: 12px;
   --quote-bar: 3px;
+  --hero-band: 4px;
+  --floor-shadow-alpha: 0.16;
+  --floor-shadow: color-mix(in srgb, var(--color-floor-shadow) 22%, transparent);
+  /* 연출 영역 배경. 위쪽 가운데가 밝은 타원 */
+  --stage-gradient: radial-gradient(ellipse 120% 90% at 50% 0%, var(--color-surface), var(--color-stage-bg));
 
   /* 동작 */
   --dur-press: 120ms;
   --dur-screen: 180ms;
   --dur-flip: 0.7s;
+  --dur-sparkle: 700ms;
   --press-scale: 0.98;
   --press-scale-icon: 0.92;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #101317;
-    --color-surface: #1a1e24;
-    --color-surface-alt: #242a31;
-    --color-stage-bg: #20252c;
-    --color-text: #eef1f4;
-    --color-muted: #a4adb8;
-    --color-border: #2c333b;
-    --color-pressed: #2c333b;
-    --color-primary: #5bbfb2;
-    --color-primary-strong: #7fd2c6;
-    --color-primary-pressed: #4aa699;
-    --color-primary-soft: #17312e;
-    --color-on-primary: #0a1a18;
-    --color-secondary: #93abd9;
-    --color-secondary-soft: #1d2636;
-    --color-focus: #93abd9;
-    --color-danger: #ef8f7f;
-    --color-danger-soft: #3a2421;
-    --color-chart-bar: #5bbfb2;
-    --color-chart-empty: #2c333b;
-    --color-piggy: #6fb0a5;
-    --color-piggy-shade: #3f7f75;
-    --color-piggy-eye: #101317;
-    --color-coin-principal: #7d8793;
+    /* 깊은 남색 + 위쪽이 조금 밝은 그라데이션 */
+    --color-bg: #0d1424;
+    --color-bg-top: #16203a;
+    --color-surface: #162036;
+    --color-surface-alt: #1f2a44;
+    --color-stage-bg: #121b30;
+    --color-text: #eef1f6;
+    --color-muted: #a9b3c4;
+    --color-border: #26314d;
+    --color-pressed: #2a3654;
+    --color-primary: #3fd1bf;
+    --color-primary-strong: #74e0d2;
+    --color-primary-pressed: #30b9a8;
+    --color-primary-soft: #11332f;
+    --color-on-primary: #04201c;
+    --color-secondary: #b9a4ff;
+    --color-secondary-soft: #251f45;
+    --color-focus: #b9a4ff;
+    --color-blob-a: #1a9c8c;
+    --color-blob-b: #6a4fd6;
+    --blob-alpha: 0.22;
+    --color-danger: #ff8f80;
+    --color-danger-soft: #3d2224;
+    --color-chart-bar: #3fd1bf;
+    --color-chart-empty: #26314d;
+    --color-piggy: #5fb3a6;
+    --color-piggy-shade: #357f74;
+    --color-piggy-eye: #0d1424;
+    --color-coin-principal: #8590a0;
     --color-coin-principal-edge: #5a6470;
-    --color-coin-grown: #e3b85a;
+    --color-coin-grown: #f0bf55;
     --color-coin-grown-edge: #a77f2c;
-    --color-tarot-back: #3c5a8f;
-    --color-tarot-front: #242a31;
-    --color-tarot-ink: #6fc4b8;
-    --color-tarot-edge: #2c4775;
+    --color-coin-shine: #fff1c2;
+    --color-floor-shadow: #000000;
+    --color-tarot-back: #5b3fc0;
+    --color-tarot-front: #1f2a44;
+    --color-tarot-ink: #4fd8c6;
+    --color-tarot-edge: #3b2585;
     --color-scale-frame: #8b95a1;
     --color-scale-pan: #4e5968;
-    --color-spend-pile: #6f8cc4;
-    --color-spend-pile-edge: #4a6699;
+    --color-spend-pile: #8f74ec;
+    --color-spend-pile-edge: #6a4fd6;
     --shadow-card: none;
   }
 }

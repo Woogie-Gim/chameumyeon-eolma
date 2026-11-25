@@ -1,6 +1,6 @@
 // 재물운 타로: 탭 이동, 하루 한 장, 새로고침 유지, 날짜 변경, 폴백, 키보드 조작
 import { expect, test, type Page } from '@playwright/test'
-import { SHOT_VIEWPORT, shot } from './helpers.ts'
+import { SCENE_TIMEOUT, shot, SHOT_VIEWPORT } from './helpers.ts'
 
 test.use({ viewport: SHOT_VIEWPORT })
 
@@ -79,7 +79,7 @@ test('WebGL 미지원이면 CSS 뒤집기 폴백', async ({ page }) => {
 test('일반 환경은 3D 카드, 동작 줄이기면 2D', async ({ page }) => {
   await page.goto('/')
   await openTarot(page)
-  await expect(page.getByTestId('tarot-stage-3d').locator('canvas')).toBeVisible()
+  await expect(page.getByTestId('tarot-stage-3d').locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
 
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.reload()

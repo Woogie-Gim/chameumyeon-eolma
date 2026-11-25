@@ -2,6 +2,7 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { expect, test, type Page } from '@playwright/test'
+import { SCENE_TIMEOUT } from './helpers.ts'
 import { BASE_PATH } from '../../playwright.config.ts'
 
 const ROOT = resolve(import.meta.dirname, '../..')
@@ -25,7 +26,7 @@ test('하위 경로에서 첫 화면, 3D 청크, 아이콘이 404 없이 열린�
   await page.getByRole('button', { name: '확인' }).click()
   await page.getByLabel('금액').fill('10000')
   await page.getByRole('button', { name: '환산하기' }).click()
-  await expect(page.getByTestId('coin-stage-3d').locator('canvas')).toBeVisible()
+  await expect(page.getByTestId('coin-stage-3d').locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
 
   // head의 아이콘과 OG 이미지 경로
   const hrefs = await page.evaluate(() => [

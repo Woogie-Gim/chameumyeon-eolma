@@ -1,6 +1,6 @@
 // 3D 저금통과 2D 폴백
 import { expect, test } from '@playwright/test'
-import { SHOT_VIEWPORT, gotoResult, shot } from './helpers.ts'
+import { gotoResult, SCENE_TIMEOUT, shot, SHOT_VIEWPORT } from './helpers.ts'
 
 test.use({ viewport: SHOT_VIEWPORT })
 
@@ -10,7 +10,7 @@ test('일반 환경에서 3D 캔버스와 대체 텍스트', async ({ page }) =>
   await gotoResult(page)
   const stage = page.getByTestId('coin-stage-3d')
   await expect(stage).toBeVisible()
-  await expect(stage.locator('canvas')).toBeVisible()
+  await expect(stage.locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   await expect(page.getByRole('img', { name: stageLabel })).toBeVisible()
 
   // 슬라이더 변화에 따라 코인 수 변경
@@ -105,7 +105,7 @@ test('저금통과 저울 전환, 기본은 저금통', async ({ page }) => {
   await group.getByRole('button', { name: '저울' }).click()
   await expect(group.getByRole('button', { name: '저울' })).toHaveAttribute('aria-pressed', 'true')
   const stage = page.getByTestId('scale-stage-3d')
-  await expect(stage.locator('canvas')).toBeVisible()
+  await expect(stage.locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   await expect(page.getByTestId('coin-stage-3d')).toHaveCount(0)
   await expect(page.getByRole('img', { name: scaleLabel })).toBeVisible()
   await expect(stage).toHaveAttribute('aria-label', /환산 쪽으로 기울어짐/)

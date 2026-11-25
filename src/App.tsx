@@ -67,6 +67,8 @@ function App() {
 
   return (
     <>
+      {/* 화면별 배경 도형. 장식이므로 보조 기기에서 숨김 */}
+      <div className="app-backdrop" data-screen={screen} aria-hidden="true" />
       <header className="app-header">
         <div className="app-header-inner">
           <span className="app-name">참으면 얼마?</span>

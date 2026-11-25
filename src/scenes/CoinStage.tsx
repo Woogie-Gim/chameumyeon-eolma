@@ -16,7 +16,7 @@ export function CoinStage({ split, reduce3d }: { split: CoinSplit; reduce3d: boo
   return (
     <>
       <div
-        className="coin-stage"
+        className={use3d ? 'coin-stage stage-3d-piggy' : 'coin-stage'}
         role="img"
         aria-label={`원금 코인 ${principal}개, 불어난 코인 ${grown}개 쌓임`}
         data-testid={use3d ? 'coin-stage-3d' : 'coin-stage-2d'}

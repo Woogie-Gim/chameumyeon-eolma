@@ -1,6 +1,6 @@
 // 3D 모듈 로딩: 첫 화면에서는 three 청크를 받지 않고, 받는 동안에는 2D 대체 화면이 먼저 보인다
 import { expect, test, type Page } from '@playwright/test'
-import { SHOT_VIEWPORT, gotoResult } from './helpers.ts'
+import { gotoResult, SCENE_TIMEOUT, SHOT_VIEWPORT } from './helpers.ts'
 
 test.use({ viewport: SHOT_VIEWPORT })
 
@@ -28,7 +28,7 @@ test('첫 화면에서는 three 청크를 받지 않는다', async ({ page }) =>
   await page.getByRole('button', { name: '확인' }).click()
   await page.getByLabel('금액').fill('10000')
   await page.getByRole('button', { name: '환산하기' }).click()
-  await expect(page.getByTestId('coin-stage-3d').locator('canvas')).toBeVisible()
+  await expect(page.getByTestId('coin-stage-3d').locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   expect(requested.some((u) => /\/assets\/three-/.test(u))).toBe(true)
 })
 
@@ -42,13 +42,13 @@ test('저금통: 로딩 중 2D 코인과 준비 중 표시, 이후 3D', async ({
   await expect(page.getByRole('img', { name: /^원금 코인 \d+개/ })).toBeVisible()
 
   release()
-  await expect(stage.locator('canvas')).toBeVisible()
+  await expect(stage.locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   await expect(stage.getByTestId('scene-loading')).toHaveCount(0)
 })
 
 test('저울: 로딩 중 2D 막대, 이후 3D', async ({ page }) => {
   await gotoResult(page)
-  await expect(page.getByTestId('coin-stage-3d').locator('canvas')).toBeVisible()
+  await expect(page.getByTestId('coin-stage-3d').locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   const release = await holdChunk(page, 'Scale')
   await page.getByRole('group', { name: '연출 선택' }).getByRole('button', { name: '저울' }).click()
   const stage = page.getByTestId('scale-stage-3d')
@@ -57,7 +57,7 @@ test('저울: 로딩 중 2D 막대, 이후 3D', async ({ page }) => {
   await expect(stage.locator('canvas')).toHaveCount(0)
 
   release()
-  await expect(stage.locator('canvas')).toBeVisible()
+  await expect(stage.locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   await expect(stage.getByTestId('scene-loading')).toHaveCount(0)
 })
 
@@ -74,6 +74,6 @@ test('타로: 로딩 중 2D 카드, 이후 3D', async ({ page }) => {
   await expect(page.getByTestId('tarot-name')).toBeVisible()
 
   release()
-  await expect(stage.locator('canvas')).toBeVisible()
+  await expect(stage.locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   await expect(stage.getByTestId('scene-loading')).toHaveCount(0)
 })

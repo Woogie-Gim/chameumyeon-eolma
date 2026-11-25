@@ -4,6 +4,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { DoubleSide, Shape, type Group } from 'three'
 import { watchContextLost } from './contextLost.ts'
+import { SceneLights } from './SceneLights.tsx'
 import { readSceneColors, type SceneColors } from './sceneColors.ts'
 import { starPoints, tarotPattern } from './tarotPattern.ts'
 
@@ -146,8 +147,8 @@ export default function TarotCard({ id, drawn, onLost }: { id: number; drawn: bo
       camera={{ position: [0, 0, 4.2], fov: 40 }}
       onCreated={({ gl }) => watchContextLost(gl.domElement, onLost)}
     >
-      <ambientLight intensity={1.9} />
-      <directionalLight position={[2, 3, 4]} intensity={1.5} />
+      {/* 흰 앞면이 회색으로 보이지 않게 전체 밝기를 높게 둔다 */}
+      <SceneLights ambient={1.9} main={1.5} position={[2, 3, 4]} />
       <Card id={id} drawn={drawn} colors={colors} />
     </Canvas>
   )

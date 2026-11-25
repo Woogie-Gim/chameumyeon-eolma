@@ -1,6 +1,6 @@
 // 접근성과 모바일: 터치 영역 44px, 키보드 탐색과 포커스 표시, 3D 대체 텍스트, 동작 줄이기
 import { expect, test, type Page } from '@playwright/test'
-import { SHOT_VIEWPORT, gotoResult } from './helpers.ts'
+import { gotoResult, SCENE_TIMEOUT, SHOT_VIEWPORT } from './helpers.ts'
 
 test.use({ viewport: SHOT_VIEWPORT, hasTouch: true, isMobile: true })
 
@@ -69,7 +69,7 @@ test('3D 영역 세 곳 모두 대체 텍스트가 있다', async ({ page }) => 
   await page.getByRole('button', { name: '타로' }).click()
   await expect(page.getByTestId('tarot-stage-3d')).toHaveAttribute('aria-label', '뒤집히지 않은 카드 뒷면')
   // 캔버스는 aria-hidden 래퍼 안에 있어 보조 기기에서 숨김
-  await expect(page.getByTestId('tarot-stage-3d').locator('canvas')).toBeVisible()
+  await expect(page.getByTestId('tarot-stage-3d').locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   expect(await page.getByTestId('tarot-stage-3d').locator('canvas').evaluate((c) => c.closest('[aria-hidden="true"]') !== null)).toBe(true)
 })
 

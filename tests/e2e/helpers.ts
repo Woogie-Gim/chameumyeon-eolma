@@ -4,6 +4,10 @@ import type { Page } from '@playwright/test'
 // 스크린샷 크기. 모바일 뷰포트 한 화면
 export const SHOT_VIEWPORT = { width: 390, height: 844 }
 
+// 3D 캔버스가 처음 뜨기까지 기다리는 시간. 헤드리스는 소프트웨어 WebGL(SwiftShader)이라
+// 여러 워커가 동시에 돌면 three 청크 로드와 첫 렌더가 기본 5초를 넘길 때가 있다
+export const SCENE_TIMEOUT = 15_000
+
 // SCREENSHOTS=1일 때만 docs/screenshots에 저장. 페이지 맨 위에서 뷰포트 크기로 캡처
 // settleMs: 3D 코인 보간이 끝날 때까지 기다릴 시간
 export async function shot(page: Page, name: string, settleMs = 0) {

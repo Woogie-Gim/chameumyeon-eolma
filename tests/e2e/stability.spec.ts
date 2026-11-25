@@ -1,6 +1,6 @@
 // 안정성: 저장소 차단, 용량 초과, WebGL 컨텍스트 소실, 금액 입력 경계
 import { expect, test } from '@playwright/test'
-import { SHOT_VIEWPORT, gotoResult } from './helpers.ts'
+import { gotoResult, SCENE_TIMEOUT, SHOT_VIEWPORT } from './helpers.ts'
 
 test.use({ viewport: SHOT_VIEWPORT })
 
@@ -54,7 +54,7 @@ async function loseContext(page: import('@playwright/test').Page, testId: string
 
 test('WebGL 컨텍스트가 소실되면 저금통이 2D로 바뀐다', async ({ page }) => {
   await gotoResult(page)
-  await expect(page.getByTestId('coin-stage-3d').locator('canvas')).toBeVisible()
+  await expect(page.getByTestId('coin-stage-3d').locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   await loseContext(page, 'coin-stage-3d')
   await expect(page.getByTestId('coin-stage-2d')).toBeVisible()
   await expect(page.locator('canvas')).toHaveCount(0)
@@ -64,7 +64,7 @@ test('WebGL 컨텍스트가 소실되면 저금통이 2D로 바뀐다', async ({
 test('WebGL 컨텍스트가 소실되면 저울이 2D로 바뀐다', async ({ page }) => {
   await gotoResult(page)
   await page.getByRole('group', { name: '연출 선택' }).getByRole('button', { name: '저울' }).click()
-  await expect(page.getByTestId('scale-stage-3d').locator('canvas')).toBeVisible()
+  await expect(page.getByTestId('scale-stage-3d').locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   await loseContext(page, 'scale-stage-3d')
   await expect(page.getByTestId('scale-stage-2d')).toBeVisible()
   await expect(page.getByTestId('scale-stage-2d').locator('.scale-bar')).toHaveCount(2)
@@ -73,7 +73,7 @@ test('WebGL 컨텍스트가 소실되면 저울이 2D로 바뀐다', async ({ pa
 test('WebGL 컨텍스트가 소실되면 타로 카드가 2D로 바뀐다', async ({ page }) => {
   await page.goto('/')
   await page.getByRole('button', { name: '타로' }).click()
-  await expect(page.getByTestId('tarot-stage-3d').locator('canvas')).toBeVisible()
+  await expect(page.getByTestId('tarot-stage-3d').locator('canvas')).toBeVisible({ timeout: SCENE_TIMEOUT })
   await loseContext(page, 'tarot-stage-3d')
   await expect(page.getByTestId('tarot-stage-2d')).toBeVisible()
   await page.getByRole('button', { name: '카드 뒤집기' }).click()

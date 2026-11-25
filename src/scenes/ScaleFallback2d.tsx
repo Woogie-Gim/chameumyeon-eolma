@@ -12,6 +12,7 @@ export function ScaleFallback2d({ spend, converted, spendLabel }: { spend: numbe
   ]
   return (
     <svg className="scale-fallback" viewBox={`0 0 ${w} ${h}`} aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+      <ellipse className="floor-shadow" cx={w / 2} cy={base + 3} rx={w / 2 - 30} ry={6} />
       <line className="scale-axis" x1={24} x2={w - 24} y1={base} y2={base} />
       {bars.map((b) => {
         const bh = Math.max(2, (Math.max(0, b.v) / max) * maxH)

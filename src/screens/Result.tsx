@@ -9,6 +9,7 @@ import { fillTemplate } from '../core/template.ts'
 import messages from '../data/messages.json' with { type: 'json' }
 import messagesEtf from '../data/messagesEtf.json' with { type: 'json' }
 import returns from '../data/returns.json' with { type: 'json' }
+import { useCountUp } from '../hooks/useCountUp.ts'
 import { CoinStage } from '../scenes/CoinStage.tsx'
 import { ScaleStage } from '../scenes/ScaleStage.tsx'
 import type { Settings } from '../store/storage.ts'
@@ -69,6 +70,15 @@ export function Result({ draft, settings, onNext, onBack }: { draft: Draft; sett
         ? { base: savings.totalPaid, value: savings.value, baseLabel: '총 납입액' }
         : { base: draft.amount, value: tm.value, baseLabel: '지금 쓰는 금액' }
   const coins = coinSplit(pair.base, pair.value)
+  // 핵심 금액은 카운트업으로 보여 주고, 보조 기기에는 최종값만 읽힌다
+  const resultValue = Math.round(pair.value)
+  const shownValue = useCountUp(resultValue)
+  const bigNumber = (
+    <>
+      <p className="big-number" data-testid="result-value" aria-hidden="true">{formatWon(shownValue)}</p>
+      <p className="sr-only">{formatWon(resultValue)}</p>
+    </>
+  )
 
   return (
     <section className="screen" aria-labelledby="result-title">
@@ -88,19 +98,19 @@ export function Result({ draft, settings, onNext, onBack }: { draft: Draft; sett
           {mode === 'deposit' && (
             <>
               <p className="hero-lead">{amountText}을 한 번 넣었다면 {years}년 뒤 약</p>
-              <p className="big-number" data-testid="result-value">{formatWon(deposit)}</p>
+              {bigNumber}
             </>
           )}
           {mode === 'savings' && (
             <>
               <p className="hero-lead">매달 {amountText}씩 {years}년 넣었다면 약</p>
-              <p className="big-number" data-testid="result-value">{formatWon(savings.value)}</p>
+              {bigNumber}
             </>
           )}
           {mode === 'etf' && (
             <>
               <p className="hero-lead">{startYear}년 초에 {amountText}을 넣었다면 {tm.endYear}년 말 약</p>
-              <p className="big-number" data-testid="result-value">{formatWon(tm.value)}</p>
+              {bigNumber}
             </>
           )}
         </div>

@@ -5,6 +5,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 import { Color, CylinderGeometry, InstancedMesh, MeshStandardMaterial, Object3D, Quaternion, Vector3, type Group, type Mesh } from 'three'
 import { COIN_BASE, COIN_MAX } from '../core/coinCount.ts'
 import { watchContextLost } from './contextLost.ts'
+import { SceneLights } from './SceneLights.tsx'
 import { readSceneColors, type SceneColors } from './sceneColors.ts'
 
 const PIVOT_Y = 1.7
@@ -97,7 +98,7 @@ function CoinPile({ count, principal, colors }: { count: number; principal: numb
   const mesh = useRef<InstancedMesh>(null)
   const invalidate = useThree((s) => s.invalidate)
   const geometry = useMemo(() => new CylinderGeometry(COIN_R, COIN_R, COIN_H, 24), [])
-  const material = useMemo(() => new MeshStandardMaterial({ color: '#ffffff', metalness: 0.25, roughness: 0.4 }), [])
+  const material = useMemo(() => new MeshStandardMaterial({ color: '#ffffff', metalness: 0.45, roughness: 0.3 }), [])
   const principalColor = useMemo(() => new Color(colors.coinPrincipal), [colors])
   const grownColor = useMemo(() => new Color(colors.coinGrown), [colors])
 
@@ -156,15 +157,15 @@ function Balance({ tilt, coins, principal, colors }: { tilt: number; coins: numb
       {/* 받침과 기둥 */}
       <mesh position={[0, 0.05, 0]}>
         <boxGeometry args={[1.2, 0.1, 0.6]} />
-        <meshStandardMaterial color={colors.scaleFrame} roughness={0.6} />
+        <meshStandardMaterial color={colors.scaleFrame} metalness={0.3} roughness={0.45} />
       </mesh>
       <mesh position={[0, PIVOT_Y / 2 + 0.05, 0]}>
         <cylinderGeometry args={[0.05, 0.07, PIVOT_Y - 0.1, 16]} />
-        <meshStandardMaterial color={colors.scaleFrame} roughness={0.6} />
+        <meshStandardMaterial color={colors.scaleFrame} metalness={0.3} roughness={0.45} />
       </mesh>
       <mesh position={[0, PIVOT_Y + 0.06, 0]}>
         <coneGeometry args={[0.08, 0.16, 16]} />
-        <meshStandardMaterial color={colors.scaleFrame} roughness={0.6} />
+        <meshStandardMaterial color={colors.scaleFrame} metalness={0.3} roughness={0.45} />
       </mesh>
       {/* 빔 */}
       <mesh ref={beam} position={[0, PIVOT_Y, 0]}>
@@ -197,8 +198,8 @@ export default function Scale({ tilt, coins, principal, onLost }: { tilt: number
         watchContextLost(gl.domElement, onLost)
       }}
     >
-      <ambientLight intensity={0.8} />
-      <directionalLight position={[3, 5, 4]} intensity={1.5} />
+      {/* 바닥 그림자는 CSS(.stage-3d-scale) */}
+      <SceneLights ambient={1.0} main={1.7} position={[2, 5, 5]} />
       <Balance tilt={tilt} coins={coins} principal={principal} colors={colors} />
     </Canvas>
   )

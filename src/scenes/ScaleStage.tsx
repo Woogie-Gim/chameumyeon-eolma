@@ -18,7 +18,7 @@ export function ScaleStage({ spend, converted, spendLabel, reduce3d }: Props) {
   return (
     <>
       <div
-        className="coin-stage"
+        className={use3d ? 'coin-stage stage-3d-scale' : 'coin-stage'}
         role="img"
         aria-label={scaleAltText(spendLabel, spend, converted)}
         data-testid={use3d ? 'scale-stage-3d' : 'scale-stage-2d'}

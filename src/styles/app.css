@@ -3,7 +3,6 @@
 
 body {
   margin: 0;
-  background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-family);
   font-size: var(--text-body);
@@ -14,6 +13,41 @@ body {
 
 button, input { font: inherit; color: inherit; }
 
+/* 배경 깊이감. 큰 원 세 개를 radial-gradient로 흐리게 그린 고정 레이어(filter blur 미사용)
+   별도 합성 레이어로 올려 한 번만 그리고, 화면별 변화는 뒤집기 transform으로만 준다(다시 그리기 없음)
+   문서 흐름 안에 두면 내용이 바뀔 때마다 그라데이션을 다시 그려 저사양에서 느려진다 */
+html { background: var(--color-bg); }
+.app-backdrop {
+  --blob-a: color-mix(in srgb, var(--color-blob-a) calc(var(--blob-alpha) * 100%), transparent);
+  --blob-b: color-mix(in srgb, var(--color-blob-b) calc(var(--blob-alpha) * 100%), transparent);
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle 300px at 6% 6%, var(--blob-a), transparent),
+    radial-gradient(circle 260px at 100% 42%, var(--blob-b), transparent),
+    radial-gradient(circle 280px at 14% 100%, var(--blob-a), transparent),
+    linear-gradient(180deg, var(--color-bg-top), var(--color-bg) 70%);
+  will-change: transform;
+}
+.app-backdrop[data-screen='result'], .app-backdrop[data-screen='choice'] { transform: scaleX(-1); }
+.app-backdrop[data-screen='log'] { transform: scaleY(-1); }
+.app-backdrop[data-screen='tarot'] { transform: scale(-1, -1); }
+
+/* 보조 기기 전용 텍스트 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* 키보드 포커스 표시. 외곽선 색은 주변 배경 대비 4.5:1 이상(--color-focus) */
 :focus-visible { outline: var(--focus-ring) solid var(--color-focus); outline-offset: var(--focus-offset); }
 
@@ -21,7 +55,7 @@ button, input { font: inherit; color: inherit; }
   position: sticky;
   top: 0;
   z-index: 2;
-  background: var(--color-bg);
+  background: color-mix(in srgb, var(--color-bg-top) 94%, transparent);
   border-bottom: var(--border-hair);
   padding-top: env(safe-area-inset-top);
 }
@@ -144,7 +178,7 @@ button, input { font: inherit; color: inherit; }
   bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
   z-index: 1;
   padding: var(--space-3) var(--gutter);
-  background: var(--color-bg);
+  background: color-mix(in srgb, var(--color-bg) 94%, transparent);
   border-top: var(--border-hair);
 }
 .cta-bar .btn { display: block; max-width: calc(var(--content-max) - var(--gutter) * 2); margin: 0 auto; }
@@ -193,6 +227,15 @@ button, input { font: inherit; color: inherit; }
 .hero-card { display: flex; flex-direction: column; gap: var(--space-4); }
 .hero-lead { margin: 0 0 var(--space-1); font-size: var(--text-body); color: var(--color-muted); }
 .hero-card .big-number { color: var(--color-text); }
+/* 핵심 카드 위쪽에 틸에서 보라로 가는 얇은 띠 */
+.hero-card { position: relative; overflow: hidden; }
+.hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: var(--hero-band);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+}
 .hero-slider { border-top: var(--border-hair); padding-top: var(--space-3); }
 .stage-card { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-3); }
 .stage-card .coin-legend { margin: 0; }
@@ -274,13 +317,42 @@ button, input { font: inherit; color: inherit; }
   position: relative;
   height: var(--stage-h);
   border-radius: var(--radius-control);
-  background: var(--color-stage-bg);
+  background: var(--stage-gradient);
   overflow: hidden;
 }
 .coin-stage canvas { display: block; }
+/* 3D 바닥 그림자. 캔버스가 투명이라 뒤 배경의 타원이 그림자로 보인다(WebGL 추가 비용 없음) */
+.stage-3d-piggy {
+  background:
+    radial-gradient(ellipse 22% 7% at 33% 80%, var(--floor-shadow), transparent),
+    radial-gradient(ellipse 16% 6% at 66% 79%, var(--floor-shadow), transparent),
+    var(--stage-gradient);
+}
+.stage-3d-scale {
+  background:
+    radial-gradient(ellipse 34% 6% at 50% 86%, var(--floor-shadow), transparent),
+    var(--stage-gradient);
+}
 .coin-fallback { width: 100%; height: 100%; display: block; }
 .coin-fallback .coin-principal { fill: var(--color-coin-principal); stroke: var(--color-coin-principal-edge); stroke-width: 1; }
 .coin-fallback .coin-grown { fill: var(--color-coin-grown); stroke: var(--color-coin-grown-edge); stroke-width: 1; }
+.coin-fallback .coin-hl { fill: var(--color-coin-shine); opacity: 0.55; }
+.coin-fallback .floor-shadow, .scale-fallback .floor-shadow { fill: var(--color-floor-shadow); opacity: var(--floor-shadow-alpha); }
+/* 쌓임 직후 가벼운 반짝임. 한 번만 */
+.coin-fallback .sparkle {
+  fill: var(--color-coin-shine);
+  stroke: var(--color-coin-grown-edge);
+  stroke-width: 0.5;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sparkle var(--dur-sparkle) ease-out forwards;
+}
+@keyframes sparkle {
+  0% { opacity: 0; transform: scale(0.2); }
+  40% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.6); }
+}
 .coin-legend {
   display: flex;
   justify-content: center;
@@ -313,7 +385,7 @@ button, input { font: inherit; color: inherit; }
   height: var(--tarot-stage-h);
   border: var(--border-hair);
   border-radius: var(--radius-card);
-  background: var(--color-stage-bg);
+  background: var(--stage-gradient);
   overflow: hidden;
 }
 .tarot-stage canvas { display: block; }
@@ -344,6 +416,7 @@ button, input { font: inherit; color: inherit; }
 .tarot-star { fill: var(--color-tarot-back); }
 @media (prefers-reduced-motion: reduce) {
   .tarot-inner { transition: none; }
+  .coin-fallback .sparkle { display: none; }
 }
 
 /* 3D 로딩 중 대체 화면 */

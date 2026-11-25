@@ -8,6 +8,15 @@ const [lightPart, darkPart] = css.split('@media (prefers-color-scheme: dark)')
 const parse = (s: string) => Object.fromEntries([...s.matchAll(/--color-([\w-]+):\s*(#[0-9a-fA-F]{6})/g)].map((m) => [m[1], m[2]]))
 const light = parse(lightPart)
 const dark = { ...light, ...parse(darkPart) }
+const alphaOf = (s: string) => Number(/--blob-alpha:\s*([\d.]+)/.exec(s)?.[1] ?? NaN)
+const lightAlpha = alphaOf(lightPart)
+const darkAlpha = alphaOf(darkPart)
+
+// 배경 위에 도형 색을 알파로 겹친 합성색
+function blend(base: string, top: string, alpha: number): string {
+  const ch = (hex: string, i: number) => parseInt(hex.slice(i, i + 2), 16)
+  return '#' + [1, 3, 5].map((i) => Math.round(ch(base, i) * (1 - alpha) + ch(top, i) * alpha).toString(16).padStart(2, '0')).join('')
+}
 
 function luminance(hex: string): number {
   const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4))
@@ -20,7 +29,7 @@ function contrast(a: string, b: string): number {
 
 // 화면에서 실제로 쓰는 글자색/배경 조합(app.css 기준)
 const TEXT_PAIRS: [string, string][] = [
-  ['text', 'bg'], ['text', 'surface'], ['text', 'surface-alt'], ['text', 'secondary-soft'], ['text', 'primary-soft'], ['text', 'stage-bg'],
+  ['text', 'bg'], ['text', 'surface'], ['text', 'surface-alt'], ['text', 'secondary-soft'], ['text', 'primary-soft'], ['text', 'stage-bg'], ['text', 'bg-top'],
   ['muted', 'bg'], ['muted', 'surface'], ['muted', 'surface-alt'], ['muted', 'stage-bg'],
   ['primary-strong', 'surface'], ['primary-strong', 'bg'], ['primary-strong', 'primary-soft'],
   ['on-primary', 'primary'], ['on-primary', 'primary-pressed'],
@@ -28,8 +37,20 @@ const TEXT_PAIRS: [string, string][] = [
 ]
 // 포커스 외곽선(outline-offset으로 요소 바깥에 그림)이 놓이는 배경. 텍스트와 같은 4.5:1 기준
 const UI_PAIRS: [string, string][] = [['focus', 'bg'], ['focus', 'surface'], ['focus', 'surface-alt'], ['focus', 'stage-bg']]
+// 배경(그라데이션 양 끝과 도형 겹침) 위에 바로 놓이는 글자와 포커스 외곽선
+const ON_BACKDROP = ['text', 'muted', 'focus', 'primary-strong']
 
-describe.each([['라이트', light], ['다크', dark]])('%s 테마 대비', (_, theme) => {
+describe.each([['라이트', light, lightAlpha], ['다크', dark, darkAlpha]] as const)('%s 테마 대비', (_, theme, alpha) => {
+  it('도형 알파 값이 있다', () => {
+    expect(alpha).toBeGreaterThan(0)
+    expect(alpha).toBeLessThanOrEqual(0.3)
+  })
+
+  it.each(ON_BACKDROP)('배경 그라데이션과 도형 위 %s 4.5:1 이상', (fg) => {
+    const backs = ['bg', 'bg-top'].flatMap((b) => [theme[b], blend(theme[b], theme['blob-a'], alpha), blend(theme[b], theme['blob-b'], alpha)])
+    for (const back of backs) expect(contrast(theme[fg], back), `${fg} / ${back}`).toBeGreaterThanOrEqual(4.5)
+  })
+
   it.each(TEXT_PAIRS)('텍스트 %s / %s 4.5:1 이상', (fg, bg) => {
     expect(contrast(theme[fg], theme[bg])).toBeGreaterThanOrEqual(4.5)
   })
@@ -40,6 +61,11 @@ describe.each([['라이트', light], ['다크', dark]])('%s 테마 대비', (_, 
 })
 
 describe('대비 계산', () => {
+  it('합성색은 알파 0이면 바탕, 1이면 위 색', () => {
+    expect(blend('#000000', '#ffffff', 0)).toBe('#000000')
+    expect(blend('#000000', '#ffffff', 1)).toBe('#ffffff')
+  })
+
   it('흑백 21:1, 같은 색 1:1', () => {
     expect(contrast('#000000', '#ffffff')).toBeCloseTo(21, 5)
     expect(contrast('#777777', '#777777')).toBe(1)

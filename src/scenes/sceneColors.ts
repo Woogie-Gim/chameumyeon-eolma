@@ -12,21 +12,23 @@ export type SceneColors = {
   scaleFrame: string
   scalePan: string
   spendPile: string
+  coinShine: string
 }
 
 const FALLBACK: SceneColors = {
-  piggy: '#a9d8d0',
-  piggyShade: '#6fb0a5',
+  piggy: '#9fdcd2',
+  piggyShade: '#5fb3a6',
   eye: '#191f28',
-  coinPrincipal: '#8b95a1',
-  coinGrown: '#e0b04a',
-  tarotBack: '#2c4775',
+  coinPrincipal: '#9aa4b1',
+  coinGrown: '#e8b445',
+  tarotBack: '#5434b0',
   tarotFront: '#ffffff',
-  tarotInk: '#5fb3a7',
-  tarotEdge: '#1f3557',
+  tarotInk: '#2fbfad',
+  tarotEdge: '#3b2585',
   scaleFrame: '#8b95a1',
-  scalePan: '#c5ccd4',
-  spendPile: '#4a6699',
+  scalePan: '#c9cfd6',
+  spendPile: '#7b5ce0',
+  coinShine: '#fff3c9',
 }
 
 export function readSceneColors(): SceneColors {
@@ -46,6 +48,7 @@ export function readSceneColors(): SceneColors {
       scaleFrame: v('--color-scale-frame', FALLBACK.scaleFrame),
       scalePan: v('--color-scale-pan', FALLBACK.scalePan),
       spendPile: v('--color-spend-pile', FALLBACK.spendPile),
+      coinShine: v('--color-coin-shine', FALLBACK.coinShine),
     }
   } catch {
     return FALLBACK
