@@ -4,6 +4,7 @@ import { coinSplit } from '../core/coinCount.ts'
 import { scaleAltText, scaleTilt } from '../core/scaleTilt.ts'
 import { ScaleFallback2d } from './ScaleFallback2d.tsx'
 import { SceneBoundary } from './SceneBoundary.tsx'
+import { SceneLoading } from './SceneLoading.tsx'
 import { useUse3d } from './useUse3d.ts'
 
 const Scale = lazy(() => import('./Scale.tsx'))
@@ -24,7 +25,7 @@ export function ScaleStage({ spend, converted, spendLabel, reduce3d }: Props) {
       >
         {use3d ? (
           <SceneBoundary fallback={fallback} onError={onFail}>
-            <Suspense fallback={fallback}>
+            <Suspense fallback={<SceneLoading>{fallback}</SceneLoading>}>
               <Scale tilt={scaleTilt(spend, converted)} coins={split.total} principal={split.principal} />
             </Suspense>
           </SceneBoundary>

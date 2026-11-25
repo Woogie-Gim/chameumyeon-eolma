@@ -3,6 +3,7 @@ import { Suspense, lazy } from 'react'
 import type { CoinSplit } from '../core/coinCount.ts'
 import { CoinFallback2d } from './CoinFallback2d.tsx'
 import { SceneBoundary } from './SceneBoundary.tsx'
+import { SceneLoading } from './SceneLoading.tsx'
 import { useUse3d } from './useUse3d.ts'
 
 const PiggyBank = lazy(() => import('./PiggyBank.tsx'))
@@ -22,7 +23,7 @@ export function CoinStage({ split, reduce3d }: { split: CoinSplit; reduce3d: boo
       >
         {use3d ? (
           <SceneBoundary fallback={fallback} onError={onFail}>
-            <Suspense fallback={fallback}>
+            <Suspense fallback={<SceneLoading>{fallback}</SceneLoading>}>
               <PiggyBank principal={principal} grown={grown} />
             </Suspense>
           </SceneBoundary>

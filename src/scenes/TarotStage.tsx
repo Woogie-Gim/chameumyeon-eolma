@@ -1,6 +1,7 @@
 // 타로 카드 3D와 2D 폴백 선택. 3D 모듈은 동적 import로 분리
 import { Suspense, lazy } from 'react'
 import { SceneBoundary } from './SceneBoundary.tsx'
+import { SceneLoading } from './SceneLoading.tsx'
 import { TarotFallback2d } from './TarotFallback2d.tsx'
 import { useUse3d } from './useUse3d.ts'
 
@@ -20,7 +21,7 @@ export function TarotStage({ id, name, keyword, drawn, reduce3d }: Props) {
     >
       {use3d ? (
         <SceneBoundary fallback={fallback} onError={onFail}>
-          <Suspense fallback={fallback}>
+          <Suspense fallback={<SceneLoading>{fallback}</SceneLoading>}>
             <TarotCard id={id} drawn={drawn} />
           </Suspense>
         </SceneBoundary>
