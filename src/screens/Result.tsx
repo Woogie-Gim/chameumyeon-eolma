@@ -138,7 +138,7 @@ export function Result({ draft, settings, onNext, onBack }: { draft: Draft; sett
                 </button>
               ))}
             </div>
-            <p className="rate-line" style={{ marginTop: 'var(--space-3)' }}>
+            <p className="rate-line mt-3">
               {asset.label} {startYear}~{tm.endYear} 상승률 <strong>{formatPercent(tm.cumulativeReturn)}</strong>
               {asset.isSample && <> <span className="badge">샘플 데이터</span></>}
             </p>

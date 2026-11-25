@@ -15,18 +15,18 @@ export type SceneColors = {
 }
 
 const FALLBACK: SceneColors = {
-  piggy: '#e9a3a0',
-  piggyShade: '#c9706c',
-  eye: '#2b2b2b',
-  coinPrincipal: '#8e9a9d',
+  piggy: '#a9d8d0',
+  piggyShade: '#6fb0a5',
+  eye: '#191f28',
+  coinPrincipal: '#8b95a1',
   coinGrown: '#e0b04a',
-  tarotBack: '#2a4f6b',
-  tarotFront: '#fdf8ee',
-  tarotInk: '#c9822b',
-  tarotEdge: '#1d3a50',
-  scaleFrame: '#6b5a45',
-  scalePan: '#b9a88c',
-  spendPile: '#d9774f',
+  tarotBack: '#2c4775',
+  tarotFront: '#ffffff',
+  tarotInk: '#5fb3a7',
+  tarotEdge: '#1f3557',
+  scaleFrame: '#8b95a1',
+  scalePan: '#c5ccd4',
+  spendPile: '#4a6699',
 }
 
 export function readSceneColors(): SceneColors {

@@ -73,7 +73,7 @@ export function Input({ initial, onSubmit }: { initial: Draft | null; onSubmit: 
         </div>
         {chipItems.length > 0 && (
           <>
-            <p className="section-label" style={{ marginTop: 'var(--space-4)' }}>품목</p>
+            <p className="section-label mt-4">품목</p>
             <div className="chips" role="group" aria-label="품목">
               {chipItems.map((i) => (
                 <button key={i.id} type="button" className="chip" aria-pressed={picked?.itemId === i.id} onClick={() => pickItem(i)}>
@@ -99,7 +99,7 @@ export function Input({ initial, onSubmit }: { initial: Draft | null; onSubmit: 
           />
           <button type="submit" className="btn" disabled={text.trim() === ''}>확인</button>
         </div>
-        <p className="meta" style={{ marginTop: 'var(--space-2)' }}>{PRIVACY_NOTE}</p>
+        <p className="meta mt-2">{PRIVACY_NOTE}</p>
         {notice && (
           <p className={`notice notice-${notice.kind}`} role={notice.kind === 'error' ? 'alert' : 'status'}>
             {notice.text}
@@ -125,7 +125,7 @@ export function Input({ initial, onSubmit }: { initial: Draft | null; onSubmit: 
         {amountNotice && (
           <p className="notice notice-other" role="status" data-testid="amount-notice">{amountNotice}</p>
         )}
-        {picked && <p className="meta" style={{ marginTop: 'var(--space-2)' }}>선택한 품목: {picked.label}</p>}
+        {picked && <p className="meta mt-2">선택한 품목: {picked.label}</p>}
       </div>
 
       <button

@@ -1,106 +1,155 @@
 /* 디자인 토큰. 디자인 변경은 이 파일만 수정 */
+/* 색: 메인(틸) 1색 + 보조(네이비) 1색 + 중립 회색. 금색은 불어난 코인 전용. 빨강은 오류 표시 전용 */
 :root {
-  /* 색 */
-  --color-bg: #f7f4ee;
+  /* 중립 */
+  --color-bg: #f2f4f6;
   --color-surface: #ffffff;
-  --color-surface-alt: #efeae1;
-  --color-text: #1e2a2c;
-  --color-muted: #5f6b6d;
-  --color-border: #ddd6ca;
-  --color-primary: #2a6b63;
-  --color-primary-strong: #1d5049;
+  --color-surface-alt: #eaedf1;
+  --color-stage-bg: #f7f8fa;
+  --color-text: #191f28;
+  --color-muted: #4e5968;
+  --color-border: #e5e8eb;
+  --color-pressed: #dfe3e8; /* 눌림 배경 */
+
+  /* 메인 */
+  --color-primary: #1d6e65;
+  --color-primary-strong: #145149;
+  --color-primary-pressed: #175a52;
+  --color-primary-soft: #e2f1ee;
   --color-on-primary: #ffffff;
-  --color-accent: #c9822b;
-  --color-accent-soft: #f6e6cf;
-  --color-focus: #a5601a; /* 포커스 외곽선. 주변 배경 대비 3:1 이상 */
-  --color-danger: #a8402f;
-  --color-danger-soft: #f7e1dc;
-  --color-success-soft: #dcefe9;
-  --color-chart-bar: #2a6b63;
-  --color-chart-empty: #ddd6ca;
-  --color-piggy: #e9a3a0;
-  --color-piggy-shade: #c9706c;
-  --color-piggy-eye: #2b2b2b;
-  --color-coin-principal: #8e9a9d;
-  --color-coin-principal-edge: #66757a;
+
+  /* 보조 */
+  --color-secondary: #2c4775;
+  --color-secondary-soft: #e7ecf5;
+  --color-focus: #2c4775; /* 포커스 외곽선. 주변 배경 대비 4.5:1 이상 */
+
+  /* 상태 */
+  --color-danger: #b23a2c;
+  --color-danger-soft: #fbeae7;
+
+  /* 그래프 */
+  --color-chart-bar: #1d6e65;
+  --color-chart-empty: #dfe3e8;
+
+  /* 장면 */
+  --color-piggy: #a9d8d0;
+  --color-piggy-shade: #6fb0a5;
+  --color-piggy-eye: #191f28;
+  --color-coin-principal: #8b95a1;
+  --color-coin-principal-edge: #6b7684;
   --color-coin-grown: #e0b04a;
   --color-coin-grown-edge: #b98a2a;
-  --color-stage-bg: #fbf3e8;
-  --color-tarot-back: #2a4f6b;
-  --color-tarot-front: #fdf8ee;
-  --color-tarot-ink: #c9822b;
-  --color-tarot-edge: #1d3a50;
-  --color-scale-frame: #6b5a45;
-  --color-scale-pan: #b9a88c;
-  --color-spend-pile: #d9774f;
-  --color-spend-pile-edge: #a9532f;
+  --color-tarot-back: #2c4775;
+  --color-tarot-front: #ffffff;
+  --color-tarot-ink: #5fb3a7;
+  --color-tarot-edge: #1f3557;
+  --color-scale-frame: #8b95a1;
+  --color-scale-pan: #c5ccd4;
+  --color-spend-pile: #4a6699;
+  --color-spend-pile-edge: #2c4775;
 
-  /* 간격 */
+  /* 간격. 4px 기반 */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
   --space-5: 24px;
   --space-6: 32px;
+  --gutter: 20px; /* 화면 좌우 여백 */
+  --card-pad: 20px; /* 카드 내부 여백 */
 
-  /* 글자 */
-  --font-family: system-ui, -apple-system, sans-serif;
+  /* 글자. 시스템 폰트만 사용 */
+  --font-family: -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --font-xs: 12px;
-  --font-sm: 14px;
+  --font-sm: 13px;
   --font-md: 16px;
   --font-lg: 20px;
-  --font-xl: 28px;
-  --font-xxl: 34px;
+  --font-xl: 22px;
+  --font-xxl: 36px;
+  /* 위계 3단계: 핵심 숫자 / 본문 / 보조. 화면 제목은 별도 */
+  --text-hero: var(--font-xxl);
+  --text-title: var(--font-xl);
+  --text-body: var(--font-md);
+  --text-caption: var(--font-sm);
+  --text-tiny: var(--font-xs); /* 탭 라벨, 그래프 눈금 */
   --weight-regular: 400;
+  --weight-medium: 600;
   --weight-bold: 700;
+  --line-body: 1.5;
+  --tracking-hero: -0.02em;
 
   /* 모양 */
   --radius-s: 8px;
-  --radius-m: 14px;
-  --radius-l: 22px;
+  --radius-control: 12px;
+  --radius-card: 16px;
+  --radius-pill: 999px;
+  --border-hair: 1px solid var(--color-border);
+  --shadow-card: 0 1px 2px rgb(25 31 40 / 0.04);
+  --focus-ring: 3px;
+  --disabled-opacity: 0.4;
+
+  /* 크기 */
   --touch-min: 48px;
   --touch-min-strict: 44px; /* 최소 터치 영역 */
+  --btn-h-lg: 56px;
+  --choice-h: 120px;
   --tabbar-h: 64px;
+  --tab-indicator: 2px;
+  --icon-size: 24px;
   --content-max: 480px;
-  --shadow-card: 0 1px 3px rgb(30 42 44 / 0.08);
   --stage-h: 220px;
+  --tarot-stage-h: 280px;
+  --tarot-card-w: 140px;
+  --tarot-card-h: 220px;
+  --switch-w: 52px;
+  --switch-h: 32px;
+  --swatch: 12px;
+  --quote-bar: 3px;
+
+  /* 동작 */
+  --dur-press: 120ms;
+  --dur-screen: 180ms;
+  --dur-flip: 0.7s;
+  --press-scale: 0.98;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #151b1c;
-    --color-surface: #1f2729;
-    --color-surface-alt: #283234;
-    --color-text: #eef1ef;
-    --color-muted: #a5b0b1;
-    --color-border: #344042;
-    --color-primary: #5fb3a8;
-    --color-primary-strong: #7fc8be;
-    --color-on-primary: #0f1b1a;
-    --color-accent: #e3a457;
-    --color-accent-soft: #3a2f21;
-    --color-focus: #e3a457;
-    --color-danger: #e58a78;
-    --color-danger-soft: #3a2420;
-    --color-success-soft: #1f3632;
-    --color-chart-bar: #5fb3a8;
-    --color-chart-empty: #344042;
-    --color-piggy: #d98f8b;
-    --color-piggy-shade: #a85f5b;
-    --color-piggy-eye: #111111;
-    --color-coin-principal: #7d898c;
-    --color-coin-principal-edge: #5a6669;
+    --color-bg: #101317;
+    --color-surface: #1a1e24;
+    --color-surface-alt: #242a31;
+    --color-stage-bg: #20252c;
+    --color-text: #eef1f4;
+    --color-muted: #a4adb8;
+    --color-border: #2c333b;
+    --color-pressed: #2c333b;
+    --color-primary: #5bbfb2;
+    --color-primary-strong: #7fd2c6;
+    --color-primary-pressed: #4aa699;
+    --color-primary-soft: #17312e;
+    --color-on-primary: #0a1a18;
+    --color-secondary: #93abd9;
+    --color-secondary-soft: #1d2636;
+    --color-focus: #93abd9;
+    --color-danger: #ef8f7f;
+    --color-danger-soft: #3a2421;
+    --color-chart-bar: #5bbfb2;
+    --color-chart-empty: #2c333b;
+    --color-piggy: #6fb0a5;
+    --color-piggy-shade: #3f7f75;
+    --color-piggy-eye: #101317;
+    --color-coin-principal: #7d8793;
+    --color-coin-principal-edge: #5a6470;
     --color-coin-grown: #e3b85a;
     --color-coin-grown-edge: #a77f2c;
-    --color-stage-bg: #222b2d;
-    --color-tarot-back: #3d6f93;
-    --color-tarot-front: #2c3537;
-    --color-tarot-ink: #e3a457;
-    --color-tarot-edge: #22465f;
-    --color-scale-frame: #a8957a;
-    --color-scale-pan: #7d6f5a;
-    --color-spend-pile: #e08a64;
-    --color-spend-pile-edge: #b0603d;
+    --color-tarot-back: #3c5a8f;
+    --color-tarot-front: #242a31;
+    --color-tarot-ink: #6fc4b8;
+    --color-tarot-edge: #2c4775;
+    --color-scale-frame: #8b95a1;
+    --color-scale-pan: #4e5968;
+    --color-spend-pile: #6f8cc4;
+    --color-spend-pile-edge: #4a6699;
     --shadow-card: none;
   }
 }

@@ -1,4 +1,4 @@
-// tokens.css 색 대비 점검. 텍스트 4.5:1 이상, 포커스 외곽선 같은 비텍스트 3:1 이상(라이트, 다크)
+// tokens.css 색 대비 점검. 텍스트와 포커스 외곽선 모두 4.5:1 이상(라이트, 다크)
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
@@ -20,13 +20,13 @@ function contrast(a: string, b: string): number {
 
 // 화면에서 실제로 쓰는 글자색/배경 조합(app.css 기준)
 const TEXT_PAIRS: [string, string][] = [
-  ['text', 'bg'], ['text', 'surface'], ['text', 'surface-alt'], ['text', 'accent-soft'], ['text', 'success-soft'], ['text', 'stage-bg'],
+  ['text', 'bg'], ['text', 'surface'], ['text', 'surface-alt'], ['text', 'secondary-soft'], ['text', 'primary-soft'], ['text', 'stage-bg'],
   ['muted', 'bg'], ['muted', 'surface'], ['muted', 'surface-alt'], ['muted', 'stage-bg'],
-  ['primary-strong', 'surface'], ['primary-strong', 'bg'],
-  ['on-primary', 'primary'],
+  ['primary-strong', 'surface'], ['primary-strong', 'bg'], ['primary-strong', 'primary-soft'],
+  ['on-primary', 'primary'], ['on-primary', 'primary-pressed'],
   ['danger', 'danger-soft'], ['danger', 'surface'], ['danger', 'surface-alt'],
 ]
-// 비텍스트: 포커스 외곽선(outline-offset으로 요소 바깥에 그림)이 놓이는 배경
+// 포커스 외곽선(outline-offset으로 요소 바깥에 그림)이 놓이는 배경. 텍스트와 같은 4.5:1 기준
 const UI_PAIRS: [string, string][] = [['focus', 'bg'], ['focus', 'surface'], ['focus', 'surface-alt'], ['focus', 'stage-bg']]
 
 describe.each([['라이트', light], ['다크', dark]])('%s 테마 대비', (_, theme) => {
@@ -34,8 +34,8 @@ describe.each([['라이트', light], ['다크', dark]])('%s 테마 대비', (_, 
     expect(contrast(theme[fg], theme[bg])).toBeGreaterThanOrEqual(4.5)
   })
 
-  it.each(UI_PAIRS)('포커스 외곽선 %s / %s 3:1 이상', (fg, bg) => {
-    expect(contrast(theme[fg], theme[bg])).toBeGreaterThanOrEqual(3)
+  it.each(UI_PAIRS)('포커스 외곽선 %s / %s 4.5:1 이상', (fg, bg) => {
+    expect(contrast(theme[fg], theme[bg])).toBeGreaterThanOrEqual(4.5)
   })
 })
 

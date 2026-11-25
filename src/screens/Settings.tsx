@@ -52,7 +52,7 @@ export function Settings({ settings, persistent, onChange, onReset, onOpenGuide 
         {!persistent && (
           <p className="notice notice-other" role="status" data-testid="storage-notice">{STORAGE_MEMORY_NOTICE}</p>
         )}
-        <button type="button" className="btn btn-block" style={{ marginTop: 'var(--space-3)' }} onClick={onOpenGuide}>
+        <button type="button" className="btn btn-block mt-3" onClick={onOpenGuide}>
           이용 안내
         </button>
       </div>
