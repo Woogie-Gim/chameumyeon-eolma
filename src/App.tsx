@@ -9,6 +9,7 @@ import { Result } from './screens/Result.tsx'
 import { Settings } from './screens/Settings.tsx'
 import { Tarot } from './screens/Tarot.tsx'
 import type { Draft } from './screens/types.ts'
+import { useToday } from './hooks/useToday.ts'
 import { store, type Settings as SettingsValue } from './store/storage.ts'
 
 type Screen = 'input' | 'result' | 'choice' | 'log' | 'tarot' | 'settings' | 'guide'
@@ -26,6 +27,7 @@ function App() {
   const [draft, setDraft] = useState<Draft | null>(null)
   const [settings, setSettings] = useState<SettingsValue>(() => store.getSettings())
   const [records, setRecords] = useState<LogRecord[]>(() => store.getRecords())
+  const today = useToday()
 
   const activeTab: Tab = screen === 'guide' ? 'settings' : screen === 'log' || screen === 'tarot' || screen === 'settings' ? screen : 'input'
 
@@ -65,8 +67,8 @@ function App() {
           <Result draft={draft} settings={settings} onNext={() => setScreen('choice')} onBack={() => setScreen('input')} />
         )}
         {screen === 'choice' && draft && <Choice draft={draft} onChoose={choose} />}
-        {screen === 'log' && <Log records={records} today={new Date()} />}
-        {screen === 'tarot' && <Tarot reduce3d={settings.reduce3d} />}
+        {screen === 'log' && <Log records={records} today={today} />}
+        {screen === 'tarot' && <Tarot todayKey={toDateKey(today)} reduce3d={settings.reduce3d} />}
         {screen === 'settings' && (
           <Settings settings={settings} onChange={changeSettings} onReset={reset} onOpenGuide={() => setScreen('guide')} />
         )}

@@ -1,14 +1,12 @@
 // 재물운 타로. 하루 한 장, 날짜 기반 시드. 환산 결과와 소비 기록에는 영향 없음
 import { useEffect, useRef, useState } from 'react'
 import { DISCLAIMER, TAROT_NOTICE } from '../core/copy.ts'
-import { toDateKey } from '../core/stats.ts'
 import { resolveToday, tarotCard } from '../core/tarot.ts'
 import { TarotStage } from '../scenes/TarotStage.tsx'
 import { store } from '../store/storage.ts'
 
-export function Tarot({ reduce3d }: { reduce3d: boolean }) {
-  // 화면에 들어올 때의 날짜 기준
-  const [todayKey] = useState(() => toDateKey(new Date()))
+// todayKey는 앱의 오늘 날짜 상태(useToday). 날짜가 바뀌면 새 카드로 다시 판정
+export function Tarot({ todayKey, reduce3d }: { todayKey: string; reduce3d: boolean }) {
   const [stored, setStored] = useState(() => store.getTarot())
   const { cardId, drawn } = resolveToday(stored, todayKey)
   const card = tarotCard(cardId)

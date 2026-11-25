@@ -86,3 +86,20 @@ test('일반 환경은 3D 카드, 동작 줄이기면 2D', async ({ page }) => {
   await openTarot(page)
   await expect(page.getByTestId('tarot-stage-2d')).toBeVisible()
 })
+
+test('자정이 지나 앱이 다시 보이면 새 카드를 뒤집을 수 있다', async ({ page }) => {
+  // 3D 렌더 루프와 가짜 시계가 섞이지 않도록 2D 환경
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.clock.install({ time: new Date(2026, 10, 25, 23, 59, 0) })
+  await page.goto('/')
+  await openTarot(page)
+  await page.getByRole('button', { name: '카드 뒤집기' }).click()
+  await expect(page.getByTestId('tarot-name')).toHaveText('흔들리는 금고') // 2026-11-25 시드
+
+  // 다음 날로 넘어간 뒤 앱이 다시 보이면 날짜 갱신
+  await page.clock.setSystemTime(new Date(2026, 10, 26, 0, 1, 0))
+  await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')))
+  await expect(page.getByRole('button', { name: '카드 뒤집기' })).toBeVisible()
+  await page.getByRole('button', { name: '카드 뒤집기' }).click()
+  await expect(page.getByTestId('tarot-name')).toHaveText('유혹의 쇼윈도') // 2026-11-26 시드
+})
