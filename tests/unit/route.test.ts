@@ -88,7 +88,7 @@ describe('해시와 쿼리 대체 단서', () => {
 
   it('교정 시 page만 지우고 나머지 쿼리는 유지', () => {
     expect(canonicalSearch('?page=tarot')).toBe('')
-    expect(canonicalSearch('?debug=1&page=tarot')).toBe('?debug=1')
+    expect(canonicalSearch('?referrer=home&page=tarot')).toBe('?referrer=home')
     expect(canonicalSearch('?referrer=home')).toBe('?referrer=home')
     expect(canonicalSearch('')).toBe('')
   })

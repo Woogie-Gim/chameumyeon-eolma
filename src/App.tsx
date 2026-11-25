@@ -1,5 +1,5 @@
 // 앱 셸. 라우터 없이 상태로 화면 전환하고 history API로 경로를 맞춘다
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { canonicalSearch, resolveRoute, screenToPath, type RouteScreen } from './core/route.ts'
 import { toDateKey, type Choice as ChoiceValue, type LogRecord } from './core/stats.ts'
 import { Choice } from './screens/Choice.tsx'
@@ -46,11 +46,6 @@ function readNavState(v: unknown): NavState | null {
 
 // 처음 진입 화면. 없는 경로는 입력(홈). 결과 경로는 따로 없고 입력값도 없으므로 입력에서 시작
 const initialScreen = (): RouteScreen => resolveRoute(window.location, BASE)
-
-// 임시 진단(?debug=1일 때만). 주소 교정 전 진입 값을 남겨 둔다. 검수 전 제거: 이 블록과 아래 RouteDebug 렌더 줄, src/debug/ 폴더 삭제
-const ENTRY = { href: window.location.href, pathname: window.location.pathname, hash: window.location.hash, search: window.location.search }
-const DEBUG = new URLSearchParams(ENTRY.search).get('debug') === '1'
-const RouteDebug = DEBUG ? lazy(() => import('./debug/RouteDebug.tsx')) : null
 
 function App() {
   const [screen, setScreen] = useState<Screen>(initialScreen)
@@ -209,11 +204,6 @@ function App() {
           ))}
         </div>
       </nav>
-      {RouteDebug && (
-        <Suspense fallback={null}>
-          <RouteDebug entry={ENTRY} entryScreen={resolveRoute(ENTRY, BASE)} screen={screen} />
-        </Suspense>
-      )}
     </SoundContext.Provider>
   )
 }

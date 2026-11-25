@@ -443,10 +443,9 @@ $env:SCREENSHOTS='1'; npm run test:e2e    # PowerShell
 ### Phase 11 딥링크 경로 해석 보강
 
 - 앱인토스 웹뷰가 `intoss://chameumyeon-eolma/tarot` 진입 시 주는 `location.pathname` 형태가 가이드에 없어 해석을 너그럽게 했다. base를 뗀 뒤 대소문자, 앞뒤와 겹친 슬래시, 앱 이름 접두어(`chameumyeon-eolma`), `index.html` 세그먼트를 무시하고 마지막 세그먼트가 tarot, record, settings, info면 그 화면을 연다. 그 외는 홈이며 주소도 홈으로 교정한다. `/tarot/extra`처럼 뒤에 다른 세그먼트가 붙으면 홈이다.
-- 경로가 홈이거나 해석되지 않으면 해시(`#/tarot`, `#tarot`, `#!/tarot`), 그다음 쿼리(`?page=tarot`) 순으로 본다. 주소는 정규 경로로 교정하면서 해시와 `page`만 지우고 다른 쿼리(`debug`, 앱인토스 `referrer` 등)는 남긴다. 교정은 `replaceState`라 기록이 쌓이지 않는다.
+- 경로가 홈이거나 해석되지 않으면 해시(`#/tarot`, `#tarot`, `#!/tarot`), 그다음 쿼리(`?page=tarot`) 순으로 본다. 주소는 정규 경로로 교정하면서 해시와 `page`만 지우고 다른 쿼리(앱인토스 `referrer` 등)는 남긴다. 교정은 `replaceState`라 기록이 쌓이지 않는다.
 - 하위 경로 배포에서 base 밖 경로(예: `/tarot`)도 마지막 세그먼트로 해석한다. GitHub Pages에서는 그런 경로에 앱이 뜨지 않으므로 실제 영향은 없다.
-- 임시 진단 패널: 주소에 `?debug=1`이 있을 때만 `src/debug/RouteDebug.tsx`를 지연 로드해 탭 바 위에 진입 시(교정 전) href, pathname, hash, search, 해석된 화면과 현재 href, 화면을 작은 글씨로 보여 준다. 조작 요소가 없고 `pointer-events: none`이다. 별도 청크 약 1KB(gzip 0.66KB)이고 일반 진입에서는 받지 않는다. 검수 전 제거 방법은 `docs/SUBMISSION.md` 제출 전 최종 확인에 적었다.
-- 실기기 확인 방법: QR 테스트 주소 `intoss-private://chameumyeon-eolma/tarot?debug=1`로 열어 진입 pathname과 해석된 화면을 확인한다. 가이드상 주요 기능 주소에 쿼리를 붙일 수 있어 debug도 전달된다고 가정한다.
+- 실기기 확인용 임시 진단 패널(`?debug=1`)을 두었다가 2026-11-25 QR 테스트에서 `/tarot` 진입 pathname이 `/tarot`으로 전달되는 것을 확인한 뒤 Phase 13에서 제거했다. 결과는 `docs/SUBMISSION.md`에 기록했다.
 - 뒤로가기는 Phase 10과 같다. `backEvent`는 구독하지 않는다.
 
 ### 배포 준비

@@ -102,20 +102,19 @@ for (const [entry, title, canonical] of [
   })
 }
 
-test('진단 패널은 ?debug=1일 때만 진입 값과 해석 결과를 보여 준다', async ({ page }) => {
+// 진단 패널은 실기기 확인 후 제거. ?debug=1이 있어도 화면에 추가 표시와 추가 청크 요청이 없다
+test('일반 진입과 ?debug=1 진입의 화면이 같다', async ({ page }) => {
+  const requested: string[] = []
+  page.on('request', (r) => requested.push(r.url()))
+
   await page.goto('/tarot')
   await expect(heading(page, '오늘의 재물운 타로')).toBeVisible()
-  await expect(page.getByTestId('route-debug')).toHaveCount(0)
+  const plain = await page.locator('body').innerText()
 
-  await page.goto('/chameumyeon-eolma/Tarot/?debug=1&page=x#frag')
-  const panel = page.getByTestId('route-debug')
-  await expect(panel).toBeVisible()
-  await expect(panel).toContainText('진입 pathname: /chameumyeon-eolma/Tarot/')
-  await expect(panel).toContainText('진입 hash: #frag')
-  await expect(panel).toContainText('해석된 화면: tarot')
-  // 주소는 교정되고 debug는 유지, page와 해시는 제거
-  await expect(panel.locator('[data-key="현재 href"]')).toHaveText(/^현재 href: http:\/\/localhost:\d+\/tarot\?debug=1$/)
-  // 패널은 조작을 막지 않는다
-  await page.getByRole('button', { name: '기록' }).click()
-  await expect(panel).toContainText('현재 화면: log')
+  await page.goto('/tarot?debug=1')
+  await expect(heading(page, '오늘의 재물운 타로')).toBeVisible()
+  expect(await page.locator('body').innerText()).toBe(plain)
+  await expect(page.getByTestId('route-debug')).toHaveCount(0)
+  await expect(page.getByRole('complementary')).toHaveCount(0)
+  expect(requested.filter((u) => /RouteDebug/i.test(u))).toEqual([])
 })

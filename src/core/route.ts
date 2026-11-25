@@ -58,7 +58,7 @@ export function resolveRoute(loc: { pathname: string; hash: string; search: stri
   return 'input'
 }
 
-// 교정할 때 남길 쿼리. 화면 지정 키만 지운다(debug 등 나머지는 유지)
+// 교정할 때 남길 쿼리. 화면 지정 키만 지운다(referrer 등 나머지는 유지)
 export function canonicalSearch(search: string): string {
   const params = new URLSearchParams(search)
   params.delete(PAGE_PARAM)
