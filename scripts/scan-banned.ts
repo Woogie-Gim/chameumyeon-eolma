@@ -15,7 +15,7 @@ const SOLICIT = /(사세요|사십시오|넣으세요|넣으십시오|투자하�
 // 티커 의심 토큰: 앞뒤가 영숫자가 아닌 대문자 2~5자
 const TICKER = /(?<![A-Za-z0-9_])[A-Z]{2,5}(?![A-Za-z0-9_])/g
 
-function readList(file: string): string[] {
+export function readList(file: string): string[] {
   try {
     return readFileSync(resolve(ROOT, 'scripts', file), 'utf8')
       .split(/\r?\n/)

@@ -11,6 +11,7 @@
     "test": "vitest run",
     "test:e2e": "playwright test --pass-with-no-tests",
     "store:logo": "tsx scripts/make-logo.ts",
+    "store:screens": "playwright test -c playwright.store.config.ts",
     "scan:banned": "tsx scripts/scan-banned.ts",
     "fetch:data": "tsx scripts/fetch-data.ts",
     "build:blocklist": "tsx scripts/build-blocklist.ts"
