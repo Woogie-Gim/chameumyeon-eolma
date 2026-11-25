@@ -135,7 +135,7 @@ function Card({ id, drawn, colors }: { id: number; drawn: boolean; colors: Scene
 }
 
 export default function TarotCard({ id, drawn }: { id: number; drawn: boolean }) {
-  const colors = useMemo(readSceneColors, [])
+  const colors = useMemo(() => readSceneColors(), [])
   return (
     <Canvas
       aria-hidden="true"

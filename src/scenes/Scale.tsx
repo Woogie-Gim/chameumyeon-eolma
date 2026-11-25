@@ -183,7 +183,7 @@ function Balance({ tilt, coins, principal, colors }: { tilt: number; coins: numb
 }
 
 export default function Scale({ tilt, coins, principal }: { tilt: number; coins: number; principal: number }) {
-  const colors = useMemo(readSceneColors, [])
+  const colors = useMemo(() => readSceneColors(), [])
   return (
     <Canvas
       aria-hidden="true"

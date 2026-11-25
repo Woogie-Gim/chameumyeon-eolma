@@ -122,7 +122,7 @@ function Coins({ target, principal, colors }: { target: number; principal: numbe
 }
 
 export default function PiggyBank({ principal, grown }: { principal: number; grown: number }) {
-  const colors = useMemo(readSceneColors, [])
+  const colors = useMemo(() => readSceneColors(), [])
   return (
     <Canvas
       aria-hidden="true"
