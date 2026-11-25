@@ -12,6 +12,7 @@
   --color-on-primary: #ffffff;
   --color-accent: #c9822b;
   --color-accent-soft: #f6e6cf;
+  --color-focus: #a5601a; /* 포커스 외곽선. 주변 배경 대비 3:1 이상 */
   --color-danger: #a8402f;
   --color-danger-soft: #f7e1dc;
   --color-success-soft: #dcefe9;
@@ -58,6 +59,7 @@
   --radius-m: 14px;
   --radius-l: 22px;
   --touch-min: 48px;
+  --touch-min-strict: 44px; /* 최소 터치 영역 */
   --tabbar-h: 64px;
   --content-max: 480px;
   --shadow-card: 0 1px 3px rgb(30 42 44 / 0.08);
@@ -77,6 +79,7 @@
     --color-on-primary: #0f1b1a;
     --color-accent: #e3a457;
     --color-accent-soft: #3a2f21;
+    --color-focus: #e3a457;
     --color-danger: #e58a78;
     --color-danger-soft: #3a2420;
     --color-success-soft: #1f3632;

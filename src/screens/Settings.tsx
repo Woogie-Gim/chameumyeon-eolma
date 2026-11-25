@@ -58,10 +58,11 @@ export function Settings({ settings, persistent, onChange, onReset, onOpenGuide 
       </div>
 
       <div className="card">
-        <div className="setting-row">
-          <label htmlFor="reduce3d">저사양 3D 끄기</label>
+        {/* 행 전체가 탭 영역 */}
+        <label className="setting-row" htmlFor="reduce3d">
+          <span>저사양 3D 끄기</span>
           <input id="reduce3d" className="switch" type="checkbox" checked={settings.reduce3d} onChange={(e) => onChange({ ...settings, reduce3d: e.target.checked })} />
-        </div>
+        </label>
         <p className="meta">켜면 저금통 연출을 2D 그래픽으로 보여 줘요. 동작 줄이기 설정이 켜진 기기와 3D를 지원하지 않는 기기도 2D로 보여요.</p>
       </div>
 
