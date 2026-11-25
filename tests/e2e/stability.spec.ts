@@ -79,3 +79,41 @@ test('WebGL 컨텍스트가 소실되면 타로 카드가 2D로 바뀐다', asyn
   await page.getByRole('button', { name: '카드 뒤집기' }).click()
   await expect(page.getByTestId('tarot-name')).toBeVisible()
 })
+
+test('금액 입력 경계값: 붙여넣기, 소수, 음수, 큰 수, 0', async ({ page }) => {
+  await page.goto('/')
+  await page.getByLabel('품목 직접 입력').fill('커피')
+  await page.getByRole('button', { name: '확인' }).click()
+  const amount = page.getByLabel('금액')
+  const submit = page.getByRole('button', { name: '환산하기' })
+
+  await amount.fill('1,234.56원')
+  await expect(amount).toHaveValue('1,234')
+  await expect(submit).toBeEnabled()
+
+  await amount.fill('-500')
+  await expect(amount).toHaveValue('')
+  await expect(page.getByTestId('amount-notice')).toContainText('1원 이상')
+  await expect(submit).toBeDisabled()
+
+  await amount.fill('99999999999999')
+  await expect(amount).toHaveValue('100,000,000')
+  await expect(page.getByTestId('amount-notice')).toContainText('최대 1억 원')
+
+  await amount.fill('0')
+  await expect(amount).toHaveValue('')
+  await expect(page.getByTestId('amount-notice')).toHaveCount(0)
+  await expect(submit).toBeDisabled()
+
+  // 클립보드 붙여넣기 이벤트 경로
+  await amount.focus()
+  await page.evaluate(() => {
+    const el = document.getElementById('amount') as HTMLInputElement
+    const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!
+    setter.call(el, '１８,０００원')
+    el.dispatchEvent(new Event('input', { bubbles: true }))
+  })
+  await expect(amount).toHaveValue('18,000')
+  await submit.click()
+  await expect(page.getByRole('heading', { name: /커피 18,000원/ })).toBeVisible()
+})

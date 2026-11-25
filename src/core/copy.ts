@@ -19,6 +19,12 @@ export const ERROR_COPY = {
   retry: '다시 시도',
 } as const
 
+// 금액 입력 안내
+export const AMOUNT_MESSAGES = {
+  capped: '최대 1억 원까지 계산해요.',
+  negative: '금액은 1원 이상으로 입력해 주세요.',
+} as const
+
 // 사전에 없는 품목 표시명
 export const OTHER_LABEL = '기타 소비'
 

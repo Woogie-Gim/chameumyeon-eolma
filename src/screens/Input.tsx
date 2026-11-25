@@ -1,6 +1,7 @@
 // 입력 화면. 직접 입력 원문은 입력 칸에만 잠시 머물고 판정 후 비운다
 import { useState, type FormEvent } from 'react'
-import { MAX_AMOUNT } from '../core/calc.ts'
+import { parseAmountInput } from '../core/amount.ts'
+import { AMOUNT_MESSAGES } from '../core/copy.ts'
 import { formatNumber } from '../core/format.ts'
 import { filterInput, type Category } from '../core/inputFilter.ts'
 import { attachParticle } from '../core/template.ts'
@@ -19,6 +20,7 @@ export function Input({ initial, onSubmit }: { initial: Draft | null; onSubmit: 
   const [text, setText] = useState('')
   const [notice, setNotice] = useState<Notice>(null)
   const [amount, setAmount] = useState<number>(initial?.amount ?? 0)
+  const [amountNotice, setAmountNotice] = useState<string | null>(null)
 
   const chipItems = category ? items.filter((i) => i.category === category).slice(0, CHIPS_PER_CATEGORY) : []
 
@@ -49,8 +51,9 @@ export function Input({ initial, onSubmit }: { initial: Draft | null; onSubmit: 
   }
 
   function changeAmount(v: string) {
-    const digits = v.replace(/[^0-9]/g, '').slice(0, 10)
-    setAmount(Math.min(MAX_AMOUNT, Number(digits || 0)))
+    const r = parseAmountInput(v)
+    setAmount(r.value)
+    setAmountNotice(r.capped ? AMOUNT_MESSAGES.capped : r.negative ? AMOUNT_MESSAGES.negative : null)
   }
 
   const ready = picked !== null && amount >= 1
@@ -118,6 +121,9 @@ export function Input({ initial, onSubmit }: { initial: Draft | null; onSubmit: 
           />
           <span className="amount-unit">원</span>
         </div>
+        {amountNotice && (
+          <p className="notice notice-other" role="status" data-testid="amount-notice">{amountNotice}</p>
+        )}
         {picked && <p className="meta" style={{ marginTop: 'var(--space-2)' }}>선택한 품목: {picked.label}</p>}
       </div>
 
