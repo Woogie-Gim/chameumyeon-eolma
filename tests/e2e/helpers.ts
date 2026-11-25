@@ -10,6 +10,8 @@ export async function shot(page: Page, name: string, settleMs = 0) {
   if (process.env.SCREENSHOTS !== '1') return
   await page.setViewportSize(SHOT_VIEWPORT)
   await page.evaluate(() => window.scrollTo(0, 0))
+  // 화면 전환 페이드가 끝난 뒤 캡처
+  await page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined))))
   if (settleMs > 0) await page.waitForTimeout(settleMs)
   await page.screenshot({ path: `docs/screenshots/${name}.png` })
 }
