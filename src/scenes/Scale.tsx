@@ -7,10 +7,10 @@ import { COIN_BASE, COIN_MAX } from '../core/coinCount.ts'
 import { readSceneColors, type SceneColors } from './sceneColors.ts'
 
 const PIVOT_Y = 1.7
-const ARM_LEN = 1.3 // 기둥에서 접시 고리까지
-const HANG_LEN = 1.0 // 고리에서 접시까지
+const ARM_LENGTH = 1.3 // 기둥에서 접시 고리까지
+const HANG_LENGTH = 1.0 // 고리에서 접시까지
 const PAN_R = 0.45
-const ROD_R = 0.025
+const ROD_THICKNESS = 0.025
 const BLOCK_SIZE = 0.15
 const BLOCKS_PER_LAYER = 3
 const COIN_R = 0.12
@@ -21,7 +21,7 @@ const COIN_PER_COLUMN = 12
 const COIN_COLUMNS: [number, number][] = [
   [0, 0],
   ...Array.from({ length: 6 }, (_, i): [number, number] => {
-    const a = (i / 6) * Math.acos(-1) * 2
+    const a = (i / 6) * Math.PI * 2
     return [Math.cos(a) * 0.26, Math.sin(a) * 0.26]
   }),
 ]
@@ -31,10 +31,10 @@ const MAX_DELTA = 1 / 30
 // 접시 테 세 점에서 고리로 모이는 줄
 function Strings({ color }: { color: string }) {
   const rods = useMemo(() => {
-    const hook = new Vector3(0, HANG_LEN, 0)
+    const hook = new Vector3(0, HANG_LENGTH, 0)
     const up = new Vector3(0, 1, 0)
     return [0, 1, 2].map((i) => {
-      const a = (i / 3) * Math.acos(-1) * 2 + 0.5
+      const a = (i / 3) * Math.PI * 2 + 0.5
       const rim = new Vector3(Math.cos(a) * (PAN_R - 0.04), 0.02, Math.sin(a) * (PAN_R - 0.04))
       const dir = hook.clone().sub(rim)
       const mid = rim.clone().add(dir.clone().multiplyScalar(0.5))
@@ -143,10 +143,10 @@ function Balance({ tilt, coins, principal, colors }: { tilt: number; coins: numb
     // 양수 기울기면 오른쪽(환산 쪽)이 내려가도록 z축 음의 회전
     const a = -current.current
     if (beam.current) beam.current.rotation.z = a
-    const dx = Math.cos(a) * ARM_LEN
-    const dy = Math.sin(a) * ARM_LEN
-    left.current?.position.set(-dx, PIVOT_Y - dy - HANG_LEN, 0)
-    right.current?.position.set(dx, PIVOT_Y + dy - HANG_LEN, 0)
+    const dx = Math.cos(a) * ARM_LENGTH
+    const dy = Math.sin(a) * ARM_LENGTH
+    left.current?.position.set(-dx, PIVOT_Y - dy - HANG_LENGTH, 0)
+    right.current?.position.set(dx, PIVOT_Y + dy - HANG_LENGTH, 0)
     if (current.current !== tilt) invalidate()
   })
 
@@ -167,14 +167,14 @@ function Balance({ tilt, coins, principal, colors }: { tilt: number; coins: numb
       </mesh>
       {/* 빔 */}
       <mesh ref={beam} position={[0, PIVOT_Y, 0]}>
-        <boxGeometry args={[ARM_LEN * 2 + 0.1, ROD_R * 3, ROD_R * 3]} />
+        <boxGeometry args={[ARM_LENGTH * 2 + 0.1, ROD_THICKNESS * 3, ROD_THICKNESS * 3]} />
         <meshStandardMaterial color={colors.scaleFrame} metalness={0.2} roughness={0.5} />
       </mesh>
-      <group ref={left} position={[-ARM_LEN, PIVOT_Y - HANG_LEN, 0]}>
+      <group ref={left} position={[-ARM_LENGTH, PIVOT_Y - HANG_LENGTH, 0]}>
         <Pan colors={colors} />
         <SpendPile colors={colors} />
       </group>
-      <group ref={right} position={[ARM_LEN, PIVOT_Y - HANG_LEN, 0]}>
+      <group ref={right} position={[ARM_LENGTH, PIVOT_Y - HANG_LENGTH, 0]}>
         <Pan colors={colors} />
         <CoinPile count={coins} principal={principal} colors={colors} />
       </group>

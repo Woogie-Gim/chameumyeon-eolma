@@ -5,7 +5,7 @@ export function normalize(s: string): string {
   return s.normalize('NFC').toLowerCase().replace(/[^가-힣a-z0-9]/g, '')
 }
 
-// 32비트 fnv-1a, 소문자 hex 8자리
+// 32비트 FNV-1a, 소문자 hex 8자리
 export function hashTerm(s: string): string {
   let h = 0x811c9dc5
   for (const ch of s) {

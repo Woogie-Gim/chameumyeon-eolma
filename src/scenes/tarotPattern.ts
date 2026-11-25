@@ -3,7 +3,7 @@
 
 export type TarotPattern = { stars: { x: number; y: number; r: number }[]; centerR: number }
 
-const FULL_TURN = Math.acos(-1) * 2
+const FULL_TURN = Math.PI * 2
 
 export function tarotPattern(id: number): TarotPattern {
   const count = 3 + (id % 6) // 3~8개
@@ -19,7 +19,7 @@ export function tarotPattern(id: number): TarotPattern {
 // 다섯 꼭짓점 별 윤곽 좌표(바깥, 안쪽 교대)
 export function starPoints(r: number): [number, number][] {
   return Array.from({ length: 10 }, (_, i) => {
-    const a = FULL_TURN / 4 + (i / 10) * FULL_TURN
+    const a = Math.PI / 2 + (i / 10) * FULL_TURN
     const rr = i % 2 ? r * 0.45 : r
     return [Math.cos(a) * rr, Math.sin(a) * rr]
   })

@@ -10,8 +10,8 @@ const W = 1.4
 const H = 2.2
 const CARD_DEPTH = 0.02
 const FACE_GAP = 0.002 // 면 위 장식 간격
-const HALF_TURN = Math.acos(-1) // 180도
-const QUARTER = HALF_TURN / 4
+const HALF_TURN = Math.PI
+const QUARTER = Math.PI / 4
 const EASE_RATE = 5
 const MAX_DELTA = 1 / 30
 

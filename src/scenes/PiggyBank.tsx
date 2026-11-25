@@ -18,7 +18,7 @@ const COLUMNS: [number, number][] = [
   [1.32, -0.3],
 ]
 const MAX_DELTA = 1 / 30
-const HALF_TURN = Math.acos(0) // 90도
+const QUARTER_TURN = Math.PI / 2
 const EASE_RATE = 6
 
 function Piggy({ colors }: { colors: SceneColors }) {
@@ -30,7 +30,7 @@ function Piggy({ colors }: { colors: SceneColors }) {
         <meshStandardMaterial color={colors.piggy} roughness={0.6} />
       </mesh>
       {/* 코 */}
-      <mesh position={[0, -0.05, 0.68]} rotation={[HALF_TURN, 0, 0]}>
+      <mesh position={[0, -0.05, 0.68]} rotation={[QUARTER_TURN, 0, 0]}>
         <cylinderGeometry args={[0.22, 0.24, 0.18, 24]} />
         <meshStandardMaterial color={colors.piggyShade} roughness={0.6} />
       </mesh>

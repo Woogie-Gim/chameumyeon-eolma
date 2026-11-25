@@ -1,4 +1,4 @@
-// 2D 폴백. 스타일 rotateY 전환으로 카드를 뒤집는다. 동작 줄이기 환경에서는 전환 없이 바로 바뀐다
+// 2D 폴백. CSS rotateY 전환으로 카드를 뒤집는다. 동작 줄이기 환경에서는 전환 없이 바로 바뀐다
 import { starPoints, tarotPattern } from './tarotPattern.ts'
 
 const W = 140

@@ -10,7 +10,7 @@ export const TAROT_COUNT = tarot.length
 // 타로는 입력 금액과 무관하므로 {amount}는 일반 단어로 채운다
 const AMOUNT_WORD = '금액'
 
-// fnv-1a 32비트 해시로 날짜 키(연-월-일 문자열)를 카드 id로 변환
+// FNV-1a 32비트 해시로 날짜 키(YYYY-MM-DD)를 카드 id로 변환
 export function dailyCardId(dateKey: string, count = TAROT_COUNT): number {
   let h = 0x811c9dc5
   for (let i = 0; i < dateKey.length; i++) {
