@@ -82,50 +82,70 @@ export function Result({ draft, settings, onNext, onBack }: { draft: Draft; sett
         ))}
       </div>
 
-      <div className="card">
-        <div className="slider-head">
-          <label className="section-label" htmlFor="years">{mode === 'etf' ? '몇 년 전에 넣었다면' : '몇 년 뒤'}</label>
-          <strong>{shownYears}년</strong>
+      {/* 핵심 문장: 몇 년 뒤 얼마 */}
+      <div className="card hero-card">
+        <div aria-live="polite">
+          {mode === 'deposit' && (
+            <>
+              <p className="hero-lead">{amountText}을 한 번 넣었다면 {years}년 뒤 약</p>
+              <p className="big-number" data-testid="result-value">{formatWon(deposit)}</p>
+            </>
+          )}
+          {mode === 'savings' && (
+            <>
+              <p className="hero-lead">매달 {amountText}씩 {years}년 넣었다면 약</p>
+              <p className="big-number" data-testid="result-value">{formatWon(savings.value)}</p>
+            </>
+          )}
+          {mode === 'etf' && (
+            <>
+              <p className="hero-lead">{startYear}년 초에 {amountText}을 넣었다면 {tm.endYear}년 말 약</p>
+              <p className="big-number" data-testid="result-value">{formatWon(tm.value)}</p>
+            </>
+          )}
         </div>
-        <input
-          id="years"
-          className="slider"
-          type="range"
-          min={mode === 'etf' ? ETF_MIN_YEARS : YEARS_MIN}
-          max={mode === 'etf' ? etfMax : YEARS_MAX}
-          step={1}
-          value={shownYears}
-          onChange={(e) => setYears(Number(e.target.value))}
-        />
+        <div className="hero-slider">
+          <div className="slider-head">
+            <label className="section-label" htmlFor="years">{mode === 'etf' ? '몇 년 전에 넣었다면' : '몇 년 뒤'}</label>
+            <strong>{shownYears}년</strong>
+          </div>
+          <input
+            id="years"
+            className="slider"
+            type="range"
+            min={mode === 'etf' ? ETF_MIN_YEARS : YEARS_MIN}
+            max={mode === 'etf' ? etfMax : YEARS_MAX}
+            step={1}
+            value={shownYears}
+            onChange={(e) => setYears(Number(e.target.value))}
+          />
+        </div>
       </div>
 
-      <div className="view-toggle" role="group" aria-label="연출 선택">
-        {VIEW_TABS.map((v) => (
-          <button key={v.id} type="button" className="chip" aria-pressed={view === v.id} onClick={() => setView(v.id)}>
-            {v.label}
-          </button>
-        ))}
+      {/* 3D 연출은 카드 안 고정 높이 영역 */}
+      <div className="card stage-card">
+        <div className="view-toggle" role="group" aria-label="연출 선택">
+          {VIEW_TABS.map((v) => (
+            <button key={v.id} type="button" className="chip" aria-pressed={view === v.id} onClick={() => setView(v.id)}>
+              {v.label}
+            </button>
+          ))}
+        </div>
+        {view === 'piggy' ? (
+          <CoinStage split={coins} reduce3d={settings.reduce3d} />
+        ) : (
+          <ScaleStage spend={pair.base} converted={pair.value} spendLabel={pair.baseLabel} reduce3d={settings.reduce3d} />
+        )}
       </div>
 
-      {view === 'piggy' ? (
-        <CoinStage split={coins} reduce3d={settings.reduce3d} />
-      ) : (
-        <ScaleStage spend={pair.base} converted={pair.value} spendLabel={pair.baseLabel} reduce3d={settings.reduce3d} />
-      )}
-
-      <div className="card" aria-live="polite">
+      {/* 수치 요약 */}
+      <div className="card summary-card" aria-live="polite">
         {mode === 'deposit' && (
-          <>
-            <p className="rate-line">적용 이율 연 <strong>{settings.depositRate.toFixed(2)}%</strong></p>
-            <p className="meta">{amountText}을 한 번 넣었다면 {years}년 뒤 약</p>
-            <p className="big-number" data-testid="result-value">{formatWon(deposit)}</p>
-          </>
+          <p className="rate-line">적용 이율 연 <strong>{settings.depositRate.toFixed(2)}%</strong></p>
         )}
         {mode === 'savings' && (
           <>
             <p className="rate-line">적용 이율 연 <strong>{settings.savingsRate.toFixed(2)}%</strong></p>
-            <p className="meta">매달 {amountText}씩 {years}년 넣었다면 약</p>
-            <p className="big-number" data-testid="result-value">{formatWon(savings.value)}</p>
             <p className="meta">총 납입액 {formatWon(savings.totalPaid)}</p>
           </>
         )}
@@ -138,12 +158,10 @@ export function Result({ draft, settings, onNext, onBack }: { draft: Draft; sett
                 </button>
               ))}
             </div>
-            <p className="rate-line mt-3">
+            <p className="rate-line">
               {asset.label} {startYear}~{tm.endYear} 상승률 <strong>{formatPercent(tm.cumulativeReturn)}</strong>
               {asset.isSample && <> <span className="badge">샘플 데이터</span></>}
             </p>
-            <p className="meta">{startYear}년 초에 {amountText}을 넣었다면 {tm.endYear}년 말 약</p>
-            <p className="big-number" data-testid="result-value">{formatWon(tm.value)}</p>
             <p className="disclaimer" data-testid="etf-disclaimer">{ETF_DISCLAIMER}</p>
           </>
         )}

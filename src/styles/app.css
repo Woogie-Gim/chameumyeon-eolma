@@ -189,6 +189,15 @@ button, input { font: inherit; color: inherit; }
 .rate-line { font-size: var(--text-body); margin: 0; }
 .rate-line strong { color: var(--color-primary-strong); font-variant-numeric: tabular-nums; }
 
+/* 결과 화면: 핵심 문장 > 연출 카드 > 수치 요약 */
+.hero-card { display: flex; flex-direction: column; gap: var(--space-4); }
+.hero-lead { margin: 0 0 var(--space-1); font-size: var(--text-body); color: var(--color-muted); }
+.hero-card .big-number { color: var(--color-text); }
+.hero-slider { border-top: var(--border-hair); padding-top: var(--space-3); }
+.stage-card { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-3); }
+.stage-card .coin-legend { margin: 0; }
+.summary-card { display: flex; flex-direction: column; gap: var(--space-2); }
+
 .slider { width: 100%; height: var(--touch-min); accent-color: var(--color-primary); }
 .slider-head { display: flex; justify-content: space-between; align-items: baseline; }
 .slider-head strong { font-variant-numeric: tabular-nums; }
