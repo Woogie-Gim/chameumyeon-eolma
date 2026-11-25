@@ -2,14 +2,34 @@
   "appName": "참으면 얼마?",
   "appNameEn": "Worth the Wait",
   "subtitle": "참은 돈이 불어나는 모습 미리보기",
-  "description": null,
+  "description": "사고 싶은 물건이나 먹고 싶은 메뉴의 금액을 입력하고 품목을 고르면 참았을 때 예금형·적금형 이율 기준으로 몇 년 뒤 얼마가 되는지 보여 줘요. 결과 화면에서는 3D 저금통과 저울 연출로 불어난 금액을 확인하고 기간 슬라이더로 기간을 바꿔 볼 수 있어요. 기술주·대형주 ETF형 상승률로 과거에 참았다면 지금 얼마인지도 재미로 볼 수 있어요. 타로 탭에서는 뒷면으로 펼쳐진 카드 5장 중 한 장을 골라 오늘의 재물운 한마디를 확인해요. 모든 결과는 재미로 보는 단순 계산이며 투자 권유나 상품 추천이 아니에요. 입력한 내용은 서버로 전송되지 않고 기록은 이 기기에만 저장돼요.",
   "releaseNotes": "첫 출시예요. 사려던 금액을 가정 이율과 과거 지수 상승률로 환산해 3D 저금통과 저울로 보여 줘요. 참은 기록과 오늘의 재물운 타로도 함께 볼 수 있어요.",
   "memo": "로그인과 서버 없이 바로 쓸 수 있어요. 입력 화면에서 품목(예: 치킨)과 금액을 넣고 환산하기를 누르면 결과가 나와요. 다음, 참았어요 순서로 누르면 기록 화면에 쌓여요. 주요 기능 주소는 intoss://chameumyeon-eolma/tarot(타로), intoss://chameumyeon-eolma/record(기록)예요. 기록은 기기 저장소에만 있고 외부로 보내지 않아요. 모든 결과는 가정 시뮬레이션이며 금융 상품을 소개하거나 권유하지 않아요.",
-  "keywords": ["소비 습관", "충동구매", "절약", "저축", "이자 계산", "재물운", "타로"],
+  "keywords": [
+    "소비 습관",
+    "충동구매",
+    "절약",
+    "저축",
+    "이자 계산",
+    "재물운",
+    "타로"
+  ],
   "category": "금융 > 소비 > 가계부·절약",
   "features": [
-    { "ko": "참았을 때 금액 보기", "en": "See savings", "url": "intoss://chameumyeon-eolma/" },
-    { "ko": "오늘의 재물운 보기", "en": "Daily fortune", "url": "intoss://chameumyeon-eolma/tarot" },
-    { "ko": "참은 기록 확인하기", "en": "View records", "url": "intoss://chameumyeon-eolma/record" }
+    {
+      "ko": "참은 금액 계산하기",
+      "en": "See savings",
+      "url": "intoss://chameumyeon-eolma/"
+    },
+    {
+      "ko": "오늘의 재물운 보기",
+      "en": "Daily fortune",
+      "url": "intoss://chameumyeon-eolma/tarot"
+    },
+    {
+      "ko": "참은 기록 확인하기",
+      "en": "View records",
+      "url": "intoss://chameumyeon-eolma/record"
+    }
   ]
 }

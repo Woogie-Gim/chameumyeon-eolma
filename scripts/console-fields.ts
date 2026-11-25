@@ -24,6 +24,7 @@ export type ConsoleFields = {
   features: Feature[]
 }
 
+// limit이 null이면 가이드에서 글자 수 제한을 확인하지 못한 항목(표에 미확인으로 표시)
 export type Check = { field: string; value: string; count: number; noSpace: number; limit: number | null; ok: boolean; note: string }
 
 const len = (s: string) => [...s].length
@@ -42,11 +43,14 @@ export function checkFields(f: ConsoleFields): Check[] {
     if (limit !== null && count > limit) notes.unshift(`${count - limit}자 초과`)
     return { field, value, count, noSpace: lenNoSpace(value), limit, ok: notes.length === 0, note: notes.join(', ') }
   }
+  // 가이드(console-workspace): 영어 이름은 3단어 이하, 부제에는 느낌표를 쓰지 않는다
+  const words = f.appNameEn.trim().split(/\s+/).length
   const rows: Check[] = [
     row('앱 이름', f.appName, 10),
-    row('영어 앱 이름', f.appNameEn, 15),
-    row('부제', f.subtitle, 20),
+    row('영어 앱 이름', f.appNameEn, 15, words > 3 ? [`${words}단어(3단어 이하)`] : []),
+    row('부제', f.subtitle, 20, /[!！]/.test(f.subtitle) ? ['느낌표 사용 불가'] : []),
   ]
+  if (f.description) rows.push(row('상세 설명', f.description, null))
   f.features.forEach((ft, i) => {
     const koBad = badFeatureChars(ft.ko)
     const enBad = badFeatureChars(ft.en)
@@ -78,7 +82,12 @@ export function buildBlock(f: ConsoleFields): string {
   const table = [
     '| 항목 | 값 | 글자 수(공백 포함) | 공백 제외 | 제한 | 결과 |',
     '| --- | --- | --- | --- | --- | --- |',
-    ...checks.map((c) => `| ${c.field} | ${c.value} | ${c.count} | ${c.noSpace} | ${c.limit ?? '-'} | ${c.ok ? '통과' : `**미통과**: ${c.note}`} |`),
+    ...checks.map((c) => {
+      // 긴 값은 표에서 앞부분만 보이고 전체는 아래 복붙 칸에 있다
+      const shown = [...c.value].length > 24 ? `${[...c.value].slice(0, 24).join('')}…` : c.value
+      const result = c.limit === null ? '제한 미확인' : c.ok ? '통과' : `**미통과**: ${c.note}`
+      return `| ${c.field} | ${shown} | ${c.count} | ${c.noSpace} | ${c.limit ?? '미확인'} | ${result} |`
+    }),
   ].join('\n')
   return [
     START,
@@ -86,7 +95,7 @@ export function buildBlock(f: ConsoleFields): string {
     '',
     '### 글자 수 점검',
     '',
-    '글자 수는 코드 포인트 기준으로 센다. 콘솔이 공백을 세는지는 가이드에 없어 두 값을 함께 적는다. 결과는 공백 포함 기준이다.',
+    '글자 수는 코드 포인트 기준으로 센다. 콘솔이 공백을 세는지는 가이드에 없어 두 값을 함께 적는다. 결과는 공백 포함 기준이다. 상세 설명은 가이드(console-workspace)에 글자 수 제한이 없어 미확인으로 둔다.',
     '',
     table,
     '',
@@ -145,7 +154,11 @@ function main() {
   const f = readFields()
   const block = buildBlock(f)
   writeFileSync(DOC, replaceBlock(readFileSync(DOC, 'utf8'), block))
-  for (const c of checkFields(f)) console.log(`${c.ok ? '통과' : '미통과'} ${c.field} ${c.count}/${c.limit ?? '-'} ${c.value}${c.note ? ` (${c.note})` : ''}`)
+  for (const c of checkFields(f)) {
+    const status = c.limit === null ? '미확인' : c.ok ? '통과' : '미통과'
+    const shown = [...c.value].length > 24 ? `${[...c.value].slice(0, 24).join('')}…` : c.value
+    console.log(`${status} ${c.field} ${c.count}/${c.limit ?? '미확인'} ${shown}${c.note ? ` (${c.note})` : ''}`)
+  }
   const v = scanFields(f)
   console.log(`금칙어 위반 ${v.length}건`)
   if (v.length > 0) process.exitCode = 1
