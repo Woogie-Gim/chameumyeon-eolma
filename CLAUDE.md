@@ -66,6 +66,6 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES
 
 - 단계는 `docs/PROMPT_DEV.md`의 Phase 순서를 따른다.
 - 각 Phase가 끝나면 테스트를 실행하고 결과를 보고한 뒤 커밋한다.
-- 모호한 부분은 질문하지 말고 합리적으로 가정해 진행한다. 가정은 README의 가정 목록에 기록한다.
+- 모호한 부분은 질문하지 말고 합리적으로 가정해 진행한다. 가정은 `docs/ASSUMPTIONS.md`의 가정 목록에 기록한다.
 - 커밋 메시지는 `feat:`, `fix:`, `test:`, `docs:`, `chore:` 접두어를 쓴다.
 - 일정이 빠듯하면 3D 저울과 타로를 뒤로 미룬다. 환산, 기록, 3D 저금통, 테스트, CI가 우선이다.
