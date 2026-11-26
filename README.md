@@ -4,6 +4,44 @@
 
 > 가정 시뮬레이션이며 수익을 보장하지 않습니다. 과거 성과는 미래를 보장하지 않습니다.
 
+## 요약
+
+[![ci](https://github.com/Woogie-Gim/chameumyeon-eolma/actions/workflows/ci.yml/badge.svg)](https://github.com/Woogie-Gim/chameumyeon-eolma/actions/workflows/ci.yml)
+
+- 금액과 품목을 넣으면 가정 이율과 ETF 유형 과거 상승률로 환산해 3D 저금통과 저울로 보여 주는 정적 웹앱
+- 서버, 런타임 LLM, 외부 API 호출 없음. 문구는 사전 작성한 JSON에서 고르고 기록은 기기 localStorage에만 저장
+
+빠른 실행:
+
+```bash
+npm ci
+npm run dev
+npm test
+```
+
+앱인토스 제출 현황:
+
+- 카테고리: 비게임, 금융 > 소비 > 가계부/절약
+- 심사 요청: 2026-11-25
+- 승인: 2026-11-25
+- 출시: 2026-11-25
+- 번들 방식: 웹 번들(.ait)
+
+검증 요약:
+
+| 항목 | 결과 |
+| --- | --- |
+| 단위 테스트 (`npm test`) | 28개 파일, 363개 통과 |
+| E2E (`npm run test:e2e`) | 11개 파일, 54개 중 52개 통과, 2개 건너뜀(스크린샷 생성용, `SCREENSHOTS=1`일 때만 실행) |
+| 금칙어 스캔 (`npm run scan:banned`) | 검사 파일 61개, 위반 0건 |
+| 린트 (`npm run lint`) | 경고 0건, 오류 0건 |
+| Lighthouse 13.6.0 (모바일, 첫 화면, 2026-11-25 측정) | 성능 100, 접근성 100, 권장사항 100 |
+| 번들 크기 (`npm run build`) | 메인 JS 338.51 kB(gzip 100.01 kB), CSS 20.58 kB(gzip 4.80 kB), three 청크 918.31 kB(gzip 242.57 kB, 3D 화면에서만 로드), `.ait` 약 423 kB(압축 메타데이터로 빌드마다 몇 바이트 달라짐) |
+
+수치 측정일: 2026-11-26(Lighthouse 제외). 상세 내용은 아래 [품질 보증](#품질-보증)에 있다.
+
+## 실행 화면
+
 | 입력(라이트) | 결과(라이트) | 타로 고르기 전(라이트) | 타로 고른 뒤(라이트) |
 | --- | --- | --- | --- |
 | <img src="docs/screenshots/input-light.png" width="160" alt="입력 화면 라이트"> | <img src="docs/screenshots/result-light.png" width="160" alt="결과 화면 라이트"> | <img src="docs/screenshots/tarot-spread-light.png" width="160" alt="타로 5장 펼침 라이트"> | <img src="docs/screenshots/tarot-picked-light.png" width="160" alt="타로 한 장 고른 뒤 라이트"> |
@@ -79,6 +117,9 @@ src/
     template.ts      자리표시자 치환, 조사 보정
     copy.ts          고정 문구, 입력 안내, 이용 안내 문구
     countUp.ts       결과 금액 카운트업 보간
+    route.ts         경로와 화면 매핑, 딥링크 경로 변형과 해시, 쿼리 대체 해석
+    amount.ts        금액 입력 해석(소수점 버림, 쉼표와 전각 처리, 범위 안내)
+    today.ts         날짜 키와 날짜 갱신 판정
     format.ts, stats.ts, fallback.ts, textNorm.ts
   data/        정적 JSON (rates, returns, items, messages, messagesEtf, tarot, blockedHashes)
   scenes/      useUse3d(3D/2D 판정 훅), SceneBoundary(3D 실패 시 폴백), SceneLoading(3D 로딩 중 2D 표시)
@@ -88,18 +129,20 @@ src/
                TarotStage → TarotCard(오늘 이미 고른 카드, 3D 지연 로드) / TarotFallback2d
                SceneLights(세 장면 공용 조명), spreadMotion(펼침 들어 올림과 흐림 값)
   hooks/       useToday(오늘 날짜 상태, 복귀 시 갱신), useCountUp(금액 카운트업)
-  sound/       SoundPlayer(Web Audio 합성 효과음과 진동), 컨텍스트
+  sound/       sound.ts(SoundPlayer, Web Audio 합성 효과음과 진동), soundContext.ts(React 컨텍스트)
   screens/     Input, Result, Choice, Log, Tarot, Settings, Guide, AppErrorBoundary
   store/       localStorage 래퍼(허용 필드만 읽고 씀, 저장소를 못 쓰면 메모리 대체)
   styles/      tokens.css(디자인 토큰), app.css
 scripts/       fetch-data.ts, scan-banned.ts, build-blocklist.ts, make-icons.ts, banned-terms.txt, allow-tokens.txt
-tests/         unit(Vitest), e2e(Playwright)
+               make-logo.ts, make-banner.ts, store-banner.html, console-fields.ts, pngSize.ts (스토어 자산과 콘솔 입력값)
+tests/         unit(Vitest), e2e(Playwright), store(스토어 스크린샷 촬영, npm run store:screens)
 docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSION, screenshots
 ```
 
 데이터 흐름:
 
 ```
+진입 경로 → route.ts → / 입력, /tarot 타로, /record 기록, /settings 설정, /info 이용 안내
 입력 화면
   ├─ 직접 입력 → inputFilter → { itemId, label, category }   (원문은 여기서 버림)
   └─ Draft { itemId, label, category, amount }
@@ -117,7 +160,14 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSIO
           뒤집기 → store.saveTarot { date, cardId }   (한 건 덮어쓰기)
 ```
 
-화면 전환은 라우터 없이 `App.tsx`의 상태로 한다. 3D 모듈(PiggyBank, Scale, TarotCard)은 `React.lazy`로 분리해 필요한 화면에서만 받는다.
+화면 이동은 라우터 라이브러리 없이 history API로 경로를 맞춘다(`src/core/route.ts`).
+
+- 경로: `/` 입력, `/tarot` 타로, `/record` 기록, `/settings` 설정, `/info` 이용 안내
+- 결과와 선택 화면은 경로가 없고 `/`에 history 항목만 쌓는다. 뒤로가기로 입력값이 남은 입력 화면에 돌아간다
+- 없는 경로는 홈으로 열고 주소도 홈으로 교정한다. 딥링크 경로 변형, 해시, 쿼리(`?page=`)도 해석한다
+- base는 `import.meta.env.BASE_URL`을 써서 루트 배포와 하위 경로 배포가 같은 코드로 동작한다
+
+3D 모듈(PiggyBank, Scale, TarotSpread3d, TarotCard)은 `React.lazy`로 분리해 필요한 화면에서만 받는다.
 
 ## 데이터 정책
 
@@ -134,11 +184,12 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSIO
 
 ## 품질 보증
 
-### 단위 테스트 (Vitest): 25개 파일, 320개
+### 단위 테스트 (Vitest): 28개 파일, 363개
 
 | 파일 | 개수 | 내용 |
 | --- | --- | --- |
 | contrast.test.ts | 58 | tokens.css 대비(라이트, 다크): 텍스트 19조합, 포커스 외곽선 4조합, 배경 그라데이션 양 끝과 도형 겹침 합성색 위 글자와 포커스 모두 4.5:1 |
+| route.test.ts | 35 | 경로와 화면 매핑, 홈 변형, 없는 경로와 결과 경로는 홈, base 붙은 경로, 해시와 쿼리 대체 해석, 교정 시 page만 제거, 하위 경로 배포 |
 | calc.test.ts | 29 | 복리, 적금, 타임머신 계산, 경계값, 범위 오류, 시작 연도 범위 |
 | tarot.test.ts | 26 | 5장 무작위 펼침(중복 없음, 범위, 주입 난수 재현성, 22장 모두 등장, 경계 난수), 오늘의 카드 고정, 부채꼴 배치(무대 안, 44px 노출, 좁으면 기울기 축소), 들어 올림, 조언 자리표시자 없음, 타로 문구 금칙어 |
 | inputFilter.test.ts | 21 | 상호명 거부, 일반 명칭 허용, 영문 거부, 결과에 원문 없음, 품목 사전 무결성, 해시 목록 동기화 |
@@ -157,14 +208,16 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSIO
 | messages.render.test.ts | 7 | 모든 품목 대입 시 조사 일치, 자리표시자 잔존 없음 |
 | format.test.ts | 6 | 원 단위 반올림, 콤마, 원과 퍼센트 표기 |
 | today.test.ts | 5 | 날짜 갱신 판정(같은 날, 자정, 월과 연 경계, 시계 역행), 타로 오늘의 카드 고정 연동 |
+| storeAssets.test.ts | 5 | 스토어 로고, 세로형 스크린샷, 가로형 배너 픽셀 크기, 촬영 뷰포트 비율, 배너 문구 금칙어 |
 | meta.test.ts | 5 | index.html 메타(설명, 뷰포트, 테마 색, OG), 자체 제작 파비콘, OG와 아이콘 크기 |
 | messagePick.test.ts | 5 | 카테고리, 금액 구간, 톤별 문구 선택 |
 | template.test.ts | 4 | 자리표시자 치환, 조사 보정 |
 | sceneColors.test.ts | 4 | 3D 색을 tokens.css 변수에서 읽기, 없으면 기본값 |
 | appErrorBoundary.test.tsx | 4 | 렌더 오류 안내 화면, 오류 원문 미노출, 다시 시도 복구, 반복 실패 시 새로고침(happy-dom) |
+| console.test.ts | 3 | 콘솔 입력값 금칙어, SUBMISSION.md 표시 구간과 console.json 일치, 주요 기능 주소와 앱 경로 |
 | contextLost.test.ts | 2 | WebGL 컨텍스트 소실 이벤트 감지 |
 
-### E2E (Playwright, Chromium): 10개 파일, 42개(스크린샷 2개는 `SCREENSHOTS=1`일 때만 실행)
+### E2E (Playwright, Chromium): 11개 파일, 54개(스크린샷 2개는 `SCREENSHOTS=1`일 때만 실행, 그 외 실행 시 건너뜀)
 
 - `flow.spec.ts` (3개): 상호명 거부, 원문 미표시와 미저장, 환산, 참았어요 기록, 기타 소비 처리, 이용 안내 이동
 - `scene.spec.ts` (8개): 3D 캔버스와 대체 텍스트, 2D 폴백(WebGL 미지원, 동작 줄이기, 설정 토글), 2D 코인 색 구분, ETF 한마디 시제, ETF 시작 연도 범위, 저금통/저울 전환, 저울 2D 폴백
@@ -174,7 +227,8 @@ docs/          PLAN, PROMPT_DEV, PROMPT_MESSAGES, SETUP, DATA_SOURCES, SUBMISSIO
 - `sound.spec.ts` (3개): 첫 입력 전 AudioContext 없음과 이후 한 번만 생성, 효과음 끄기 저장과 새로고침 후 유지, 오디오와 진동이 막힌 환경에서 오류 없음
 - `a11y.spec.ts` (4개): 7개 화면 터치 영역 44px, 키보드 탐색과 포커스 외곽선, 3D 대체 텍스트와 타로 카드 버튼 이름, 동작 줄이기
 - `guide.spec.ts` (3개): 어느 화면에서든 안내 열기와 돌아가기, 고정 면책과 개인정보 문구, 입력 화면 개인정보 문구
-- `base-path.spec.ts` (3개, `base-path` 프로젝트): `BASE_PATH=/chameumyeon-eolma/` 빌드에서 자산 404 없음, 새로고침, 딥링크, 404.html
+- `routing.spec.ts` (9개): 주요 기능 경로로 바로 열기와 새로고침, 탭 이동 경로와 뒤로가기/앞으로가기 복원, 결과 화면 뒤로가기와 새로고침, 없는 경로는 홈으로 교정, 경로 변형 진입 교정(3개), `?debug=1` 진입도 같은 화면이고 진단 패널 없음
+- `base-path.spec.ts` (6개, `base-path` 프로젝트): `BASE_PATH=/chameumyeon-eolma/` 빌드에서 자산 404 없음, 새로고침과 딥링크, 404.html, 주요 기능 경로, 탭 이동 경로에 base 붙음, 없는 경로는 base로 교정
 - `screenshots.spec.ts` (2개): 입력, 결과, 타로 고르기 전과 후를 라이트와 다크로 각각 새 컨텍스트에서 캡처
 - 헤드리스에서는 소프트웨어 WebGL(swiftshader)로 3D를 렌더링한다. 3D 캔버스가 처음 뜨기를 기다리는 단언은 `SCENE_TIMEOUT`(15초)을 쓴다.
 
@@ -200,7 +254,7 @@ Node.js 20 이상이 필요하다.
 ```bash
 npm ci
 npm run dev        # 개발 서버
-npm run build      # 프로덕션 빌드(dist/)
+npm run build      # 타입 검사, 프로덕션 빌드(dist/), 앱인토스 웹 번들(chameumyeon-eolma.ait)
 npm run preview    # 빌드 결과 미리 보기
 ```
 
@@ -214,6 +268,7 @@ BASE_PATH=/chameumyeon-eolma/ npm run build
 
 ```bash
 npm test                          # 단위 테스트
+npm run lint                      # oxlint
 npm run scan:banned               # 금칙어 스캔
 npx playwright install chromium   # 최초 1회
 npm run test:e2e                  # E2E(루트 빌드 4173, BASE_PATH 빌드 4174 preview 서버로 실행)
@@ -224,6 +279,18 @@ npm run test:e2e                  # E2E(루트 빌드 4173, BASE_PATH 빌드 417
 ```bash
 SCREENSHOTS=1 npm run test:e2e            # bash
 $env:SCREENSHOTS='1'; npm run test:e2e    # PowerShell
+```
+
+### 그 밖의 스크립트
+
+```bash
+npm run fetch:data        # 이율, 상승률 데이터 수집(src/data/rates.json, returns.json)
+npm run build:blocklist   # scripts/banned-terms.txt → src/data/blockedHashes.json
+npm run store:screens     # 스토어 세로형 스크린샷(docs/store/screenshots/)
+npm run store:logo        # 스토어 로고
+npm run store:banner      # 스토어 가로형 배너
+npm run store:console     # 콘솔 입력값(docs/store/console.json → docs/SUBMISSION.md 표시 구간)
+npm run deploy            # 앱인토스 배포(ait deploy)
 ```
 
 ## 가정 목록
